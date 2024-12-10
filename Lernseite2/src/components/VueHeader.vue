@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Lerntagebuch</h1>
+    <h1></h1>
     <nav>
   <router-link to="/">Dashboard</router-link>
   <router-link to="/entry">Neuer Eintrag</router-link>

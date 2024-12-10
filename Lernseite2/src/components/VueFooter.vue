@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <p>&copy; 2024 Dein Lerntagebuch</p>
+    <p>&copy; 2024 Devory</p>
   </footer>
 </template>
 
