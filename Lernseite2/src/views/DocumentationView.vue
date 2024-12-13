@@ -137,36 +137,53 @@
     methods: {
       async exportAsPDF() {
         const element = this.$refs.documentation;
+  
+        // Screenshot der gesamten Seite erstellen
         const canvas = await html2canvas(element, {
           scale: 2,
           useCORS: true,
+          onclone: (documentClone) => {
+            // Links deaktivieren im Snapshot
+            const links = documentClone.querySelectorAll("a");
+            links.forEach((link) => {
+              link.replaceWith(documentClone.createTextNode(link.textContent));
+            });
+          },
         });
   
         const pdf = new jsPDF("p", "mm", "a4");
         const imgData = canvas.toDataURL("image/png");
   
-        // DIN A4 Maße berechnen
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        const pdfHeight = pdf.internal.pageSize.getHeight();
   
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        // Bild in Seiten aufteilen
+        let imgHeight = (canvas.height * pdfWidth) / canvas.width;
+        let position = 0;
   
-        // Klickbare Links hinzufügen
-        const links = [
-          { url: "https://visualstudio.microsoft.com/de/downloads/", x: 10, y: 50 },
-          { url: "https://www.w3schools.com/html/html_intro.asp", x: 10, y: 60 },
-          { url: "https://www.w3schools.com/quiztest/quiztest.asp?qtest=HTML", x: 10, y: 70 },
-        ];
+        while (position < imgHeight) {
+          pdf.addImage(
+            imgData,
+            "PNG",
+            0,
+            position ? -position : 0,
+            pdfWidth,
+            (canvas.height * pdfWidth) / canvas.width
+          );
   
-        links.forEach((link) => {
-          pdf.link(link.x, link.y - 4, pdfWidth - 20, 10, { url: link.url });
-        });
+          position += pdfHeight;
+  
+          if (position < imgHeight) {
+            pdf.addPage();
+          }
+        }
   
         pdf.save("Technische_Dokumentation.pdf");
       },
     },
   };
   </script>
+
   
   <style scoped>
   .documentation-view {
