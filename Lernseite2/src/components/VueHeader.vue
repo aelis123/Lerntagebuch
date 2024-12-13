@@ -1,7 +1,12 @@
 <template>
   <header>
-   
-    <nav>
+    <div class="header-container">
+      
+      <button class="menu-toggle" @click="toggleMenu">
+        ☰
+      </button>
+    </div>
+    <nav :class="{ open: menuOpen }">
       <router-link to="/" exact-active-class="active-link">Dashboard</router-link>
       <router-link to="/entry" exact-active-class="active-link">Neuer Eintrag</router-link>
       <router-link to="/entries" exact-active-class="active-link">Einträge</router-link>
@@ -15,6 +20,16 @@
 <script>
 export default {
   name: "VueHeader",
+  data() {
+    return {
+      menuOpen: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    },
+  },
 };
 </script>
 
@@ -22,21 +37,46 @@ export default {
 header {
   background-color: #ededed;
   padding: 1rem;
-  text-align: center;
   border-bottom: 2px solid #c3b1e1;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 h1 {
   margin: 0;
   color: #c3b1e1;
+  font-size: 1.5rem;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+  color: #c3b1e1;
 }
 
 nav {
+  display: none; /* Standardmäßig verstecken */
+  flex-direction: column;
   margin-top: 0.5rem;
 }
 
+nav.open {
+  display: flex; /* Sichtbar machen, wenn das Menü geöffnet ist */
+}
+
 nav a {
-  margin: 0 10px;
+  margin: 5px 0;
   text-decoration: none;
   color: #333333;
   padding: 0.5rem 1rem;
@@ -51,5 +91,21 @@ nav a:hover {
 nav a.active-link {
   background-color: #c3b1e1; /* Farbe für aktive Links */
   color: white;
+}
+
+@media (min-width: 768px) {
+  .menu-toggle {
+    display: none;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  nav a {
+    margin: 0 10px;
+  }
 }
 </style>
