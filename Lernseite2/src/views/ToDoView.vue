@@ -10,6 +10,11 @@
         placeholder="Neues To-Do hinzufügen..."
         @keyup.enter="addTodo"
       />
+      <input
+        v-model="newTodoDate"
+        type="date"
+        placeholder="Fälligkeitsdatum wählen"
+      />
       <button @click="addTodo">Hinzufügen</button>
     </div>
 
@@ -22,31 +27,30 @@
           <div class="circle" @click="toggleComplete(todo.id)">
             <span v-if="todo.completed" class="checkmark">✔</span>
           </div>
-          <p>{{ todo.text }}</p>
+          <p>{{ todo.text }} <small v-if="todo.dueDate">({{ formatDate(todo.dueDate) }})</small></p>
         </li>
       </ul>
     </div>
 
     <!-- Archivierte To-Dos -->
     <div class="todo-archive">
-  <h3 @click="toggleArchive">
-    📦 Archiv {{ archiveOpen ? '⯆' : '⯈' }} ({{ archivedTodos.length }})
-  </h3>
-  <ul v-show="archiveOpen">
-    <li
-      v-for="todo in archivedTodos"
-      :key="todo.id"
-      class="todo-item archived"
-    >
-      <div class="delete-button" @click="confirmDelete(todo.id)">🗑️</div>
-      <div class="circle" @click="toggleComplete(todo.id)">
-        <span class="checkmark">✔</span>
-      </div>
-      <p>{{ todo.text }}</p>
-    </li>
-  </ul>
-</div>
-
+      <h3 @click="toggleArchive">
+        📦 Archiv {{ archiveOpen ? '⯆' : '⯈' }} ({{ archivedTodos.length }})
+      </h3>
+      <ul v-show="archiveOpen">
+        <li
+          v-for="todo in archivedTodos"
+          :key="todo.id"
+          class="todo-item archived"
+        >
+          <div class="delete-button" @click="confirmDelete(todo.id)">🗑️</div>
+          <div class="circle" @click="toggleComplete(todo.id)">
+            <span class="checkmark">✔</span>
+          </div>
+          <p>{{ todo.text }} <small v-if="todo.dueDate">({{ formatDate(todo.dueDate) }})</small></p>
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -56,6 +60,7 @@ export default {
   data() {
     return {
       newTodo: "",
+      newTodoDate: "", // Für das Fälligkeitsdatum
       todos: [], // Alle To-Dos (aktive und archivierte)
       archiveOpen: false, // Steuert das Archiv-Dropdown
     };
@@ -75,9 +80,11 @@ export default {
           id: Date.now().toString(),
           text: this.newTodo.trim(),
           completed: false,
+          dueDate: this.newTodoDate || null, // Datum optional
         };
         this.todos.push(newTask);
         this.newTodo = "";
+        this.newTodoDate = "";
         this.saveTodos();
       }
     },
@@ -107,6 +114,10 @@ export default {
       const savedTodos = JSON.parse(localStorage.getItem("todos") || "[]");
       this.todos = savedTodos;
     },
+    formatDate(date) {
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return new Date(date).toLocaleDateString("de-DE", options);
+    },
   },
   mounted() {
     this.loadTodos();
@@ -130,7 +141,6 @@ export default {
 }
 
 .todo-input input {
-  flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;

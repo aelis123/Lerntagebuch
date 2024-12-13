@@ -103,8 +103,8 @@ export default {
   { emoji: "😠", label: "Wütend" },
   { emoji: "😴", label: "Müde" },
   { emoji: "🤔", label: "Nachdenklich" },
-  { emoji: "😎", label: "Cool" },
-  { emoji: "😇", label: "Zufrieden" },
+  { emoji: "😌", label: "Erleichtert" },
+  { emoji: "🤒", label: "Krank" },
 ],
 
     };

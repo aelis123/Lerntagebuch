@@ -3,6 +3,8 @@ import DashboardView from '../views/DashboardView.vue';
 import EntryView from '../views/EntryView.vue';
 import EntriesView from '../views/EntriesView.vue';
 import ToDoView from '../views/ToDoView.vue';
+import DocumentationView from '../views/DocumentationView.vue';
+import DictionaryView from '../views/DictionaryView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL), // BASE_URL für korrektes Routing
@@ -18,6 +20,11 @@ const router = createRouter({
       component: EntryView,
     },
     {
+      path: '/documentation',
+      name: 'documentation',
+      component: DocumentationView
+    },
+    {
       path: '/entries',
       name: 'entries',
       component: EntriesView,
@@ -29,7 +36,12 @@ const router = createRouter({
       name: 'todos',
       component: ToDoView,
 
-    }
+    },
+    {
+    path: '/dictionary',
+    name: 'dictionary',
+    component: DictionaryView,
+  }
   ],
 });
 

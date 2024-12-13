@@ -1,7 +1,7 @@
 <template>
   <section class="dashboard">
     <div class="welcome">
-      <h2>Willkommen!</h2>
+      <h2>{{ greeting }}</h2>
       <p>Heute ist: {{ currentDate }}</p>
     </div>
 
@@ -12,7 +12,7 @@
     </div>
 
     <div class="calendar-section">
-      <h3>📅 Dein Kalender</h3>
+    
       <div class="calendar">
         <div class="calendar-header">
           <button @click="changeMonth(-1)">◀</button>
@@ -86,6 +86,21 @@ export default {
 
       return days;
     },
+    greeting() {
+      const hour = new Date().getHours();
+
+      if (hour >= 6 && hour < 12) {
+        return "Guten Morgen!";
+      } else if (hour >= 12 && hour < 14) {
+        return "Mahlzeit!";
+      } else if (hour >= 14 && hour < 18) {
+        return "Guten Nachmittag!";
+      } else if (hour >= 18 && hour <= 23) {
+        return "Guten Abend!";
+      } else {
+        return "Hallo Nachteule!";
+      }
+    },
   },
   methods: {
     loadEntries() {
@@ -110,8 +125,8 @@ export default {
         "😠": "#ffe5d9",
         "😴": "#e3e4f1",
         "🤔": "#f3e9d2",
-        "😎": "#d1f4e6",
-        "😇": "#e8daf9",
+        "😌": "#d1f4e6",
+        "🤒": "#e8daf9",
       };
       return moodColors[mood] || "#ffffff";
     },
@@ -162,7 +177,7 @@ button:hover {
 }
 
 .calendar {
-  background-color: #fff;
+  background-color: #f5f3f3;
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -188,6 +203,7 @@ button:hover {
   font-weight: bold;
   padding: 5px;
   color: #555;
+ 
 }
 
 .calendar-day {
@@ -196,10 +212,11 @@ button:hover {
   padding: 10px;
   height: 50px;
   font-size: 0.8rem;
+  border: 0.002rem solid;
 }
 
 .calendar-day:hover {
-  background-color: #f0f0f0;
+  background-color: #dfdbdb;
 }
 
 .calendar-date {

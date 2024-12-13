@@ -2,12 +2,22 @@
   <section class="entries">
     <h2>Deine Einträge</h2>
     <div v-if="entries.length === 0">Keine Einträge vorhanden.</div>
+    <div class="controls">
+      <button @click="sortEntries">Sortieren: {{ sortOrder }}</button>
+      
+      
+      <label for="emoji">Filter nach Stimmung:</label>
+      <select id="emoji" v-model="filterEmoji">
+        <option value="">Alle</option>
+        <option v-for="emoji in emojis" :key="emoji" :value="emoji">{{ emoji }}</option>
+      </select>
+    </div>
     <div class="export">
       <button @click="exportToPDF">📄 Als PDF exportieren</button>
     </div>
     <ul ref="entryList">
       <li
-        v-for="entry in entries"
+        v-for="entry in filteredEntries"
         :key="entry.id"
         :style="{ backgroundColor: getBackgroundColor(entry.mood) }"
         class="entry-card"
@@ -37,7 +47,33 @@ export default {
   data() {
     return {
       entries: [],
+      sortOrder: "Älteste zuerst",
+     
+      filterEmoji: "",
+     
+      emojis: ["😊", "😢", "😠", "😴", "🤔", "😌", "🤒"],
     };
+  },
+  computed: {
+    filteredEntries() {
+      let result = [...this.entries];
+
+      if (this.filterMonth) {
+        result = result.filter((entry) => entry.timestamp.includes(`-${this.filterMonth}-`));
+      }
+
+      if (this.filterEmoji) {
+        result = result.filter((entry) => entry.mood === this.filterEmoji);
+      }
+
+      if (this.sortOrder === "Neueste zuerst") {
+        result.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      } else {
+        result.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      }
+
+      return result;
+    },
   },
   methods: {
     loadEntries() {
@@ -56,10 +92,13 @@ export default {
         "😠": "#ffe5d9", // Wütend
         "😴": "#e3e4f1", // Müde
         "🤔": "#f3e9d2", // Nachdenklich
-        "😎": "#d1f4e6", // Cool
-        "😇": "#e8daf9", // Zufrieden
+        "😌": "#d1f4e6", // Erleichtert
+        "🤒": "#e8daf9", // Krank
       };
       return moodColors[mood] || "#ffffff";
+    },
+    sortEntries() {
+      this.sortOrder = this.sortOrder === "Älteste zuerst" ? "Neueste zuerst" : "Älteste zuerst";
     },
     async exportToPDF() {
       const element = this.$refs.entryList;
@@ -83,6 +122,12 @@ export default {
 <style scoped>
 .entries {
   padding: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1rem;
 }
 
 .export {
@@ -126,7 +171,15 @@ export default {
 }
 
 button {
-  background-color: #e57373;
+  background-color: #e09393;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.controls button {
+  background-color: #cfaad3;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -137,4 +190,8 @@ button {
 button:hover {
   background-color: #d32f2f;
 }
+.controls button:hover {
+  background-color: rgb(214, 148, 214); 
+}
+
 </style>

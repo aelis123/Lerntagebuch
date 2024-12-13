@@ -1,14 +1,14 @@
 <template>
   <header>
-    <h1></h1>
+   
     <nav>
-  <router-link to="/">Dashboard</router-link>
-  <router-link to="/entry">Neuer Eintrag</router-link>
-  <router-link to="/entries">Einträge</router-link>
-  <router-link to="/todos">To-Do-Liste</router-link>
-
-</nav>
-
+      <router-link to="/" exact-active-class="active-link">Dashboard</router-link>
+      <router-link to="/entry" exact-active-class="active-link">Neuer Eintrag</router-link>
+      <router-link to="/entries" exact-active-class="active-link">Einträge</router-link>
+      <router-link to="/todos" exact-active-class="active-link">To-Do-Liste</router-link>
+      <router-link to="/documentation" exact-active-class="active-link">Technische Dokumentation</router-link>
+      <router-link to="/dictionary" exact-active-class="active-link">IT-Wörterbuch</router-link>
+    </nav>
   </header>
 </template>
 
@@ -39,9 +39,17 @@ nav a {
   margin: 0 10px;
   text-decoration: none;
   color: #333333;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 nav a:hover {
   color: #c3b1e1;
+}
+
+nav a.active-link {
+  background-color: #c3b1e1; /* Farbe für aktive Links */
+  color: white;
 }
 </style>
