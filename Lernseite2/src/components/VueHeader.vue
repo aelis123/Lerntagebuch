@@ -1,9 +1,11 @@
 <template>
   <header>
     <div class="header-container">
-      
-      <button class="menu-toggle" @click="toggleMenu">
-        ☰
+     
+      <button class="menu-toggle" @click="toggleMenu" :class="{ open: menuOpen }">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
     <nav :class="{ open: menuOpen }">
@@ -55,14 +57,37 @@ h1 {
 .menu-toggle {
   background: none;
   border: none;
-  font-size: 1.5rem;
-  color: #333333;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   cursor: pointer;
-  transition: color 0.3s ease;
+  padding: 0;
+  position: relative;
 }
 
-.menu-toggle:hover {
-  color: #c3b1e1;
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: #333333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translateY(20px);
+}
+
+.menu-toggle.open span:nth-child(2) {
+  transform: rotate(90deg) translateY(6px);
+  opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-18px);
+  opacity: 50;
 }
 
 nav {
