@@ -124,6 +124,28 @@
 </p>
 
       </div>
+
+      <div class="info-box2"> 
+        <strong>Render Einstellungen </strong> 
+
+        <p> <code>Hier kommt demnächst eine Schritt für Schritt Anleitung für den Livegang einer statischen Website.</code></p>
+
+
+        <p>Wenn du eine statische Seite auf <a href="https://render.com/"_blank>Render</a> deployst, funktioniert der direkte Zugriff auf Links wie <code>https://lerntagebuch.onrender.com/dictionary</code> zunächst nicht. Stattdessen erscheint ein "Not Found"-Fehler. Das liegt daran, dass statische Seiten bei direktem Aufruf der URL keinen Server haben, der alle Anfragen automatisch an die <code>index.html</code> weiterleitet. Standardmäßig funktionieren die Verlinkungen nur lokal oder über clientseitiges Routing. Um dies zu beheben, müssen in Render ein paar Einstellungen vorgenommen werden, um alle Anfragen zur <code>index.html</code> umzuleiten.</p>
+      <div class="info-box">
+       <strong> <ol>
+          <li>Öffne dein Dashboard auf Render.</li>
+          <li>Öffne das Projekt, an dem du die Änderung vornehmen möchtest.</li>
+          <li>Suche nach einem Schalter namens "Redirects/Rewrites" im Navigationsmenü auf der linken Seite. </li>
+          <li>Füge bei Source <code>/*</code> hinzu.</li>
+          <li>Füge bei Destination <code>/index.html</code> hinzu.</li>
+          <li>Wähle bei Action <code>Rewrite</code>.</li>
+          <li>Speichere die Einstellungen und teste, ob es funktioniert!</li>
+        </ol>
+      </strong>
+
+      </div>
+      </div>
      
     </section>
   </template>

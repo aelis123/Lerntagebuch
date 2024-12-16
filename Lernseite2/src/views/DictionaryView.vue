@@ -105,19 +105,12 @@ export default {
         { word: "Internal Network", definition: "Ein isoliertes Netzwerk in VirtualBox, das nur die Kommunikation zwischen virtuellen Maschinen ermöglicht, ohne Zugang zum Host oder Internet." },
         { word: "Windows Defender", definition: "Ein integriertes Sicherheitsprogramm in Windows 10, das das System vor Schadsoftware schützt und grundlegende Sicherheitsfunktionen bereitstellt." },
         { word: "VM (Virtuelle Maschine)", definition: "Eine emulierte Umgebung, die ein Betriebssystem oder eine Anwendung isoliert ausführt, als ob es sich um einen eigenen Computer handelt. Virtuelle Maschinen teilen sich die Hardware-Ressourcen des Hosts." },
-
         { word: "Host-only Adapter", definition: "Ein Netzwerkmodus, bei dem die virtuelle Maschine nur mit dem Host-Computer kommunizieren kann. Es gibt keine Verbindung zum Internet oder zu anderen Geräten." },
-
 { word: "Port Forwarding", definition: "Eine Technik im NAT-Netzwerkmodus, die es ermöglicht, den Zugriff auf bestimmte Dienste in einer virtuellen Maschine vom Host aus zu steuern." },
-
 { word: "VHD (Virtual Hard Disk)", definition: "Eine Datei, die wie eine Festplatte für virtuelle Maschinen funktioniert. Sie speichert das Betriebssystem, Anwendungen und Daten der VM." },
-
 { word: "VT-x/AMD-V", definition: "Hardware-gestützte Virtualisierungstechnologien von Intel (VT-x) und AMD (AMD-V), die die Leistung von virtuellen Maschinen verbessern." },
-
 { word: "Guest Additions", definition: "Zusätzliche Software, die in einer virtuellen Maschine installiert wird, um Funktionen wie Drag & Drop, Mauszeiger-Integration und verbesserte Grafikleistung zu ermöglichen." },
-
 { word: "Host", definition: "Der physische Computer, auf dem eine Virtualisierungssoftware wie VirtualBox oder VMware ausgeführt wird." },
-
         { word: "Binärzahl", definition: "Ein Zahlensystem, das nur die Ziffern 0 und 1 verwendet. Es ist die Grundlage für die Funktionsweise von Computern und digitalen Geräten." },
         { word: "Kompatibilitätsmodus", definition: "Eine Funktion in Windows 10, die es ermöglicht, ältere Programme auszuführen, indem eine frühere Windows-Version simuliert wird." },
         { word: "Integration Test", definition: "Testen der Interaktion zwischen mehreren Komponenten." },
@@ -129,21 +122,13 @@ export default {
         { word: "Secure Boot", definition: "Eine Sicherheitsfunktion von UEFI, die verhindert, dass nicht signierte oder unsichere Betriebssysteme gestartet werden." },
         { word: "Task-Manager", definition: "Ein Windows-Tool, das Informationen über laufende Programme, Prozesse und die Systemauslastung anzeigt und es ermöglicht, Aufgaben zu beenden." },
         { word: "Hexadezimalsystem", definition: "Ein Zahlensystem, das die Basis 16 verwendet. Es wird häufig in der Programmierung und bei Speicheradressen genutzt. Beispiel: 0x1A3F." },
-
 { word: "Oktalsystem", definition: "Ein Zahlensystem mit der Basis 8, das Zahlen von 0 bis 7 verwendet. Es wird gelegentlich in der Computertechnik eingesetzt." },
-
 { word: "Systemwiederherstellung", definition: "Eine Windows-Funktion, die es ermöglicht, das System zu einem früheren Zeitpunkt zurückzusetzen, um Probleme zu beheben." },
-
 { word: "Eingabeaufforderung (CMD)", definition: "Ein Kommandozeilen-Tool in Windows, das die manuelle Ausführung von Befehlen zur Systemsteuerung oder Fehlersuche ermöglicht." },
-
 { word: "Windows Update", definition: "Ein Dienst, der Aktualisierungen für das Betriebssystem bereitstellt, um Sicherheitslücken zu schließen und die Leistung zu verbessern." },
-
 { word: "POST (Power-On Self-Test)", definition: "Ein Test, den der Computer beim Einschalten durchführt, um Hardware-Fehler zu erkennen, bevor das Betriebssystem geladen wird." },
-
 { word: "Bootloader", definition: "Ein Programm, das den Startvorgang eines Betriebssystems einleitet. Beispiele sind GRUB (Linux) oder der Windows Boot Manager." },
-
 { word: "CMOS", definition: "Ein Speicherchip auf dem Mainboard, der BIOS-Einstellungen und Systemzeit speichert." },
-
         { word: "Latency", definition: "Die Verzögerung bei der Datenübertragung." },
         { word: "Linting", definition: "Ein Prozess zur Analyse von Code auf potenzielle Fehler." },
         { word: "Load Balancer", definition: "Eine Methode zur Verteilung von Netzwerkverkehr auf mehrere Server." },
@@ -238,7 +223,6 @@ export default {
 { word: "GF", definition: "Glasfaserbasierte Netzwerkkabel für schnelle Datenübertragung." },
 { word: "Technischer Brandschutz", definition: "Maßnahmen zum Schutz von IT-Systemen vor Feuergefahr." },
 { word: "Bit", definition: "Die kleinste Einheit von Daten in der Informatik, die nur zwei Werte annehmen kann: 0 oder 1." },
-
 { word: "Byte", definition: "Eine Einheit von 8 Bits, die in der Regel ein Zeichen oder eine kleine Datenmenge repräsentiert." },
 { word: "Base64", definition: "Ein Kodierungsverfahren, das Binärdaten in ASCII-Text umwandelt. Es wird häufig zum Übertragen von Daten in E-Mails oder APIs verwendet." },
 { word: "Protokoll", definition: "Ein Satz von Regeln für die Kommunikation in Netzwerken, z. B. TCP/IP." },
@@ -287,14 +271,10 @@ export default {
 { word: "RAID", definition: "Steht für 'Redundant Array of Independent Disks' und bezeichnet verschiedene Methoden zur Kombination mehrerer Festplatten zu einem logischen Laufwerk. RAID verbessert entweder die Datensicherheit (Redundanz) oder die Leistung von Speichersystemen. Beispiele sind RAID 0 (Striping), RAID 1 (Mirroring) und RAID 5 (Parität)." },
 { word: "Hybrid Drive (SSHD)", definition: "Ein Laufwerk, das die Vorteile von HDDs (große Speicherkapazität) und SSDs (schneller Zugriff) kombiniert. Häufig genutzte Daten werden auf dem SSD-Teil gespeichert, während der Rest auf der HDD bleibt." },
 { word: "RAID 0 (Striping)", definition: "Ein RAID-Level, bei dem Daten in Blöcken auf mehrere Festplatten verteilt werden, um die Lese- und Schreibgeschwindigkeit zu erhöhen. Es bietet jedoch keine Redundanz – ein Ausfall einer Platte führt zum Datenverlust." },
-
 { word: "RAID 1 (Mirroring)", definition: "Ein RAID-Level, das die gleichen Daten gleichzeitig auf zwei oder mehr Festplatten speichert. Dadurch wird Redundanz geschaffen, sodass die Daten erhalten bleiben, wenn eine Platte ausfällt." },
-
 { word: "RAID 5 (Parität)", definition: "Ein RAID-Level, das Daten über mehrere Festplatten verteilt und zusätzlich Paritätsinformationen speichert. Es bietet Redundanz und verbessert die Leistung, erfordert aber mindestens drei Festplatten." },
-
 { word: "HDD (Hard Disk Drive)", definition: "Ein Speichermedium, das Daten magnetisch auf rotierenden Scheiben speichert. HDDs bieten große Speicherkapazität zu niedrigem Preis, sind jedoch langsamer und empfindlicher gegenüber Erschütterungen als SSDs." },
 { word: "NVMe (Non-Volatile Memory Express)", definition: "Ein Protokoll für SSDs, das die Geschwindigkeit von Speichermedien drastisch erhöht, indem es direkt mit dem PCIe-Bus kommuniziert. NVMe-SSDs sind deutlich schneller als herkömmliche SATA-SSDs." },
-
 { word: "Netzteil", definition: "Ein Gerät, das den Computer mit Strom versorgt." },
 { word: "BIOS", definition: "Die Firmware, die die Hardware eines Computers initialisiert." },
 { word: "MAC-Adresse", definition: "Eine eindeutige Hardware-Adresse eines Netzwerkgeräts." },
