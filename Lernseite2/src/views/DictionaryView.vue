@@ -299,7 +299,7 @@ export default {
 { word: "BIOS", definition: "Die Firmware, die die Hardware eines Computers initialisiert." },
 { word: "MAC-Adresse", definition: "Eine eindeutige Hardware-Adresse eines Netzwerkgeräts." },
 { word: "Subnetzmaske", definition: "Eine Zahl, die verwendet wird, um IP-Adressen in Netzwerke und Subnetze zu unterteilen. Sie legt fest, welcher Teil der IP-Adresse das Netzwerk und welcher Teil das Gerät (Host) identifiziert. Beispiel: In der Subnetzmaske 255.255.255.0 gehört der erste Teil der IP-Adresse (die ersten 24 Bits) zum Netzwerk, während die letzten 8 Bits die Hosts im Netzwerk kennzeichnen." },
-
+{ word: "Unterschied zwischen Datenbank und API", definition: "Eine Datenbank speichert Daten und stellt Funktionen zur Datenverwaltung bereit. Eine API hingegen ist ein Vermittler, der den Zugriff auf Daten oder Dienste der Datenbank für Anwendungen kontrolliert. Während eine Datenbank lokal oder remote direkt angesprochen werden kann, bietet eine API einen standardisierten, sicheren Weg, um Daten zu lesen, zu schreiben oder zu manipulieren, oft über HTTP-Protokolle." },
 { word: "Gateway", definition: "Ein Gerät, das Netzwerke miteinander verbindet." },
 { word: "Switch", definition: "Ein Gerät, das Netzwerkgeräte miteinander verbindet." },
 { word: "Router", definition: "Ein Gerät, das Datenpakete zwischen Netzwerken weiterleitet." },
