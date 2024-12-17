@@ -65,14 +65,15 @@ h1 {
   cursor: pointer;
   padding: 0;
   position: relative;
+  
 }
 
 .menu-toggle span {
   display: block;
   width: 100%;
-  height: 4px;
+  height: 2px;
   background-color: #333333;
-  border-radius: 2px;
+  border-radius: 1px;
   transition: all 0.3s ease;
 }
 
@@ -86,7 +87,7 @@ h1 {
 }
 
 .menu-toggle.open span:nth-child(3) {
-  transform: rotate(-45deg) translateY(-18px);
+  transform: rotate(-45deg) translateY(-20px);
   opacity: 50;
 }
 
