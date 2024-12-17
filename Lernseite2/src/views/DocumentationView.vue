@@ -126,23 +126,40 @@
       </div>
 
       <div class="info-box2"> 
-        <strong>Render Einstellungen </strong> 
+        <strong><a href="https://render.com/" target="_blank">Render</a> Einstellungen </strong> 
+<p>Livegang einer statischen Seite:</p>
+<div class="info-box2">
+<ol>
+<li>Öffne <a href="https://render.com/" target="_blank">Render</a> und logge dich ein. Am besten du loggst dich direkt mit deinem Github-Konto ein.</li>
+<li>Klicke auf <strong>"New"</strong> und wähle <strong>"Static Site".</strong></li>
+<li>Wähle das <strong> Github Repository</strong> von dem Projekt, das du deployen möchtest und klicke <strong>"Connect"</strong>.</li>
+<li>Gib bei <strong>General</strong> den Namen für deine Website ein.</li>
+<li>Bei <strong>Build & Deploy</strong> siehst du eine Vorschau für den Link deiner Seite, wähle beim <strong>Branch</strong> den Zweig aus, den du für den Livegang in Github vorgesehen hast.</li>
+<li>Bei <strong>Root Directory</strong> wählst du den Pfad/die Ordnerstruktur, der veröffentlicht werden soll, z.B. nur den Frontend-Ordner. </li>
+<li><strong>Build Command</strong> ist bei einer Node/Vue Anwendung <strong>$ npm run build.</strong></li>
+<li>Bei <strong>Publish Directory</strong> tragen wir <strong>dist</strong> ein.</li>
+<li>Klicke auf Deploy, warte kurz und überprüfe dann, ob du die Seite aufrufen kannst.</li>
+</ol>
 
-        <p> <code>Hier kommt demnächst eine Schritt für Schritt Anleitung für den Livegang einer statischen Website.</code></p>
 
 
-        <p>Wenn du eine statische Seite auf <a href="https://render.com/"_blank>Render</a> deployst, funktioniert der direkte Zugriff auf Links wie <code>https://lerntagebuch.onrender.com/dictionary</code> zunächst nicht. Stattdessen erscheint ein "Not Found"-Fehler. Das liegt daran, dass statische Seiten bei direktem Aufruf der URL keinen Server haben, der alle Anfragen automatisch an die <code>index.html</code> weiterleitet. Standardmäßig funktionieren die Verlinkungen nur lokal oder über clientseitiges Routing. Um dies zu beheben, müssen in Render ein paar Einstellungen vorgenommen werden, um alle Anfragen zur <code>index.html</code> umzuleiten.</p>
+</div>
+        
+
+
+        <p>Wenn du eine statische Seite auf <a href="https://render.com/" target="_blank">Render</a>
+          deployst, funktioniert der direkte Zugriff auf Links wie <code>https://lerntagebuch.onrender.com/dictionary</code> zunächst nicht. Stattdessen erscheint ein "Not Found"-Fehler. Das liegt daran, dass statische Seiten bei direktem Aufruf der URL keinen Server haben, der alle Anfragen automatisch an die <code>index.html</code> weiterleitet. Standardmäßig funktionieren die Verlinkungen nur lokal oder über clientseitiges Routing. Um dies zu beheben, müssen in Render ein paar Einstellungen vorgenommen werden, um alle Anfragen zur <code>index.html</code> umzuleiten.</p>
       <div class="info-box">
-       <strong> <ol>
-          <li>Öffne dein Dashboard auf Render.</li>
-          <li>Öffne das Projekt, an dem du die Änderung vornehmen möchtest.</li>
-          <li>Suche nach einem Schalter namens "Redirects/Rewrites" im Navigationsmenü auf der linken Seite. </li>
-          <li>Füge bei Source <code>/*</code> hinzu.</li>
-          <li>Füge bei Destination <code>/index.html</code> hinzu.</li>
-          <li>Wähle bei Action <code>Rewrite</code>.</li>
+      <ol>
+          <li>Öffne dein <strong>Dashboard</strong> auf Render.</li>
+          <li>Öffne das <strong>Projekt</strong>, an dem du die Änderung vornehmen möchtest.</li>
+          <li>Suche nach einem Schalter namens <strong>"Redirects/Rewrites"</strong> im Navigationsmenü auf der linken Seite. </li>
+          <li>Füge bei Source <strong><code>/*</code></strong> hinzu.</li>
+          <li>Füge bei Destination <strong><code>/index.html</code></strong> hinzu.</li>
+          <li>Wähle bei Action <strong> <code>Rewrite</code></strong>.</li>
           <li>Speichere die Einstellungen und teste, ob es funktioniert!</li>
         </ol>
-      </strong>
+    
 
       </div>
       </div>
@@ -285,5 +302,12 @@
   color: #00ccff; /* Highlight color for views */
   font-weight: bold;
 }
+img {
+  max-width: 100%; /* Bild bleibt innerhalb der Elternelemente */
+  height: auto;    /* Verhältnis bleibt erhalten */
+  display: block;  /* Verhindert zusätzliche Leerflächen unter Bildern */
+  margin: 0 auto;  /* Zentriert das Bild horizontal */
+}
+
   </style>
   
