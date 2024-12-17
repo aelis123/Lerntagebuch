@@ -15,6 +15,7 @@
       <router-link to="/todos" exact-active-class="active-link">To-Do-Liste</router-link>
       <router-link to="/documentation" exact-active-class="active-link">Technische Dokumentation</router-link>
       <router-link to="/dictionary" exact-active-class="active-link">IT-Wörterbuch</router-link>
+      
     </nav>
   </header>
 </template>

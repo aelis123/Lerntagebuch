@@ -1,6 +1,6 @@
 <template>
   <section class="entry">
-    <h2>🌟 Neues Tagebuch-Eintrag 🌟</h2>
+    <h2>🌟 Neuer Tagebuch-Eintrag 🌟</h2>
     <form @submit.prevent="saveEntry">
       <div class="form-group">
         <label for="what-learned">📚 Was habe ich gelernt?</label>
