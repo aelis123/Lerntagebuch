@@ -128,7 +128,7 @@
       <div class="info-box2"> 
         <strong><a href="https://render.com/" target="_blank">Render</a> Einstellungen </strong> 
 <p>Livegang einer statischen Seite:</p>
-<div class="info-box2">
+<div class="info-box">
 <ol>
 <li>Öffne <a href="https://render.com/" target="_blank">Render</a> und logge dich ein. Am besten du loggst dich direkt mit deinem Github-Konto ein.</li>
 <li>Klicke auf <strong>"New"</strong> und wähle <strong>"Static Site".</strong></li>
@@ -137,7 +137,7 @@
 <li>Bei <strong>Build & Deploy</strong> siehst du eine Vorschau für den Link deiner Seite, wähle beim <strong>Branch</strong> den Zweig aus, den du für den Livegang in Github vorgesehen hast.</li>
 <li>Bei <strong>Root Directory</strong> wählst du den Pfad/die Ordnerstruktur, der veröffentlicht werden soll, z.B. nur den Frontend-Ordner. </li>
 <li><strong>Build Command</strong> ist bei einer Node/Vue Anwendung <strong>$ npm run build.</strong></li>
-<li>Bei <strong>Publish Directory</strong> tragen wir <strong>dist</strong> ein.</li>
+<li>Bei <strong>Publish Directory</strong> trage <strong>dist</strong> ein.</li>
 <li>Klicke auf Deploy, warte kurz und überprüfe dann, ob du die Seite aufrufen kannst.</li>
 </ol>
 
@@ -147,8 +147,8 @@
         
 
 
-        <p>Wenn du eine statische Seite auf <a href="https://render.com/" target="_blank">Render</a>
-          deployst, funktioniert der direkte Zugriff auf Links wie <code>https://lerntagebuch.onrender.com/dictionary</code> zunächst nicht. Stattdessen erscheint ein "Not Found"-Fehler. Das liegt daran, dass statische Seiten bei direktem Aufruf der URL keinen Server haben, der alle Anfragen automatisch an die <code>index.html</code> weiterleitet. Standardmäßig funktionieren die Verlinkungen nur lokal oder über clientseitiges Routing. Um dies zu beheben, müssen in Render ein paar Einstellungen vorgenommen werden, um alle Anfragen zur <code>index.html</code> umzuleiten.</p>
+        <p><em>Wenn du eine statische Seite auf <a href="https://render.com/" target="_blank">Render</a>
+          deployst, funktioniert der direkte Zugriff auf Links wie <code>https://lerntagebuch.onrender.com/dictionary</code> zunächst nicht. Stattdessen erscheint ein "Not Found"-Fehler. Das liegt daran, dass statische Seiten bei direktem Aufruf der URL keinen Server haben, der alle Anfragen automatisch an die <code>index.html</code> weiterleitet. Standardmäßig funktionieren die Verlinkungen nur lokal oder über clientseitiges Routing. Um dies zu beheben, müssen in Render ein paar Einstellungen vorgenommen werden, um alle Anfragen zur <code>index.html</code> umzuleiten.</em></p>
       <div class="info-box">
       <ol>
           <li>Öffne dein <strong>Dashboard</strong> auf Render.</li>
