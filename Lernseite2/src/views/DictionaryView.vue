@@ -34,7 +34,7 @@ export default {
       terms: [
         { word: "5G", definition: "Die fünfte Generation der Mobilfunktechnologie, die höhere Geschwindigkeiten, geringere Latenzen und eine größere Kapazität bietet als ihre Vorgänger. 5G ist die Grundlage für viele moderne Anwendungen wie autonomes Fahren, das Internet der Dinge (IoT) und Smart Cities. Es ermöglicht Downloadgeschwindigkeiten von bis zu 10 Gbit/s und unterstützt eine Vielzahl von Geräten gleichzeitig, was es ideal für stark vernetzte Umgebungen macht." },
         { word: "4G", definition: "Die vierte Generation der Mobilfunktechnologie, die im Vergleich zu 3G deutlich schnellere Datenübertragungsraten bietet. Mit Downloadgeschwindigkeiten von bis zu 1 Gbit/s ermöglicht 4G Anwendungen wie HD-Videostreaming, Videotelefonie und schnelle mobile Internetverbindungen." },
-        { word: "LTE", definition: "Steht für 'Long Term Evolution' und ist eine Mobilfunktechnologie, die oft als 4G bezeichnet wird. LTE ist jedoch technisch eine Weiterentwicklung von 3G und erreicht nicht die vollständigen Spezifikationen von echtem 4G. Es bietet dennoch Geschwindigkeiten von bis zu 300 Mbit/s und bildet die Grundlage für viele heutige 4G-Netzwerke." }, 
+        { word: "LTE", definition: "Steht für 'Long Term Evolution' und ist eine Mobilfunktechnologie, die oft als 4G bezeichnet wird. LTE ist jedoch technisch eine Weiterentwicklung von 3G und erreicht nicht die vollständigen Spezifikationen von echtem 4G. Es bietet dennoch Geschwindigkeiten von bis zu 300 Mbit/s und bildet die Grundlage für viele heutige 4G-Netzwerke." },
         { word: "Agile", definition: "Ein Ansatz zur Softwareentwicklung, der Flexibilität und Anpassung priorisiert." },
         { word: "Algorithmus", definition: "Eine Reihe von Anweisungen zur Problemlösung." },
         { word: "API", definition: "Steht für 'Application Programming Interface' und ist eine Schnittstelle, die es ermöglicht, Daten und Funktionen zwischen Softwareanwendungen auszutauschen." },
@@ -61,7 +61,7 @@ export default {
         { word: "Datenbankindex", definition: "Ein Mechanismus, der die Geschwindigkeit von Datenbankabfragen erhöht, indem er den Zugriff auf Zeilen beschleunigt. Ein Index funktioniert ähnlich wie ein Inhaltsverzeichnis in einem Buch." },
         { word: "Continuous Integration", definition: "Ein Entwicklungsprozess, bei dem Änderungen kontinuierlich integriert und getestet werden." },
         { word: "Cookies", definition: "Kleine Daten, die von Websites gespeichert werden, um Benutzerinformationen zu speichern." },
-        { word: "Server", definition: "Ein Computer oder Programm, das Ressourcen und Dienste wie Webseiten, Datenbanken oder APIs bereitstellt und Anfragen von Clients verarbeitet." },       
+        { word: "Server", definition: "Ein Computer oder Programm, das Ressourcen und Dienste wie Webseiten, Datenbanken oder APIs bereitstellt und Anfragen von Clients verarbeitet." },
         { word: "Endpoint", definition: "Ein spezifischer URL-Pfad in einer API, über den bestimmte Daten oder Funktionen bereitgestellt werden. Beispiel: '/api/v1/users' liefert Benutzerdaten." },
         { word: "Cross-Browser Testing", definition: "Testen einer Website in verschiedenen Browsern." },
         { word: "Primary Key", definition: "Ein eindeutiges Merkmal oder Feld, das jede Zeile in einer Datenbanktabelle identifiziert. Ein Primary Key verhindert doppelte Einträge." },
@@ -314,12 +314,16 @@ export default {
 { word: "Change Request (Änderungsantrag)", definition: "Eine formelle Anfrage, die eine Änderung des ursprünglichen Projektumfangs, der Anforderungen oder der Zeitpläne vorschlägt. Änderungsanträge werden häufig durch neue Erkenntnisse oder veränderte Bedingungen notwendig." },
 { word: "Risk (Risiko)", definition: "Ein potenzielles Problem oder Ereignis, das den Erfolg eines Projekts beeinträchtigen könnte. Risiken können positiv (Chancen) oder negativ (Gefahren) sein und sollten durch Risikomanagement überwacht und minimiert werden." },
 { word: "Support", definition: "Unterstützung, die von einer Person oder einem Team bereitgestellt wird, um Probleme zu lösen, Fragen zu beantworten oder Hilfe bei der Nutzung eines Produkts oder einer Dienstleistung zu bieten. Im IT-Bereich umfasst Support häufig technische Hilfe, wie Fehlerbehebung, Software-Updates oder die Einrichtung von Geräten." },
+{
+  word: "Mocking",
+  definition: "Mocking bezeichnet im Softwareentwicklungs- und Testkontext das Erstellen von simulierten Objekten oder Diensten, die das Verhalten echter Komponenten nachahmen. Es wird häufig verwendet, um isolierte Tests durchzuführen, indem externe Abhängigkeiten ersetzt werden. Mocking hilft dabei, bestimmte Szenarien zu simulieren, Fehler zu reproduzieren oder zu prüfen, wie eine Komponente auf verschiedene Eingaben reagiert, ohne die tatsächliche Infrastruktur zu benötigen. Besonders nützlich ist es bei Unit-Tests, API-Simulationen oder der Validierung komplexer Logiken."
+},
 
 
       ],
     };
   },
-  
+
   computed: {
     sortedAndFilteredTerms() {
       // Zuerst filtern, dann sortieren

@@ -2,11 +2,12 @@
   <section class="flashcards-view">
     <h2>📝 Karteikarten</h2>
 
+
     <!-- Container für Filter und Eingabefelder -->
     <div class="top-container">
       <!-- Filterbereich -->
       <div class="filter-options">
-        <p>🔍 Anzeigen nach Farbe:</p>
+        <p>🔍 Wähle, was du wiederholen möchtest:</p>
         <label v-for="(color, key) in colors" :key="key" :style="{ color: color.text }">
           <input type="checkbox" v-model="filters" :value="key" />
           <span class="emoji">{{ color.emoji }} ({{ cardCount[key] }})</span>
@@ -23,36 +24,32 @@
 
     <!-- Kartenanzeige -->
     <div v-if="filteredCards.length" class="flashcard-container">
-      <div
-        v-for="(card, index) in filteredCards"
-        :key="index"
-        class="flashcard"
-        :style="{ backgroundColor: getBackgroundColor(card.color) }"
-      >
-        <div :class="['flashcard-inner', { flipped: card.flipped }]">
-          <div class="flashcard-front" @click="toggleAnswer(index)">
-            <p>{{ card.question }}</p>
+      <div class="navigation-buttons">
+        <button @click="prevCard">&#x2039;</button>
+      </div>
+      <div class="flashcard" :style="{ backgroundColor: getBackgroundColor(activeCard.color) }">
+        <div :class="['flashcard-inner', { flipped: activeCard.flipped }]">
+          <div class="flashcard-front" @click="toggleAnswer()">
+            <p>{{ activeCard.question }}</p>
           </div>
-          <div class="flashcard-back" @click="toggleAnswer(index)">
-            <p>{{ card.answer }}</p>
+          <div class="flashcard-back" @click="toggleAnswer()">
+            <p>{{ activeCard.answer }}</p>
           </div>
         </div>
 
-        <!-- Farbampel zur Aktualisierung -->
+        <!-- Dropdown-Menü zur Farbaktualisierung und Buttons -->
         <div class="color-controls">
-          <button
-            v-for="(color, key) in colors"
-            :key="key"
-            :style="{ backgroundColor: color.background }"
-            @click="updateCardColor(index, color.key)"
-          ></button>
+          <select v-model="activeCard.color" @change="saveCards">
+            <option v-for="(color, key) in colors" :key="key" :value="key">
+              {{ colors[key].emoji }} {{ colors[key].description }}
+            </option>
+          </select>
+          <button @click="editCard()">✏️</button>
+          <button @click="deleteCard()">🗑️</button>
         </div>
-
-        <!-- Bearbeiten und Löschen Buttons -->
-        <div class="card-actions">
-          <button @click="editCard(index)">✏️ Bearbeiten</button>
-          <button @click="deleteCard(index)">🗑️ Löschen</button>
-        </div>
+      </div>
+      <div class="navigation-buttons">
+        <button @click="nextCard">    &#x203A;    </button>
       </div>
     </div>
     <div v-else>
@@ -60,6 +57,7 @@
     </div>
   </section>
 </template>
+
 
 
 <script>
@@ -70,6 +68,7 @@ export default {
       newQuestion: "",
       newAnswer: "",
       cards: [],
+      activeIndex: 0, // Index der aktuell angezeigten Karte
       filters: ["red", "yellow", "green", "blue"], // Farbfilter
       colors: {
         red: {
@@ -116,6 +115,9 @@ export default {
     filteredCards() {
       return this.cards.filter((card) => this.filters.includes(card.color));
     },
+    activeCard() {
+      return this.filteredCards[this.activeIndex] || {};
+    },
   },
   methods: {
     addCard() {
@@ -131,35 +133,46 @@ export default {
         this.saveCards();
       }
     },
-    toggleAnswer(index) {
-      this.cards[index].flipped = !this.cards[index].flipped;
-    },
-    updateCardColor(index, color) {
-      this.cards[index].color = color;
+    toggleAnswer() {
+      this.activeCard.flipped = !this.activeCard.flipped;
       this.saveCards();
     },
-    deleteCard(index) {
-      this.cards.splice(index, 1);
+    deleteCard() {
+      const filteredIndex = this.filteredCards.indexOf(this.activeCard);
+      this.cards.splice(filteredIndex, 1);
+      if (this.activeIndex > 0) {
+        this.activeIndex--;
+      }
       this.saveCards();
     },
-    editCard(index) {
+    editCard() {
       const updatedQuestion = prompt(
         "Neue Frage eingeben:",
-        this.cards[index].question
+        this.activeCard.question
       );
       const updatedAnswer = prompt(
         "Neue Antwort eingeben:",
-        this.cards[index].answer
+        this.activeCard.answer
       );
       if (updatedQuestion !== null && updatedAnswer !== null) {
-        this.cards[index].question = updatedQuestion.trim();
-        this.cards[index].answer = updatedAnswer.trim();
+        this.activeCard.question = updatedQuestion.trim();
+        this.activeCard.answer = updatedAnswer.trim();
         this.saveCards();
       }
     },
     getBackgroundColor(colorKey) {
       const color = this.colors[colorKey];
       return color ? color.background : "#ffffff";
+    },
+    prevCard() {
+      if (this.activeIndex > 0) {
+        this.activeIndex--;
+      }
+    },
+    nextCard() {
+      if (this.activeIndex < this.filteredCards.length - 1) {
+        this.activeIndex++;
+      }
     },
     saveCards() {
       localStorage.setItem("flashcards", JSON.stringify(this.cards));
@@ -175,14 +188,16 @@ export default {
 };
 </script>
 
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap");
 
 .flashcards-view {
-  padding: 1.5rem;
+  padding: 3rem;
   background-color: #fefcfb;
   border-radius: 10px;
 }
+
 .filter-options {
   flex: 1;
   min-width: 250px;
@@ -191,7 +206,7 @@ export default {
 .filter-options label {
   display: flex;
   align-items: center;
-  gap: 10px; /* Abstand zwischen Checkbox und Emoji */
+  gap: 0.5rem; /* Abstand zwischen Checkbox und Emoji */
   cursor: pointer;
   font-size: 1.2rem; /* Größere Schrift für bessere Lesbarkeit */
   margin-bottom: 0.5rem;
@@ -203,7 +218,6 @@ export default {
   transform: scale(1.5); /* Checkbox vergrößern */
   cursor: pointer; /* Zeiger anzeigen */
 }
-
 
 h2 {
   text-align: center;
@@ -218,7 +232,7 @@ h2 {
 .card-summary-container {
   display: flex;
   justify-content: space-around;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .emoji {
@@ -259,21 +273,50 @@ h2 {
   flex: 2;
   display: flex;
   gap: 10px;
+  margin: 2.5rem;
 }
 
 .flashcards-input input {
-  padding: 10px;
+  padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   flex: 1;
 }
 
+.flashcard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem; /* Nach oben schieben angepasst */
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem; /* Abstand zur Karte */
+}
+
+.navigation-buttons button {
+  background-color: #b9a9e8af;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.navigation-buttons button:hover {
+  background-color: #b9a9e8e8;
+}
+
 .top-container {
   display: flex;
-  gap: 20px; /* Abstand zwischen Filter und Eingabefeldern */
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.5rem;
+  margin-top: 0;
 }
 
 .flashcards-input input::placeholder {
@@ -305,27 +348,30 @@ h2 {
   box-shadow: none;
 }
 
-
-.flashcard-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-}
-
 .flashcard {
-  width: 200px;
-  height: 150px;
+  width: 300px; /* Einheitliche Breite */
+  height: auto; /* Automatische Höhe, um Text und Inhalte anzupassen */
   perspective: 1000px;
   font-family: "Annie Use Your Telescope", Arial, Helvetica, sans-serif;
+  background-color: #ffffff; /* Weißer Hintergrund für bessere Lesbarkeit */
+  border-radius: 10px; /* Abgerundete Ecken */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schatten für visuelle Trennung */
+  padding: 10px; /* Innenabstand für Inhalte */
+  display: flex;
+  flex-direction: column; /* Elemente untereinander anordnen */
+  align-items: center; /* Zentriert ausrichten */
 }
 
 .flashcard-inner {
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
   width: 100%;
-  height: 100%;
+  height: auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .flashcard-inner.flipped {
@@ -337,13 +383,23 @@ h2 {
   backface-visibility: hidden;
   border: 1px solid #b9a9e8;
   border-radius: 10px;
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  overflow: auto; /* Scrollbars aktivieren */
+  padding: 10px; /* Abstand zwischen Text und Rand */
+  box-sizing: border-box; /* Bezieht Padding in die Gesamtgröße ein */
+}
+
+.flashcard-front p,
+.flashcard-back p {
+  max-height: 100%; /* Begrenzung auf die Kartenhöhe */
+  overflow-y: auto; /* Vertikales Scrollen, wenn nötig */
+  margin: 0; /* Abstand entfernen */
 }
 
 .flashcard-back {
@@ -353,15 +409,126 @@ h2 {
 
 .card-actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
+  justify-content: center;
+  gap: 1rem; /* Abstand zwischen Buttons */
+  margin-top: 10px; /* Abstand nach oben */
 }
 
 .card-actions button {
   background-color: #6c757d;
   color: white;
   border: none;
-  padding: 5px;
+  padding: 8px 12px;
   border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
 }
+
+.card-actions button:hover {
+  background-color: #5a6268;
+}
+
+.color-controls {
+  display: flex;
+  justify-content: center; /* Zentriert unter der Karte */
+  align-items: center;
+  gap: 0.5rem; /* Abstand zwischen Dropdown und Buttons */
+  margin-top: 10px;
+}
+
+.color-controls select {
+  background-color: #f4f3f8;
+  border: 1px solid #b9a9e8;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  font-family: "Annie Use Your Telescope", Arial, Helvetica, sans-serif;
+}
+
+.color-controls select:hover {
+  background-color: #eae9f2;
+}
+
+.color-controls button {
+  background-color: #b9a9e8;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Annie Use Your Telescope", Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.color-controls button:hover {
+  background-color: #8a7cb7;
+}
+
+.color-controls button:active {
+  transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+  .top-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    margin-top: 0;
+  }
+
+  .flashcards-input {
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 0;
+  }
+
+  .flashcards-input input {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .flashcards-input button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .flashcard-container {
+    display: flex;
+    flex-direction: column; /* Alle Karten übereinander für mobile Geräte */
+    align-items: center; /* Karten zentrieren */
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .flashcard {
+    width: 90%;
+    height: auto; /* Automatische Höhe */
+  }
+
+  .flashcard-inner {
+    font-size: 1rem;
+  }
+
+  .navigation-buttons {
+    flex-direction: row; /* Buttons nebeneinander */
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .color-controls {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .color-controls select,
+  .color-controls button {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+}
+
 </style>

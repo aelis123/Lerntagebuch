@@ -35,7 +35,7 @@
     <!-- Archivierte To-Dos -->
     <div class="todo-archive">
       <h3 @click="toggleArchive">
-        📦 Archiv {{ archiveOpen ? '👇' : '👉' }} ({{ archivedTodos.length }})
+        📦 Erledigt {{ archiveOpen ? '👇' : '👉' }} ({{ archivedTodos.length }})
       </h3>
       <ul v-show="archiveOpen">
         <li

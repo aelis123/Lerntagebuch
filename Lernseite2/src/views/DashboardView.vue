@@ -2,7 +2,7 @@
   <section class="dashboard">
     <div class="welcome">
       <h2>{{ greeting }}</h2>
-      <p>Heute ist: {{ currentDate }}</p>
+      <p> {{ currentDate }}</p>
     </div>
 
     <div class="actions">
