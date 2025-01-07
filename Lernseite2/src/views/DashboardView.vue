@@ -1,8 +1,10 @@
 <template>
   <section class="dashboard">
     <div class="welcome">
+      <h2>Neues Update:</h2>
+      <p>Es gab aufgrund der ID-Berechnung einen Bug, der keine Einträge für Januar hinzufügen ließ. Die ID-Berechnung findet nun über eine andere Methode statt und somit sollte das Problem hiermit behoben sein. Die App befindet sich noch in der Test- und Entwicklungsphase. Schon geschriebene Einträge werden nicht mehr im Kalender angezeigt, aber sind weiterhin unter "Einträge" einsehbar.</p>
       <h2>{{ greeting }}</h2>
-      <p> {{ currentDate }}</p>
+      <p>{{ currentDate }}</p>
     </div>
 
     <div class="actions">
@@ -12,7 +14,6 @@
     </div>
 
     <div class="calendar-section">
-    
       <div class="calendar">
         <div class="calendar-header">
           <button @click="changeMonth(-1)">◀</button>
@@ -69,23 +70,31 @@ export default {
       return ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
     },
     calendarDays() {
-      const days = [];
-      const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
-      const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+  const days = [];
+  const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+  const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
 
-      for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-        days.push({ date: null });
-      }
+  // Leere Felder für die erste Woche auffüllen
+  for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+    days.push({ date: null });
+  }
 
-      for (let i = 1; i <= daysInMonth; i++) {
-        const dateString = `${String(i).padStart(2, "0")}.${String(this.currentMonth + 1).padStart(2, "0")}.${this.currentYear}`;
-        const entry = this.entries.find((e) => e.timestamp.startsWith(dateString));
+  // Tage des Monats generieren
+  for (let i = 1; i <= daysInMonth; i++) {
+    const dateString = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
 
-        days.push({ date: i, entry });
-      }
+    // Suche nach gültigen Einträgen
+    const entry = this.entries.find((e) => {
+      const entryDate = e.timestamp.split("T")[0]; // Nur Datumsteil vergleichen
+      return entryDate === dateString;
+    });
 
-      return days;
-    },
+    days.push({ date: i, entry });
+  }
+
+  return days;
+},
+
     greeting() {
       const hour = new Date().getHours();
 
@@ -102,44 +111,71 @@ export default {
       }
     },
   },
-  methods: {
-    loadEntries() {
-      const savedEntries = JSON.parse(localStorage.getItem("entries") || "[]");
-      this.entries = savedEntries;
-    },
-    changeMonth(direction) {
-      this.currentMonth += direction;
-      if (this.currentMonth < 0) {
-        this.currentMonth = 11;
-        this.currentYear--;
-      } else if (this.currentMonth > 11) {
-        this.currentMonth = 0;
-        this.currentYear++;
+ methods: {
+  loadEntries() {
+    const savedEntries = JSON.parse(localStorage.getItem("entries") || "[]");
+
+    // Filtere ungültige Einträge heraus
+    this.entries = savedEntries.filter((entry, index, self) => {
+      const isValid =
+        entry.timestamp &&
+        !isNaN(new Date(entry.timestamp)) &&
+        typeof entry.id === "number" &&
+        entry.id > 0 &&
+        self.findIndex((e) => e.id === entry.id) === index; // Verhindere doppelte IDs
+
+      if (!isValid) {
+        console.warn("Ungültiger Eintrag entfernt:", entry);
       }
-    },
-    getBackgroundColor(mood) {
-      const moodColors = {
-        "😊": "#d4f1f4",
-        "😐": "#f9f7d9",
-        "😢": "#fce4ec",
-        "😠": "#ffe5d9",
-        "😴": "#e3e4f1",
-        "🤔": "#f3e9d2",
-        "😌": "#d1f4e6",
-        "🤒": "#e8daf9",
-      };
-      return moodColors[mood] || "#ffffff";
-    },
-    goToEntry(id) {
-      this.$router.push({ path: "/entries", query: { entryId: id } });
-    },
+      return isValid;
+    });
+
+    console.log("Geladene gültige Einträge:", this.entries); // Debugging
   },
-  mounted() {
-    this.loadEntries();
+  changeMonth(direction) {
+    this.currentMonth += direction;
+
+    // Logik für Monatswechsel
+    if (this.currentMonth < 0) {
+      this.currentMonth = 11;
+      this.currentYear--;
+    } else if (this.currentMonth > 11) {
+      this.currentMonth = 0;
+      this.currentYear++;
+    }
+
+    console.log(`Monat geändert: ${this.currentMonth + 1}, Jahr: ${this.currentYear}`); // Debugging
   },
+  getBackgroundColor(mood) {
+    const moodColors = {
+      "😊": "#d4f1f4",
+      "😐": "#f9f7d9",
+      "😢": "#fce4ec",
+      "😠": "#ffe5d9",
+      "😴": "#e3e4f1",
+      "🤔": "#f3e9d2",
+      "😌": "#d1f4e6",
+      "🤒": "#e8daf9",
+    };
+    return moodColors[mood] || "#ffffff";
+  },
+  goToEntry(id) {
+    // Überprüfe, ob die ID gültig ist
+    const entryExists = this.entries.some((entry) => entry.id === id);
+    if (!entryExists) {
+      console.warn("Eintrag nicht gefunden:", id);
+      return;
+    }
+
+    this.$router.push({ path: "/entries", query: { entryId: id } });
+  },
+},
+mounted() {
+  this.loadEntries();
+},
+
 };
 </script>
-
 <style scoped>
 .dashboard {
   padding: 1.5rem;
@@ -203,7 +239,7 @@ button:hover {
   font-weight: bold;
   padding: 5px;
   color: #555;
- 
+
 }
 
 .calendar-day {

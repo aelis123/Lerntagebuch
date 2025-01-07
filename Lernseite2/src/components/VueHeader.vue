@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="header-container">
-     
+
       <button class="menu-toggle" @click="toggleMenu" :class="{ open: menuOpen }">
         <span></span>
         <span></span>
@@ -13,9 +13,10 @@
       <router-link to="/entry" exact-active-class="active-link">Neuer Eintrag</router-link>
       <router-link to="/entries" exact-active-class="active-link">Einträge</router-link>
       <router-link to="/todos" exact-active-class="active-link">To-Do-Liste</router-link>
+      <router-link to="/cards" exact-active-class="active-link">Karteikarten</router-link>
       <router-link to="/documentation" exact-active-class="active-link">Technische Dokumentation</router-link>
       <router-link to="/dictionary" exact-active-class="active-link">IT-Wörterbuch</router-link>
-      
+
     </nav>
   </header>
 </template>
@@ -66,7 +67,7 @@ h1 {
   cursor: pointer;
   padding: 0;
   position: relative;
-  
+
 }
 
 .menu-toggle span {

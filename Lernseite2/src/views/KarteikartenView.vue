@@ -1,6 +1,7 @@
 <template>
   <section class="flashcards-view">
     <h2>📝 Karteikarten</h2>
+    <p>👷 Noch in Arbeit 🚧</p>
 
 
     <!-- Container für Filter und Eingabefelder -->
@@ -83,7 +84,7 @@ export default {
           background: "#fff3cd",
           text: "#f39c12",
           emoji: "🤏",
-          description: "Teilweise Ahnung",
+          description: "Teilweise Gemerkt",
         },
         green: {
           key: "green",
@@ -97,7 +98,7 @@ export default {
           background: "#d1ecf1",
           text: "#3498db",
           emoji: "📦",
-          description: "Irrelevant",
+          description: "Gerade unwichtig",
         },
       },
     };
@@ -360,6 +361,7 @@ h2 {
   display: flex;
   flex-direction: column; /* Elemente untereinander anordnen */
   align-items: center; /* Zentriert ausrichten */
+  position: relative;
 }
 
 .flashcard-inner {

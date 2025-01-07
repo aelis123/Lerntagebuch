@@ -79,14 +79,12 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from "uuid";
-
 export default {
   name: "EntryView",
   data() {
     return {
       entry: {
-        id: "",
+        id: null, // Hier wird eine laufende Nummer gespeichert
         whatLearned: "",
         challenges: "",
         success: "",
@@ -97,28 +95,48 @@ export default {
         timestamp: "",
       },
       moods: [
-  { emoji: "😊", label: "Glücklich" },
-  { emoji: "😐", label: "Neutral" },
-  { emoji: "😢", label: "Traurig" },
-  { emoji: "😠", label: "Wütend" },
-  { emoji: "😴", label: "Müde" },
-  { emoji: "🤔", label: "Nachdenklich" },
-  { emoji: "😌", label: "Erleichtert" },
-  { emoji: "🤒", label: "Krank" },
-],
-
+        { emoji: "😊", label: "Glücklich" },
+        { emoji: "😐", label: "Neutral" },
+        { emoji: "😢", label: "Traurig" },
+        { emoji: "😠", label: "Wütend" },
+        { emoji: "😴", label: "Müde" },
+        { emoji: "🤔", label: "Nachdenklich" },
+        { emoji: "😌", label: "Erleichtert" },
+        { emoji: "🤒", label: "Krank" },
+      ],
     };
   },
   methods: {
     saveEntry() {
-      this.entry.id = uuidv4();
-      this.entry.timestamp = new Date().toLocaleString("de-DE");
-      const entries = JSON.parse(localStorage.getItem("entries") || "[]");
-      entries.push(this.entry);
-      localStorage.setItem("entries", JSON.stringify(entries));
-      alert("Eintrag gespeichert!");
+  const entries = JSON.parse(localStorage.getItem("entries") || "[]");
+
+  // Neue ID basierend auf der Anzahl der bestehenden Einträge
+  const newId = entries.length + 1;
+
+  // Neuen Eintrag erstellen
+  this.entry.id = newId;
+
+  // Datum und Uhrzeit in der lokalen Zeitzone speichern
+  const now = new Date();
+  const localDateString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  this.entry.timestamp = `${localDateString}T${now.toTimeString().split(" ")[0]}`;
+
+  // Eintrag speichern
+  entries.push(this.entry);
+  localStorage.setItem("entries", JSON.stringify(entries));
+
+  alert("Eintrag gespeichert!");
+
+  // Zurücksetzen des Formulars
+  this.resetEntry();
+},
+
+    selectMood(mood) {
+      this.entry.mood = mood;
+    },
+    resetEntry() {
       this.entry = {
-        id: "",
+        id: null,
         whatLearned: "",
         challenges: "",
         success: "",
@@ -129,12 +147,10 @@ export default {
         timestamp: "",
       };
     },
-    selectMood(mood) {
-      this.entry.mood = mood;
-    },
   },
 };
 </script>
+
 
 <style scoped>
 .entry {
