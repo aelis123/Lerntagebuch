@@ -3,13 +3,16 @@
     <h2>📝 Karteikarten</h2>
     <p>👷 Noch in Arbeit 🚧</p>
 
-
     <!-- Container für Filter und Eingabefelder -->
     <div class="top-container">
       <!-- Filterbereich -->
       <div class="filter-options">
         <p>🔍 Wähle, was du wiederholen möchtest:</p>
-        <label v-for="(color, key) in colors" :key="key" :style="{ color: color.text }">
+        <label
+          v-for="(color, key) in colors"
+          :key="key"
+          :style="{ color: color.text }"
+        >
           <input type="checkbox" v-model="filters" :value="key" />
           <span class="emoji">{{ color.emoji }} ({{ cardCount[key] }})</span>
         </label>
@@ -25,34 +28,42 @@
 
     <!-- Kartenanzeige -->
     <div v-if="filteredCards.length" class="flashcard-container">
+      <!-- Navigation-Buttons -->
       <div class="navigation-buttons">
         <button @click="prevCard">&#x2039;</button>
+        <button @click="nextCard">&#x203A;</button>
       </div>
-      <div class="flashcard" :style="{ backgroundColor: getBackgroundColor(activeCard.color) }">
-        <div :class="['flashcard-inner', { flipped: activeCard.flipped }]">
-          <div class="flashcard-front" @click="toggleAnswer()">
-            <p>{{ activeCard.question }}</p>
-          </div>
-          <div class="flashcard-back" @click="toggleAnswer()">
-            <p>{{ activeCard.answer }}</p>
+
+      <!-- Wrapper für Karte und Buttons -->
+      <div class="flashcard-wrapper">
+        <!-- Flashcard -->
+        <div
+          class="flashcard"
+          :style="{ backgroundColor: getBackgroundColor(activeCard.color) }"
+        >
+          <div :class="['flashcard-inner', { flipped: activeCard.flipped }]">
+            <div class="flashcard-front" @click="toggleAnswer()">
+              <p>{{ activeCard.question }}</p>
+            </div>
+            <div class="flashcard-back" @click="toggleAnswer()">
+              <p>{{ activeCard.answer }}</p>
+            </div>
           </div>
         </div>
 
-        <!-- Dropdown-Menü zur Farbaktualisierung und Buttons -->
-        <div class="color-controls">
+        <!-- Buttons und Dropdown neben der Flashcard -->
+        <div class="flashcard-controls">
           <select v-model="activeCard.color" @change="saveCards">
             <option v-for="(color, key) in colors" :key="key" :value="key">
               {{ colors[key].emoji }} {{ colors[key].description }}
             </option>
           </select>
-          <button @click="editCard()">✏️</button>
-          <button @click="deleteCard()">🗑️</button>
+          <button class="edit" @click="editCard">✏️ Bearbeiten</button>
+          <button class="delete" @click="deleteCard">🗑️ Löschen</button>
         </div>
       </div>
-      <div class="navigation-buttons">
-        <button @click="nextCard">    &#x203A;    </button>
-      </div>
     </div>
+
     <div v-else>
       <p>Keine Karteikarten vorhanden.</p>
     </div>
@@ -121,6 +132,7 @@ export default {
     },
   },
   methods: {
+
     addCard() {
       if (this.newQuestion.trim() && this.newAnswer.trim()) {
         this.cards.push({
@@ -162,9 +174,9 @@ export default {
       }
     },
     getBackgroundColor(colorKey) {
-      const color = this.colors[colorKey];
-      return color ? color.background : "#ffffff";
-    },
+    const color = this.colors[colorKey];
+    return color ? color.background : "#ffffff";
+  },
     prevCard() {
       if (this.activeIndex > 0) {
         this.activeIndex--;
@@ -194,343 +206,302 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap");
 
 .flashcards-view {
-  padding: 3rem;
-  background-color: #fefcfb;
+  padding: 2rem;
+  background-color: #f9f9f9;
   border-radius: 10px;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  color: #3b3b3b;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.top-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .filter-options {
   flex: 1;
-  min-width: 250px;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  min-width: 260px;
+}
+
+.filter-options p {
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #444;
 }
 
 .filter-options label {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* Abstand zwischen Checkbox und Emoji */
+  margin-bottom: 0.8rem;
   cursor: pointer;
-  font-size: 1.2rem; /* Größere Schrift für bessere Lesbarkeit */
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #444;
 }
 
 .filter-options input[type="checkbox"] {
-  width: 20px; /* Breite der Checkbox */
-  height: 20px; /* Höhe der Checkbox */
-  transform: scale(1.5); /* Checkbox vergrößern */
-  cursor: pointer; /* Zeiger anzeigen */
-}
-
-h2 {
-  text-align: center;
-  color: #b9a9e8;
-}
-
-.card-summary {
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.card-summary-container {
-  display: flex;
-  justify-content: space-around;
-  gap: 1rem;
-}
-
-.emoji {
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-  color: #333;
-}
-
-.summary-item {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  color: #4a4a4a;
-  font-weight: bold;
-}
-
-.summary-item.red {
-  background-color: #f8d7da;
-}
-
-.summary-item.yellow {
-  background-color: #fff3cd;
-}
-
-.summary-item.green {
-  background-color: #d4edda;
-}
-
-.summary-item.blue {
-  background-color: #d1ecf1;
+  margin-right: 10px;
+  transform: scale(1.3);
+  cursor: pointer;
 }
 
 .flashcards-input {
   flex: 2;
-  display: flex;
-  gap: 10px;
-  margin: 2.5rem;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .flashcards-input input {
-  padding: 1rem;
-  border: 1px solid #ccc;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  flex: 1;
+  font-size: 1rem;
+  background-color: #f7f7f7;
+}
+
+.flashcards-input input:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.flashcards-input button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.flashcards-input button:hover {
+  background-color: #45a049;
 }
 
 .flashcard-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   align-items: center;
-  margin-top: 1rem; /* Nach oben schieben angepasst */
+  gap: 2rem;
 }
 
-.navigation-buttons {
+.flashcard-wrapper {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem; /* Abstand zur Karte */
-}
-
-.navigation-buttons button {
-  background-color: #b9a9e8af;
-  color: white;
-  border: none;
-  padding: 1rem;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
-
-.navigation-buttons button:hover {
-  background-color: #b9a9e8e8;
-}
-
-.top-container {
-  display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  margin-top: 0;
-}
-
-.flashcards-input input::placeholder {
-  color: #aaa;
-  font-style: italic;
-}
-
-.flashcards-input input:focus {
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.flashcards-input button {
-  background-color: #b9a9e8;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.flashcards-input button:hover {
-  background-color: #8a7cb7;
-}
-
-.flashcards-input button:active {
-  transform: translateY(0);
-  box-shadow: none;
+  gap: 20px;
+  margin: 20px 0;
 }
 
 .flashcard {
-  width: 300px; /* Einheitliche Breite */
-  height: auto; /* Automatische Höhe, um Text und Inhalte anzupassen */
+  width: 350px;
+  height: 220px;
   perspective: 1000px;
-  font-family: "Annie Use Your Telescope", Arial, Helvetica, sans-serif;
-  background-color: #ffffff; /* Weißer Hintergrund für bessere Lesbarkeit */
-  border-radius: 10px; /* Abgerundete Ecken */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schatten für visuelle Trennung */
-  padding: 10px; /* Innenabstand für Inhalte */
-  display: flex;
-  flex-direction: column; /* Elemente untereinander anordnen */
-  align-items: center; /* Zentriert ausrichten */
   position: relative;
+  border-radius: 10px;
 }
 
-.flashcard-inner {
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
-  width: 100%;
-  height: auto;
-  position: relative;
+
+
+
+
+.flashcard-controls {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.flashcard-controls select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  width: 200px;
+}
+
+.flashcard-controls select:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.flashcard-controls button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 200px;
+}
+
+.flashcard-controls button.edit {
+  background-color: #4caf50;
+  color: white;
+}
+
+.flashcard-controls button.edit:hover {
+  background-color: #45a049;
+}
+
+.flashcard-controls button.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.flashcard-controls button.delete:hover {
+  background-color: #c0392b;
+}
+
+
+.flashcard-inner {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  position: relative;
+  border-radius: 10px;
 }
 
 .flashcard-inner.flipped {
   transform: rotateY(180deg);
 }
-
 .flashcard-front,
 .flashcard-back {
+  position: absolute;
+  width: 90%;
+  height: 82%;
   backface-visibility: hidden;
-  border: 1px solid #b9a9e8;
-  border-radius: 10px;
-  position: relative;
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  overflow: auto; /* Scrollbars aktivieren */
-  padding: 10px; /* Abstand zwischen Text und Rand */
-  box-sizing: border-box; /* Bezieht Padding in die Gesamtgröße ein */
+  margin-top: 0.1rem;
+  padding: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 10px;
+  overflow-y: auto; /* Ermöglicht Scrollen bei langem Text */
+  word-wrap: break-word; /* Lässt Wörter umbrechen */
+}
+.flashcard-front {
+  transition: background-color 0.3s ease;
 }
 
-.flashcard-front p,
-.flashcard-back p {
-  max-height: 100%; /* Begrenzung auf die Kartenhöhe */
-  overflow-y: auto; /* Vertikales Scrollen, wenn nötig */
-  margin: 0; /* Abstand entfernen */
-}
 
 .flashcard-back {
+  background-color: #f0f2f5; /* Neutrale Farbe */
+  color: #333; /* Textfarbe der Antwort */
   transform: rotateY(180deg);
-  background-color: #f4f3f8;
 }
 
-.card-actions {
+.navigation-buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* Abstand zwischen Buttons */
-  margin-top: 10px; /* Abstand nach oben */
+  gap: 20px;
+  margin-bottom: 0.1rem; /* Abstand zur Flashcard */
 }
 
-.card-actions button {
-  background-color: #6c757d;
+.navigation-buttons button {
+  background-color: #4a90e2;
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  font-size: 1rem;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 1.5rem;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.card-actions button:hover {
-  background-color: #5a6268;
+.navigation-buttons button:hover {
+  background-color: #357abd;
 }
-
 .color-controls {
   display: flex;
-  justify-content: center; /* Zentriert unter der Karte */
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem; /* Abstand zwischen Dropdown und Buttons */
+  gap: 15px;
   margin-top: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .color-controls select {
-  background-color: #f4f3f8;
-  border: 1px solid #b9a9e8;
+  padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 5px 10px;
   font-size: 1rem;
-  color: #333;
+  background-color: #f9f9f9;
   cursor: pointer;
-  font-family: "Annie Use Your Telescope", Arial, Helvetica, sans-serif;
+  transition: border-color 0.2s ease;
 }
 
-.color-controls select:hover {
-  background-color: #eae9f2;
+.color-controls select:focus {
+  border-color: #4a90e2;
+  outline: none;
 }
 
 .color-controls button {
-  background-color: #b9a9e8;
-  color: white;
-  border: none;
   padding: 8px 12px;
+  border: none;
   border-radius: 5px;
-  cursor: pointer;
   font-size: 1rem;
-  font-family: "Annie Use Your Telescope", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .color-controls button:hover {
-  background-color: #8a7cb7;
+  background-color: #357abd;
+  color: #ffffff;
 }
 
 .color-controls button:active {
-  transform: translateY(2px);
+  transform: scale(0.95);
 }
 
-@media (max-width: 768px) {
-  .top-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-    margin-top: 0;
-  }
-
-  .flashcards-input {
-    flex-direction: column;
-    gap: 10px;
-    margin-left: 0;
-  }
-
-  .flashcards-input input {
-    width: 100%;
-    font-size: 1rem;
-  }
-
-  .flashcards-input button {
-    width: 100%;
-    padding: 12px;
-  }
-
-  .flashcard-container {
-    display: flex;
-    flex-direction: column; /* Alle Karten übereinander für mobile Geräte */
-    align-items: center; /* Karten zentrieren */
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .flashcard {
-    width: 90%;
-    height: auto; /* Automatische Höhe */
-  }
-
-  .flashcard-inner {
-    font-size: 1rem;
-  }
-
-  .navigation-buttons {
-    flex-direction: row; /* Buttons nebeneinander */
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .color-controls {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .color-controls select,
-  .color-controls button {
-    width: 100%;
-    font-size: 0.9rem;
-  }
+.color-controls button.edit {
+  background-color: #4caf50;
+  color: white;
 }
+
+.color-controls button.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
 
 </style>

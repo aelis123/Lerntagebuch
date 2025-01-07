@@ -107,7 +107,7 @@ export default {
     };
   },
   methods: {
-    saveEntry() {
+ saveEntry() {
   const entries = JSON.parse(localStorage.getItem("entries") || "[]");
 
   // Neue ID basierend auf der Anzahl der bestehenden Einträge
