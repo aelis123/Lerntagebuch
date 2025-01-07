@@ -1,7 +1,7 @@
 <template>
   <section class="flashcards-view">
     <h2>📝 Karteikarten</h2>
-    <p>👷 Noch in Arbeit 🚧</p>
+
 
     <!-- Container für Filter und Eingabefelder -->
     <div class="top-container">
@@ -438,7 +438,7 @@ p {
 }
 
 .navigation-buttons button {
-  background-color: #4a90e2;
+  background-color: #4a91e2ad;
   color: white;
   border: none;
   padding: 12px;

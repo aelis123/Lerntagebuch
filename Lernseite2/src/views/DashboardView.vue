@@ -1,8 +1,8 @@
 <template>
   <section class="dashboard">
     <div class="welcome">
-      <h2>Neues Update:</h2>
-      <p>Es gab aufgrund der ID-Berechnung einen Bug, der keine Einträge für Januar hinzufügen ließ. Die ID-Berechnung findet nun über eine andere Methode statt und somit sollte das Problem hiermit behoben sein. Die App befindet sich noch in der Test- und Entwicklungsphase. Schon geschriebene Einträge werden nicht mehr im Kalender angezeigt, aber sind weiterhin unter "Einträge" einsehbar.</p>
+      <h2>Du vermisst deine Kalendereinträge?</h2>
+      <p>Es gibt nun den Reiter "Patchlogs", dort siehst du, was sich geändert hat. Diese App befindet sich noch in der Entwicklung, du siehst deine Einträge aber wie gewohnt in "Einträge".</p>
       <h2>{{ greeting }}</h2>
       <p>{{ currentDate }}</p>
     </div>

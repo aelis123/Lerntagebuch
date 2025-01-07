@@ -1,0 +1,152 @@
+<template>
+    <section class="documentation-view" ref="documentation">
+
+<div class="info-box2">
+<h3>In Arbeit:</h3>
+<p>Ein interaktiver Kalender, <br>cleaneres Design, <br>Auswahlmöglichkeiten für unterschiedliche Designs (inkl. Farbenblindmodus), <br>Backend-Integration mit Login-System (du kannst deine Daten auf einem anderen Gerät abrufen),
+  <br>ein Formular für eigene Dokumentations-/Hefteinträge.
+   </p>
+   <p><em>Dir fehlt was? Lass es mich gern wissen!</em></p>
+</div>
+
+      <div class="info-box">
+        <code>07.Januar.2025</code>
+        <p>Gutes neues Jahr! Wir starten stark rein.
+          <br>
+          - Ein Bug, der Einträge davon abhielt im Kalender zu erscheinen, wurde behoben. >>> Dadurch funktioniert die Sortierfunktion der Einträge gerade nicht optimal, das Problem wird aber noch gelöst.
+        <br>  - Die Karteikarten sind nun einsatzfähig und stark optimiert. Dort wird sich erstmal nur noch das Design ändern.
+        <br> - Man kann nun auch für vergangene Tage noch einen Reflexions-Eintrag erstellen.
+        </p>
+      </div>
+
+<div class="info-box">
+  <code>19. Dezember 2024</code>
+  <p> Weiterarbeiten an der Karteikartenfunktion.</p>
+</div>
+
+<div class="info-box">
+<code>17.Dezember 2024</code>
+<p>
+  - Karteikarten wurden eingefügt, aber es gibt noch keine Navigation dorthin (unstable).
+  <br>- Die Technische Dokumentation wurde erweitert.
+</p>
+
+
+</div>
+
+
+<div class="info-box">
+  <code>16. Dezember 2024</code>
+  <p>
+- Große Erweiterung der IT-Handbuch-Datenbank. <br>
+- Start der Technischen Dokumentation.
+  </p>
+</div>
+
+<div class="info-box">
+<code>13. Dezember 2024</code><p> - Erste Einträge in der IT-Handbuch-Datenbank mit Filterfunktion. <br>
+- PDF Exportierfunktion hinzugefügt. <br>
+- Seitennavigation angepasst und auch für das Mobiltelefon kompatibel gemacht, je nach Bildschirmgröße wandelt sich die Navigation in ein Burger-Menü um.</p>
+
+</div>
+
+
+      <div class="info-box">
+
+<code>10. Dezember 2024</code><p> - Seite wurde erstellt. Kalender hinzugefügt, Einträge lassen sich hinzufügen.</p>
+
+     </div>
+    </section>
+  </template>
+
+  <script>
+
+  </script>
+
+
+  <style scoped>
+  .documentation-view {
+    padding: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fefcfb;
+    color: #4a4a4a;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    color: #b9a9e8;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  a {
+    color: #b9a9e8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #8274b2;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .info-box {
+    background-color: #f4f3f8;
+    border-left: 4px solid #b9a9e8;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .info-box2 {
+    background-color: #f4f3f8;
+    border: 1px solid #b9a9e8;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .export-button {
+    margin-top: 1rem;
+    padding: 10px 15px;
+    background-color: #b9a9e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .export-button:hover {
+    background-color: #a495d4;
+  }
+  .highlight-yellow {
+  color: #ffcc00; /* Highlight color for index.js */
+  font-weight: bold;
+}
+
+.highlight-blue {
+  color: #00ccff; /* Highlight color for views */
+  font-weight: bold;
+}
+img {
+  max-width: 100%; /* Bild bleibt innerhalb der Elternelemente */
+  height: auto;    /* Verhältnis bleibt erhalten */
+  display: block;  /* Verhindert zusätzliche Leerflächen unter Bildern */
+  margin: 0 auto;  /* Zentriert das Bild horizontal */
+}
+
+  </style>

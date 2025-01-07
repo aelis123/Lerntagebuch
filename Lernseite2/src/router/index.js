@@ -5,7 +5,8 @@ import EntriesView from '../views/EntriesView.vue';
 import ToDoView from '../views/ToDoView.vue';
 import DocumentationView from '../views/DocumentationView.vue';
 import DictionaryView from '../views/DictionaryView.vue';
-import KarteikartenView from '../views/KarteikartenView.vue'; 
+import KarteikartenView from '../views/KarteikartenView.vue';
+import UpdateLogView from '@/views/UpdateLogView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL), // BASE_URL für korrektes Routing
@@ -14,6 +15,11 @@ const router = createRouter({
       path: '/',
       name: 'dashboard',
       component: DashboardView,
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: UpdateLogView,
     },
     {
       path: '/entry',

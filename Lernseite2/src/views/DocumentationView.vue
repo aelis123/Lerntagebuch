@@ -6,14 +6,15 @@
       <h2>📚 Technische Dokumentation</h2>
       <p>
         Hier ist ein Kompendium der - für mich - relevantesten Informationen und Links zum Thema Programmierung.
+        Mit diesen Schritten kannst du theoretisch eine eigene Seite wie diese hier erstellen.
       </p>
-  
+
       <div class="info-box">
         <p>
           ✍️ <strong>Tipp:</strong> Exportiere gerne die Seite und speichere sie dir ab.
         </p>
       </div>
-  
+
       <div class="info-box2">
         <p>
           <strong>Linksammlung:</strong> Die Links sind nach Schwierigkeitslevel sortiert.<br />
@@ -39,13 +40,13 @@
   <li><a href="https://vuejs.org/examples/#attribute-bindings" target="_blank">Beispiele für Vue-Bausteine</a></li>
   <li><a href="https://www.vuemastery.com/" target="_blank">VueMastery - Seite für alle relevanten Vue-Kurse</a></li>
   <li><a href="https://vuejs.org/api/" target="_blank">Vue API</a></li>
-  
+
 </ul>
- 
+
 
       </div>
 
-      
+
       <div class="info-box2">
 
         <p><strong>Nützliche Erweiterungen</strong> in Visual Studio Code:</p>
@@ -63,10 +64,10 @@
         <p><strong>✍️ Merke:</strong> Vue 3 Projekt aufsetzen: <br>
         <small>Bedenke aber: Abläufe können sich mit der Zeit auch verändern!</small></p>
         <ol>
-          <li>Version prüfen</li>  
+          <li>Version prüfen</li>
           <div class="info-box2">
             Öffne das Terminal in Visual Studio Code und gib zum Prüfen der Versionen ein: <br><br>
-            node -v 
+            node -v
             <br>
             npm -v
             <br>
@@ -111,7 +112,7 @@
 </div>
 
         </ol>
- <p>      
+ <p>
   Vue 3 arbeitet mit sogenannten "Single File Components" (SFCs). Diese sind Bausteine, in denen HTML, JavaScript und CSS in einer einzigen Datei organisiert sind, typischerweise mit der Endung <code>.vue</code>. <br>
   Diese Komponenten werden dann in <span class="highlight-blue">"Views"</span> oder Routen integriert, um die verschiedenen Bereiche einer Website zu bilden. <br>
 <br>
@@ -125,8 +126,8 @@
 
       </div>
 
-      <div class="info-box2"> 
-        <strong><a href="https://render.com/" target="_blank">Render</a> Einstellungen </strong> 
+      <div class="info-box2">
+        <strong><a href="https://render.com/" target="_blank">Render</a> Einstellungen </strong>
 <p>Livegang einer statischen Seite:</p>
 <div class="info-box">
 <ol>
@@ -144,7 +145,7 @@
 
 
 </div>
-        
+
 
 
         <p><em>Wenn du eine statische Seite auf <a href="https://render.com/" target="_blank">Render</a>
@@ -159,24 +160,26 @@
           <li>Wähle bei Action <strong> <code>Rewrite</code></strong>.</li>
           <li>Speichere die Einstellungen und teste, ob es funktioniert!</li>
         </ol>
-    
+
 
       </div>
       </div>
-     
+
+      <div class="info-box2"> <h4>Ultimativer Tipp für Gewinner:</h4>
+      <p>Wenn im Terminal Probleme angezeigt werden oder etwas einfach nicht funktioniert, hab keine Scheu davor eine KI wie z.B. ChatGPT zu fragen. Du kannst dir dort auch erklären lassen, was das Problem ist. Achte nur bitte immer darauf, nicht nur Copy + Paste zu machen, sondern die KI gewissenhaft zu nutzen.</p></div>
     </section>
   </template>
-  
+
   <script>
   import jsPDF from "jspdf";
   import html2canvas from "html2canvas";
-  
+
   export default {
     name: "DocumentationView",
     methods: {
       async exportAsPDF() {
         const element = this.$refs.documentation;
-  
+
         // Screenshot der gesamten Seite erstellen
         const canvas = await html2canvas(element, {
           scale: 2,
@@ -189,17 +192,17 @@
             });
           },
         });
-  
+
         const pdf = new jsPDF("p", "mm", "a4");
         const imgData = canvas.toDataURL("image/png");
-  
+
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
-  
+
         // Bild in Seiten aufteilen
         let imgHeight = (canvas.height * pdfWidth) / canvas.width;
         let position = 0;
-  
+
         while (position < imgHeight) {
           pdf.addImage(
             imgData,
@@ -209,21 +212,21 @@
             pdfWidth,
             (canvas.height * pdfWidth) / canvas.width
           );
-  
+
           position += pdfHeight;
-  
+
           if (position < imgHeight) {
             pdf.addPage();
           }
         }
-  
+
         pdf.save("Technische_Dokumentation.pdf");
       },
     },
   };
   </script>
 
-  
+
   <style scoped>
   .documentation-view {
     padding: 1.5rem;
@@ -233,33 +236,33 @@
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
+
   h2 {
     font-size: 1.8rem;
     color: #b9a9e8;
     margin-bottom: 1rem;
   }
-  
+
   p {
     line-height: 1.6;
   }
-  
+
   a {
     color: #b9a9e8;
     text-decoration: none;
     transition: color 0.3s ease;
   }
-  
+
   a:hover {
     color: #8274b2;
   }
-  
+
   ul {
     list-style-type: disc;
     padding-left: 20px;
     margin-bottom: 1rem;
   }
-  
+
   .info-box {
     background-color: #f4f3f8;
     border-left: 4px solid #b9a9e8;
@@ -268,7 +271,7 @@
     margin-top: 1.5rem;
     font-size: 0.95rem;
   }
-  
+
   .info-box2 {
     background-color: #f4f3f8;
     border: 1px solid #b9a9e8;
@@ -277,7 +280,7 @@
     margin-top: 1.5rem;
     font-size: 0.95rem;
   }
-  
+
   .export-button {
     margin-top: 1rem;
     padding: 10px 15px;
@@ -289,7 +292,7 @@
     font-size: 1rem;
     transition: background-color 0.3s ease;
   }
-  
+
   .export-button:hover {
     background-color: #a495d4;
   }
@@ -310,4 +313,3 @@ img {
 }
 
   </style>
-  

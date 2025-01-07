@@ -16,6 +16,7 @@
       <router-link to="/cards" exact-active-class="active-link">Karteikarten</router-link>
       <router-link to="/documentation" exact-active-class="active-link">Technische Dokumentation</router-link>
       <router-link to="/dictionary" exact-active-class="active-link">IT-Wörterbuch</router-link>
+      <router-link to="/news" exact-active-class="active-link">Patchlogs</router-link>
 
     </nav>
   </header>

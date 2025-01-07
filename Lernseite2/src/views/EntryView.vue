@@ -2,6 +2,17 @@
   <section class="entry">
     <h2>🌟 Neuer Tagebuch-Eintrag 🌟</h2>
     <form @submit.prevent="saveEntry">
+      <div class="form-group date-picker">
+  <label for="entry-date">📅 Für welchen Tag ist dieser Eintrag?</label>
+  <input
+    id="entry-date"
+    type="date"
+    v-model="entry.date"
+    :max="today"
+    class="date-input"
+  />
+</div>
+
       <div class="form-group">
         <label for="what-learned">📚 Was habe ich gelernt?</label>
         <textarea
@@ -57,19 +68,18 @@
       </div>
 
       <div class="form-group mood">
-  <label>🌀 Wie fühlst du dich?</label>
-  <div class="mood-selector">
-    <span
-      v-for="mood in moods"
-      :key="mood.emoji"
-      :class="{ selected: entry.mood === mood.emoji }"
-      @click="selectMood(mood.emoji)"
-    >
-      {{ mood.emoji }}
-    </span>
-  </div>
-</div>
-
+        <label>🌀 Wie fühlst du dich?</label>
+        <div class="mood-selector">
+          <span
+            v-for="mood in moods"
+            :key="mood.emoji"
+            :class="{ selected: entry.mood === mood.emoji }"
+            @click="selectMood(mood.emoji)"
+          >
+            {{ mood.emoji }}
+          </span>
+        </div>
+      </div>
 
       <div class="form-actions">
         <button type="submit">💾 Eintrag speichern</button>
@@ -84,7 +94,8 @@ export default {
   data() {
     return {
       entry: {
-        id: null, // Hier wird eine laufende Nummer gespeichert
+        id: null,
+        date: "",
         whatLearned: "",
         challenges: "",
         success: "",
@@ -104,39 +115,39 @@ export default {
         { emoji: "😌", label: "Erleichtert" },
         { emoji: "🤒", label: "Krank" },
       ],
+      today: new Date().toISOString().split("T")[0], // Aktuelles Datum für die Maximalgrenze
     };
   },
   methods: {
- saveEntry() {
-  const entries = JSON.parse(localStorage.getItem("entries") || "[]");
+    saveEntry() {
+      const entries = JSON.parse(localStorage.getItem("entries") || "[]");
 
-  // Neue ID basierend auf der Anzahl der bestehenden Einträge
-  const newId = entries.length + 1;
+      const newId = entries.length + 1;
+      this.entry.id = newId;
 
-  // Neuen Eintrag erstellen
-  this.entry.id = newId;
+      // Standarddatum verwenden, falls kein Datum ausgewählt wurde
+      if (!this.entry.date) {
+        this.entry.date = this.today;
+      }
 
-  // Datum und Uhrzeit in der lokalen Zeitzone speichern
-  const now = new Date();
-  const localDateString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-  this.entry.timestamp = `${localDateString}T${now.toTimeString().split(" ")[0]}`;
+      // Uhrzeit für den Eintrag speichern
+      const now = new Date();
+      this.entry.timestamp = `${this.entry.date}T${now.toTimeString().split(" ")[0]}`;
 
-  // Eintrag speichern
-  entries.push(this.entry);
-  localStorage.setItem("entries", JSON.stringify(entries));
+      entries.push(this.entry);
+      localStorage.setItem("entries", JSON.stringify(entries));
 
-  alert("Eintrag gespeichert!");
+      alert("Eintrag gespeichert!");
 
-  // Zurücksetzen des Formulars
-  this.resetEntry();
-},
-
+      this.resetEntry();
+    },
     selectMood(mood) {
       this.entry.mood = mood;
     },
     resetEntry() {
       this.entry = {
         id: null,
+        date: "",
         whatLearned: "",
         challenges: "",
         success: "",
@@ -151,8 +162,43 @@ export default {
 };
 </script>
 
-
 <style scoped>
+
+.date-picker {
+  margin-bottom: 1.5rem;
+}
+
+.date-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fdfcff;
+  box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.date-input:focus {
+  border-color: #b9a9e8;
+  outline: none;
+  box-shadow: 0px 0px 6px rgba(185, 169, 232, 0.5);
+}
+
+.date-input:hover {
+  border-color: #b9a9e8;
+}
+
+label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+
 .entry {
   padding: 2rem;
   max-width: 800px;
