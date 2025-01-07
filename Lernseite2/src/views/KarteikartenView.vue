@@ -174,9 +174,9 @@ export default {
       }
     },
     getBackgroundColor(colorKey) {
-    const color = this.colors[colorKey];
-    return color ? color.background : "#ffffff";
-  },
+      const color = this.colors[colorKey];
+      return color ? color.background : "#ffffff";
+    },
     prevCard() {
       if (this.activeIndex > 0) {
         this.activeIndex--;
@@ -193,6 +193,10 @@ export default {
     loadCards() {
       const savedCards = JSON.parse(localStorage.getItem("flashcards") || "[]");
       this.cards = savedCards;
+    },
+    resetToFirstCard() {
+      // Setzt den Index auf die erste Karte nach einem Filterwechsel
+      this.activeIndex = 0;
     },
   },
   mounted() {
@@ -286,7 +290,7 @@ p {
 }
 
 .flashcards-input input:focus {
-  border-color: #4a90e2;
+  border-color: #4a91e29d;
   outline: none;
 }
 
@@ -304,7 +308,7 @@ p {
 }
 
 .flashcards-input button:hover {
-  background-color: #45a049;
+  background-color: #45a049a6;
 }
 
 .flashcard-container {
