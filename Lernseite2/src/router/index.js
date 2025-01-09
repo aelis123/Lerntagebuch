@@ -7,6 +7,8 @@ import DocumentationView from '../views/DocumentationView.vue';
 import DictionaryView from '../views/DictionaryView.vue';
 import KarteikartenView from '../views/KarteikartenView.vue';
 import UpdateLogView from '@/views/UpdateLogView.vue';
+import NewHeftEntryView from '@/views/NewHeftEntryView.vue';
+import AllHeftEntriesView from '@/views/AllHeftEntriesView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL), // BASE_URL für korrektes Routing
@@ -50,6 +52,18 @@ const router = createRouter({
       component: ToDoView,
 
     },
+
+    {
+      path: '/ringbook',
+      name: 'ringbook',
+      component: NewHeftEntryView,
+    },
+{
+  path: '/allentries',
+  name: 'allentries',
+  component: AllHeftEntriesView,
+},
+
     {
     path: '/dictionary',
     name: 'dictionary',
