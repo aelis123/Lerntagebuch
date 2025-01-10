@@ -1,17 +1,39 @@
 <template>
     <section class="documentation-view" ref="documentation">
 
-<div class="info-box2">
-<h3>In Arbeit:</h3>
-<p>Ein interaktiver Kalender, <br>cleaneres Design, <br>Auswahlmöglichkeiten für unterschiedliche Designs (inkl. Farbenblindmodus), <br>Backend-Integration mit Login-System (du kannst deine Daten auf einem anderen Gerät abrufen),
-  <br>ein Formular für eigene Dokumentations-/Hefteinträge, <br>
-  eventuell virtuelle "Boxen", in welche man die Karteikarten einsortieren kann, um sie thematisch voneinander trennen zu können.
-   </p>
-   <p><em>Dir fehlt was? Lass es mich gern wissen!</em></p>
+
+
+<div class="info-box">
+  <code>10. Januar 2025</code>
+  <p>Es gibt eine neue Funktion <em>Hefteinträge</em>, hiermit könnt ihr durch ausfüllen eines Formulars einen ordentlichen und gut strukturierten Hefteintrag erstellen, ohne viel Aufwand. Das befindet sich noch in der Entwicklung und ist demnach noch nicht fehlerfrei und funktioniert auch noch nicht optimal, der Bereich ist aber zu Testzwecken schon geöffnet.
+  <br><br>
+  Das ändert sich noch an Hefteinträge: <br>
+  - Es werden verschiedene Schriftarten hinzugefügt <br>
+  - Es werden verschiedene Schriftfarben, und -markierungen hinzugefügt <br>
+  - Es wird die Möglichkeit geben, mehr Bilder hochzuladen <br>
+  - Es wird eine Verschiebfunktion für die Bilder eingebaut <br>
+  - Die Größenanpassung wird optimiert und ein Lock hinzugefügt (Einrasten) <br>
+  - Die Darstellung des Eintrags wird ästhetischer gestaltet <br>
+  - Es wird mehrere Möglichkeiten geben, wie der Eintrag aufgebaut sein wird <br>
+  - Es wird Schmuckleisten zum Verzieren des Eintrags geben <br>
+  - Es wird kompatibel für Mobiltelefon und Tablet gemacht <br>
+  - Es wird eine Exportfunktion geben, die erlaubt, entweder alle, einzelne oder gefilterte Einträge zu exportieren <br><br>
+
+ Reports und Fixes:<br> <br>
+  - Es wurde ein Darstellungsfehler bei den Karteikarten festgestellt, welcher die Anwendung auf kleineren Bildschirmen erschwert, das wird überarbeitet.</p>
+<br>
+<p>
+- Die Toleranz, ab wann die Naviagationsbar zum Burger-Menü wird, wurde angepasst <br>
+- Die Sortierfunktion für die Kalendereinträge funktioniert wieder wie gewohnt.
+
+
+
+</p>
+
 </div>
 
       <div class="info-box">
-        <code>07.Januar.2025</code>
+        <code>07. Januar 2025</code>
         <p>Gutes neues Jahr! Wir starten stark rein.
           <br>
           - Ein Bug, der Einträge davon abhielt im Kalender zu erscheinen, wurde behoben. >>> Dadurch funktioniert die Sortierfunktion der Einträge gerade nicht optimal, das Problem wird aber noch gelöst.

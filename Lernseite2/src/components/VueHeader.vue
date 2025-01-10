@@ -125,7 +125,7 @@ nav a.active-link {
   color: white;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .menu-toggle {
     display: none;
   }
