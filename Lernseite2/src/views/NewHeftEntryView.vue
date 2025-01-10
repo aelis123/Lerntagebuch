@@ -1,44 +1,78 @@
 <template>
   <div class="heft-view">
     <h2>📘 Hefteinträge</h2>
-<h3>Das hier ist eine Baustelle! Aber du kannst gern schon testen :D Da wird sich noch viel tun.</h3>
+    <h3>Das hier ist eine Baustelle! Aber du kannst gern schon testen :D Da wird sich noch viel tun.</h3>
     <!-- Formular zum Erstellen -->
     <form @submit.prevent="addEntry" class="heft-form">
       <div class="form-section">
         <h3>Allgemeine Informationen</h3>
-        <div class="form-group">
-          <label for="title">📌 Überschrift:</label>
-          <input
-            v-model="newEntry.title"
-            id="title"
-            type="text"
-            placeholder="Hauptüberschrift eingeben"
-            required
-          />
-        </div>
 
-        <div class="form-group">
-          <label for="subtitle">📋 Unterüberschrift:</label>
-          <input
-            v-model="newEntry.subtitle"
-            id="subtitle"
-            type="text"
-            placeholder="Optionale Unterüberschrift eingeben"
-          />
-        </div>
-      </div>
+       <!-- Überschrift -->
+       <div class="form-group form-group-title">
+  <label for="title">📌 Überschrift:</label>
+  <div class="title-container" style="display: flex; align-items: center; gap: 10px;">
+    <input
+      v-model="newEntry.title"
+      id="title"
+      type="text"
+      placeholder="Hauptüberschrift eingeben"
+      required
+      style="flex-grow: 1; padding: 8px; font-size: 16px;"
+    />
+    <select
+      v-model="newEntry.titleFont"
+      id="title-font"
+      class="font-select"
+    >
+      <option disabled value="">Schriftart auswählen</option>
+      <option value="Arial" style="font-family: Arial, sans-serif;">Arial</option>
+      <option value="Georgia" style="font-family: Georgia, serif;">Georgia</option>
+      <option value="Times New Roman" style="font-family: 'Times New Roman', serif;">Times New Roman</option>
+      <option value="Roboto" style="font-family: 'Roboto', sans-serif;">Roboto</option>
+      <option value="Courier New" style="font-family: 'Courier New', monospace;">Courier New</option>
+      <option value="Dancing Script" style="font-family: 'Dancing Script', cursive;">Dancing Script</option>
+      <option value="Pacifico" style="font-family: 'Pacifico', cursive;">Pacifico</option>
+      <option value="Lobster" style="font-family: 'Lobster', cursive;">Lobster</option>
+      <option value="Caveat" style="font-family: 'Caveat', cursive;">Caveat</option>
+      <option value="Playfair Display" style="font-family: 'Playfair Display', serif;">Playfair Display</option>
+      <option value="Bebas Neue" style="font-family: 'Bebas Neue', sans-serif;">Bebas Neue</option>
+    </select>
+  </div>
+</div>
 
-      <div class="form-section">
-        <h3>Details</h3>
-        <div class="form-group">
-          <label for="general-info">ℹ️ Allgemeine Informationen:</label>
-          <textarea
-            v-model="newEntry.generalInfo"
-            id="general-info"
-            placeholder="Allgemeine Details eintragen..."
-            rows="3"
-          ></textarea>
-        </div>
+
+        <!-- Unterüberschrift -->
+        <div class="form-group form-group-subtitle">
+  <label for="subtitle">📋 Unterüberschrift:</label>
+  <div class="subtitle-container" style="display: flex; align-items: center; gap: 10px;">
+    <input
+      v-model="newEntry.subtitle"
+      id="subtitle"
+      type="text"
+      placeholder="Optionale Unterüberschrift eingeben"
+    />
+    <select
+      v-model="newEntry.subtitleFont"
+      id="subtitle-font"
+      class="font-select"
+    >
+      <option disabled value="">Schriftart auswählen</option>
+      <option value="Arial" style="font-family: Arial, sans-serif;">Arial</option>
+      <option value="Georgia" style="font-family: Georgia, serif;">Georgia</option>
+      <option value="Times New Roman" style="font-family: 'Times New Roman', serif;">Times New Roman</option>
+      <option value="Roboto" style="font-family: 'Roboto', sans-serif;">Roboto</option>
+      <option value="Courier New" style="font-family: 'Courier New', monospace;">Courier New</option>
+      <option value="Dancing Script" style="font-family: 'Dancing Script', cursive;">Dancing Script</option>
+      <option value="Pacifico" style="font-family: 'Pacifico', cursive;">Pacifico</option>
+      <option value="Lobster" style="font-family: 'Lobster', cursive;">Lobster</option>
+      <option value="Caveat" style="font-family: 'Caveat', cursive;">Caveat</option>
+      <option value="Playfair Display" style="font-family: 'Playfair Display', serif;">Playfair Display</option>
+      <option value="Bebas Neue" style="font-family: 'Bebas Neue', sans-serif;">Bebas Neue</option>
+    </select>
+  </div>
+</div>
+
+
 
         <div class="form-group">
           <label for="notes">📝 Das ist wichtig zu merken:</label>
@@ -100,12 +134,36 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="image-upload">🖼️ Bild hinzufügen:</label>
-          <input type="file" id="image-upload" multiple @change="handleImageUpload" />
+        <div class="form-section">
+  <h3>Bilder hinzufügen</h3>
+  <div class="form-group">
+    <label for="image-upload">🖼️ Bild hinzufügen:</label>
+    <input type="file" id="image-upload" multiple @change="handleImageUpload" />
+  </div>
 
-        </div>
-      </div>
+  <!-- Dynamisches Formular für Titel und Beschreibung -->
+  <div v-if="newEntry.images && newEntry.images.length" class="image-details-container">
+    <div v-for="(image, index) in newEntry.images" :key="index" class="image-details">
+      <h4>{{ `Bild ${index + 1}: ${image.title}` }}</h4>
+      <label for="image-title">Titel:</label>
+      <input
+        type="text"
+        id="image-title"
+        v-model="image.title"
+        placeholder="Titel eingeben"
+      />
+
+      <label for="image-description">Beschreibung:</label>
+      <textarea
+        id="image-description"
+        v-model="image.description"
+        placeholder="Beschreibung eingeben"
+        rows="2"
+      ></textarea>
+    </div>
+  </div> </div> </div>
+
+
 
       <button type="submit" class="export-button">✅ Eintrag hinzufügen</button>
     </form>
@@ -133,40 +191,63 @@
         class="entry-card"
         :style="{ borderColor: entry.borderColor }"
       >
-        <h3 v-html="highlightText(entry.title)"></h3>
-        <h4 v-html="highlightText(entry.subtitle)"></h4>
-        <p><strong>Allgemeine Informationen:</strong> <span v-html="highlightText(entry.generalInfo)"></span></p>
-        <p><strong>Wichtig:</strong> <span v-html="highlightText(entry.notes)"></span></p>
+        <!-- Überschrift anzeigen -->
+<h3 :style="{ fontFamily: entry.titleFont }" class="entry-title">
+  <span v-if="entry.emoji">{{ entry.emoji }}</span>
+  {{ entry.title }}
+  <span v-if="entry.emoji">{{ entry.emoji }}</span>
+</h3>
+
+<!-- Unterüberschrift anzeigen -->
+<h4 :style="{ fontFamily: entry.subtitleFont }" class="entry-subtitle">
+  {{ entry.subtitle }}
+</h4>
+
+        <p class="important-notes">
+  <strong>Merke: </strong>
+  <span v-html="highlightText(entry.notes)"></span>
+</p>
+
         <p><strong>Aufgaben:</strong> <span v-html="highlightText(entry.tasks)"></span></p>
         <p><strong>Quellen:</strong> <span v-html="highlightText(entry.sources)"></span></p>
         <p><strong>Fragen:</strong> <span v-html="highlightText(entry.questions)"></span></p>
 
-      <!-- Bilder anzeigen mit Größenanpassung -->
-      <div v-if="entry.images && entry.images.length" class="image-gallery">
+        <div v-if="entry.images && entry.images.length" class="image-gallery">
   <div
     v-for="(image, index) in entry.images"
     :key="index"
-    class="resize-container"
+    class="image-row"
   >
-    <img
-      :src="image.src"
-      alt="Hochgeladenes Bild"
-      class="resizable-image"
-      :style="{ width: image.width + 'px' }"
-    />
-    <div
-      class="resize-handle"
-      @mousedown="startResize($event, entry, index)"
-    ></div>
-    <button
-      @click.stop="removeImage(entry.id, index)"
-      class="delete-image"
-      title="Bild löschen"
-    >
-      🗑️
-    </button>
+    <!-- Titel und Beschreibung -->
+    <div class="image-details">
+      <h4>{{ image.title || `Bild ${index + 1}` }}</h4>
+      <p>{{ image.description || "Keine Beschreibung verfügbar." }}</p>
+    </div>
+
+    <!-- Bild -->
+    <div class="image-wrapper">
+      <img
+        :src="image.src"
+        alt="Hochgeladenes Bild"
+        class="resizable-image"
+        :style="{ width: image.width + 'px' }"
+      />
+      <div
+        class="resize-handle"
+        @mousedown="startResize($event, entry, index)"
+      ></div>
+      <button
+        @click.stop="removeImage(entry.id, index)"
+        class="delete-image"
+        title="Bild löschen"
+      >
+        🗑️
+      </button>
+    </div>
   </div>
 </div>
+
+
 
 
 
@@ -254,11 +335,15 @@ export default defineComponent({
       newEntry.value.images.push({
         src: reader.result,
         width: 300, // Standardbreite
+        title: `Titel von ${file.name}`, // Nutze den Dateinamen als Standard
+        description: `Beschreibung von ${file.name}`, // Nutze den Dateinamen als Standard
       });
     };
     reader.readAsDataURL(file);
   });
 };
+
+
 
     const updateBorderColor = () => {
       const selectedEmoji = emojiOptions.value.find(
@@ -280,9 +365,6 @@ export default defineComponent({
 
 
 const removeImage = (entryId, imageIndex) => {
-  const confirmation = window.confirm("Möchtest du das Bild wirklich löschen?");
-  if (!confirmation) return; // Abbrechen, wenn der Benutzer "Nein" auswählt
-
   // Finde den Eintrag anhand der ID
   const entry = store.entries.find((e) => e.id === entryId);
   if (entry && entry.images) {
@@ -290,7 +372,6 @@ const removeImage = (entryId, imageIndex) => {
     entry.images.splice(imageIndex, 1);
   }
 };
-
 
 
 
@@ -355,15 +436,19 @@ const doResize = (event) => {
     };
 
     const filteredEntries = computed(() =>
-      store.entries.filter((entry) => {
-        const searchTerm = filter.value.toLowerCase();
-        return (
-          entry.title.toLowerCase().includes(searchTerm) ||
-          entry.notes.toLowerCase().includes(searchTerm) ||
-          entry.emoji.toLowerCase().includes(searchTerm)
-        );
-      })
-    );
+  store.entries
+    .slice() // Erstellt eine Kopie des Arrays
+    .sort((a, b) => b.id - a.id) // Sortiert absteigend nach ID (neuste zuerst)
+    .filter((entry) => {
+      const searchTerm = filter.value.toLowerCase();
+      return (
+        entry.title.toLowerCase().includes(searchTerm) ||
+        entry.notes.toLowerCase().includes(searchTerm) ||
+        entry.emoji.toLowerCase().includes(searchTerm)
+      );
+    })
+);
+
 
     const highlightText = (text) => {
       if (!filter.value) return text;
@@ -398,6 +483,8 @@ const doResize = (event) => {
 });
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&family=Lobster&family=Pacifico&family=Playfair+Display:wght@400;700&display=swap');
+
 /* Allgemeiner Wrapper */
 .heft-view {
   max-width: 600px; /* Maximale Breite */
@@ -561,9 +648,20 @@ button:active {
 
 .image-gallery {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column; /* Bilder vertikal stapeln */
+  gap: 15px; /* Abstand zwischen den Bildern */
 }
+
+.important-notes {
+  background-color: #ffefd5; /* Sanftes Pastellgelb */
+  border-left: 4px solid #ffc107; /* Farblicher Akzent */
+  padding: 10px;
+  border-radius: 5px; /* Abgerundete Ecken */
+  margin: 10px 0; /* Abstand nach oben und unten */
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 
 .resize-container {
   position: relative;
@@ -571,8 +669,9 @@ button:active {
 }
 
 .resizable-image {
-  max-width: 100%;
-  height: auto;
+  max-width: 400%; /* Begrenze die Breite des Bilds */
+  max-height: 400%; /* Begrenze die Höhe des Bilds */
+  object-fit: cover; /* Proportionale Skalierung */
   border-radius: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -610,6 +709,126 @@ button:active {
   color: #d32f2f; /* Etwas dunklerer Rotton beim Hover */
 }
 
+.image-details {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex-grow: 1; /* Nutzt den restlichen Platz rechts vom Bild */
+  text-align: left; /* Links ausgerichtet */
+}
+.image-row {
+  display: flex;
+  align-items: center; /* Bild und Details vertikal zentrieren */
+  gap: 20px; /* Abstand zwischen Bild und Details */
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.image-details h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #4a4a4a;
+}
+.image-wrapper {
+  position: relative; /* Für den Löschen-Button */
+  display: flex;
+  align-items: center;
+}
+.image-details label {
+  display: block;
+  margin-top: 8px;
+  font-weight: bold;
+}
+.image-details p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #6a6a6a;
+  line-height: 1.4;
+}
+.image-details-container {
+  margin-top: 10px;
+}
+.image-details input,
+.image-details textarea {
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: 'Roboto', sans-serif;
+}
+.image-details input:focus,
+.image-details textarea:focus {
+  border-color: #b9a9e8;
+  outline: none;
+  box-shadow: 0px 0px 6px rgba(185, 169, 232, 0.5);
+}
+.image-details-row {
+  display: flex;
+  align-items: flex-start; /* Bild und Text oben ausrichten */
+  margin-bottom: 15px;
+  gap: 20px; /* Abstand zwischen Bild und Text */
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.image-preview {
+  max-width: 150px; /* Begrenze die Breite des Bilds */
+  max-height: 150px; /* Begrenze die Höhe des Bilds */
+  object-fit: cover; /* Proportionale Skalierung */
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.entry-title {
+  font-size: 1.8rem; /* Überschrift leicht vergrößern */
+  text-align: center;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.entry-title::after {
+  content: "";
+  display: block;
+  width: 50%;
+  height: 2px;
+  background-color: #b9a9e8;
+  margin: 0.5rem auto; /* Zentrierte Linie */
+}
+
+.entry-subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: normal;
+  color: #4a4a4a;
+}
+.form-group-title .title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Abstand zwischen Input und Dropdown */
+}
+
+.form-group-title input {
+  flex-grow: 1; /* Das Eingabefeld nimmt den restlichen Platz ein */
+}
+
+.font-select {
+  padding: 4px; /* Weniger Padding */
+  font-size: 0.8rem; /* Kleinere Schriftgröße */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  width: 120px; /* Reduzierte Breite */
+  height: 30px; /* Feste Höhe */
+}
 
 
 
