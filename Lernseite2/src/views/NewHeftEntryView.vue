@@ -5,7 +5,7 @@
     <!-- Formular zum Erstellen -->
     <form @submit.prevent="addEntry" class="heft-form">
       <div class="form-section">
-        <h3>Allgemeine Informationen</h3>
+        <h3>Das Wichtigste</h3>
 
        <!-- Überschrift -->
        <div class="form-group form-group-title">

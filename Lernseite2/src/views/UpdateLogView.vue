@@ -5,26 +5,40 @@
 
 <div class="info-box">
   <code>10. Januar 2025</code>
+
+  <b><p>Big Update</p></b>
   <p>Es gibt eine neue Funktion <em>Hefteinträge</em>, hiermit könnt ihr durch ausfüllen eines Formulars einen ordentlichen und gut strukturierten Hefteintrag erstellen, ohne viel Aufwand. Das befindet sich noch in der Entwicklung und ist demnach noch nicht fehlerfrei und funktioniert auch noch nicht optimal, der Bereich ist aber zu Testzwecken schon geöffnet.
   <br><br>
-  Das ändert sich noch an Hefteinträge: <br>
-  - Es werden verschiedene Schriftarten hinzugefügt <br>
-  - Es werden verschiedene Schriftfarben, und -markierungen hinzugefügt <br>
-  - Es wird die Möglichkeit geben, mehr Bilder hochzuladen <br>
-  - Es wird eine Verschiebfunktion für die Bilder eingebaut <br>
-  - Die Größenanpassung wird optimiert und ein Lock hinzugefügt (Einrasten) <br>
-  - Die Darstellung des Eintrags wird ästhetischer gestaltet <br>
-  - Es wird mehrere Möglichkeiten geben, wie der Eintrag aufgebaut sein wird <br>
-  - Es wird Schmuckleisten zum Verzieren des Eintrags geben <br>
-  - Es wird kompatibel für Mobiltelefon und Tablet gemacht <br>
-  - Es wird eine Exportfunktion geben, die erlaubt, entweder alle, einzelne oder gefilterte Einträge zu exportieren <br><br>
+ <b> Das hier können die Hefteinträge schon:</b>
+  <ul>
+    <li> Überschrift, Unterüberschrift, Merkekasten, Aufgaben, Quellen, Fragen aufnahmen</li><br>
+    <li> Auswahl eines Fachs oder einer Farbe</li><br>
+    <li> Hinzufügen von einem oder mehreren Bildern inklusive der Betitelung und Benennung dieser</li><br>
+    <li> Wahl der Schriftart für die Titel </li><br>
+    <li>Generierung eines Hefteintrags und Abspeichern im Local Storage </li><br>
+    <li>Der Merke-Kasten ist farblich hinterlegt</li><br>
+    <li>Man kann jeden Eintrag nachträglich nachbearbeiten (er flippt zurück in das Formular)</li><br>
+    <li>Die Bilder können individuell größer und kleiner gezogen werden am rechten unteren Eck</li><br>
+    <li>Bilder können einzeln entfernt werden</li><br>
+    <li> Du kannst Einträge nach Wörtern filtern (teilweise noch buggy)</li>
+  </ul>
+  <b>Das ändert sich noch an Hefteinträge:</b> <br><br>
+  - Es werden mehr Schriftarten hinzugefügt <br><br>
+  - Es werden verschiedene Schriftfarben, und -markierungen hinzugefügt <br><br>
+  - Es wird eine Verschiebfunktion für die Bilder eingebaut <br><br>
+  - Die Größenanpassung wird optimiert und ein Lock hinzugefügt (Einrasten) <br><br>
+  - Die Darstellung des Eintrags wird ästhetischer gestaltet <br><br>
+  - Es wird mehrere Möglichkeiten geben, wie der Eintrag aufgebaut sein wird <br><br>
+  - Es wird unterschiedliche Schmuckleisten zum Verzieren des Eintrags geben <br><br>
+  - Es wird kompatibel für Mobiltelefon und Tablet gemacht <br><br>
+  - Es wird eine Exportfunktion geben, die erlaubt, entweder alle, einzelne oder gefilterte Einträge zu exportieren <br><br><br>
 
- Reports und Fixes:<br> <br>
+ <b>Reports und Fixes:<br> <br></b>
   - Es wurde ein Darstellungsfehler bei den Karteikarten festgestellt, welcher die Anwendung auf kleineren Bildschirmen erschwert, das wird überarbeitet.</p>
-<br>
+
 <p>
 - Die Toleranz, ab wann die Naviagationsbar zum Burger-Menü wird, wurde angepasst <br>
-- Die Sortierfunktion für die Kalendereinträge funktioniert wieder wie gewohnt.
+- Die Sortierfunktion für die Kalendereinträge funktioniert wieder wie gewohnt (funktioniert nicht mit Einträgen mit der alten ID Darstellung).
 
 
 
