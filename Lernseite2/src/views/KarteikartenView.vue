@@ -20,6 +20,7 @@
 
       <!-- Eingabefelder für neue Karten -->
       <div class="flashcards-input">
+        <p><b>Neue Karteikarte erstellen:</b></p>
         <input v-model="newQuestion" type="text" placeholder="Frage eingeben..." />
         <input v-model="newAnswer" type="text" placeholder="Antwort eingeben..." />
         <button @click="addCard">Karte hinzufügen</button>
@@ -236,18 +237,24 @@ p {
 
 .top-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Erlaubt das Umbrechen */
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
+@media (max-width: 768px) {
+  .top-container {
+    flex-direction: column; /* Elemente untereinander anordnen */
+  } }
+
 
 .filter-options {
-  flex: 1;
+  flex: 1 1 25%; /* Beide nehmen jeweils ca. die Hälfte der Breite ein */
   background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   min-width: 260px;
+
 }
 
 .filter-options p {
@@ -272,7 +279,7 @@ p {
 }
 
 .flashcards-input {
-  flex: 2;
+  flex: 3;
   background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 8px;
@@ -322,8 +329,14 @@ p {
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  margin: 20px 0;
 }
+
+/* Nur für kleinere Bildschirme */
+@media (max-width: 768px) {
+  .flashcard-wrapper {
+    flex-direction: column; /* Elemente untereinander anordnen */
+    align-items: center; /* Zentriert die Inhalte */
+  } }
 
 .flashcard {
   width: 350px;

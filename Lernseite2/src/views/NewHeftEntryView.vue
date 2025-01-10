@@ -102,7 +102,8 @@
 
         <div class="form-group">
           <label for="image-upload">🖼️ Bild hinzufügen:</label>
-          <input type="file" id="image-upload" @change="handleImageUpload" />
+          <input type="file" id="image-upload" multiple @change="handleImageUpload" />
+
         </div>
       </div>
 
@@ -140,28 +141,45 @@
         <p><strong>Quellen:</strong> <span v-html="highlightText(entry.sources)"></span></p>
         <p><strong>Fragen:</strong> <span v-html="highlightText(entry.questions)"></span></p>
 
-        <!-- Bild anzeigen mit Größenanpassung -->
-        <div v-if="entry.image" class="resize-container">
-          <img
-            :src="entry.image"
-            alt="Hochgeladenes Bild"
-            class="resizable-image"
-            :style="{ width: entry.imageWidth + 'px' }"
-          />
-          <div
-            class="resize-handle"
-            @mousedown="startResize($event, entry)"
-          ></div>
-        </div>
+      <!-- Bilder anzeigen mit Größenanpassung -->
+      <div v-if="entry.images && entry.images.length" class="image-gallery">
+  <div
+    v-for="(image, index) in entry.images"
+    :key="index"
+    class="resize-container"
+  >
+    <img
+      :src="image.src"
+      alt="Hochgeladenes Bild"
+      class="resizable-image"
+      :style="{ width: image.width + 'px' }"
+    />
+    <div
+      class="resize-handle"
+      @mousedown="startResize($event, entry, index)"
+    ></div>
+    <button
+      @click.stop="removeImage(entry.id, index)"
+      class="delete-image"
+      title="Bild löschen"
+    >
+      🗑️
+    </button>
+  </div>
+</div>
 
-        <div class="entry-actions">
-          <button @click="editEntry(entry.id)" class="edit-button">
-            ✏️ Bearbeiten
-          </button>
-          <button @click="deleteEntry(entry.id)" class="delete-button">
-            🗑️ Löschen
-          </button>
-        </div>
+
+
+<!-- Eintragsaktionen -->
+<div class="entry-actions">
+  <button @click="editEntry(entry.id)" class="edit-button">
+    ✏️ Bearbeiten
+  </button>
+  <button @click="deleteEntry(entry.id)" class="delete-button">
+    🗑️ Löschen
+  </button>
+</div>
+
       </div>
     </div>
   </div>
@@ -187,16 +205,16 @@ export default defineComponent({
   id: null,
   title: "",
   subtitle: "",
-  generalInfo: "", // Allgemeine Informationen
+  generalInfo: "",
   notes: "",
   tasks: "",
   sources: "",
   questions: "",
   emoji: "",
   borderColor: "#ccc",
-  image: null,
-  imageWidth: 300, // Standardbreite für Bilder
+  images: [], // Array für mehrere Bilder
 });
+
 
 
     const filter = ref("");
@@ -225,15 +243,22 @@ export default defineComponent({
     ]);
 
     const handleImageUpload = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          newEntry.value.image = reader.result;
-        };
-        reader.readAsDataURL(file);
-      }
+  const files = event.target.files;
+  if (files.length + newEntry.value.images.length > 7) {
+    alert("Maximal 7 Bilder erlaubt!");
+    return;
+  }
+  Array.from(files).forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      newEntry.value.images.push({
+        src: reader.result,
+        width: 300, // Standardbreite
+      });
     };
+    reader.readAsDataURL(file);
+  });
+};
 
     const updateBorderColor = () => {
       const selectedEmoji = emojiOptions.value.find(
@@ -242,21 +267,46 @@ export default defineComponent({
       newEntry.value.borderColor = selectedEmoji ? selectedEmoji.color : "#ccc";
     };
 
-    const startResize = (event, entry) => {
-      resizing.value = true;
-      currentEntry.value = entry;
-      startX.value = event.clientX;
-      startWidth.value = entry.imageWidth || 300;
+    const startResize = (event, entry, imageIndex) => {
+  resizing.value = true;
+  currentEntry.value = entry;
+  currentEntryImageIndex.value = imageIndex;
+  startX.value = event.clientX;
+  startWidth.value = entry.images[imageIndex].width || 300;
 
-      document.addEventListener("mousemove", doResize);
-      document.addEventListener("mouseup", stopResize);
-    };
+  document.addEventListener("mousemove", doResize);
+  document.addEventListener("mouseup", stopResize);
+};
 
-    const doResize = (event) => {
-      if (!resizing.value || !currentEntry.value) return;
-      const newWidth = startWidth.value + (event.clientX - startX.value);
-      currentEntry.value.imageWidth = newWidth > 50 ? newWidth : 50; // Mindestbreite
-    };
+
+const removeImage = (entryId, imageIndex) => {
+  const confirmation = window.confirm("Möchtest du das Bild wirklich löschen?");
+  if (!confirmation) return; // Abbrechen, wenn der Benutzer "Nein" auswählt
+
+  // Finde den Eintrag anhand der ID
+  const entry = store.entries.find((e) => e.id === entryId);
+  if (entry && entry.images) {
+    // Entferne das Bild an der angegebenen Position
+    entry.images.splice(imageIndex, 1);
+  }
+};
+
+
+
+
+const currentEntryImageIndex = ref(null);
+
+
+
+
+const doResize = (event) => {
+  if (!resizing.value || currentEntry.value === null || currentEntryImageIndex.value === null) return;
+  const newWidth = startWidth.value + (event.clientX - startX.value);
+  const image = currentEntry.value.images[currentEntryImageIndex.value];
+  image.width = newWidth > 50 ? newWidth : 50; // Mindestbreite setzen
+};
+
+
 
     const stopResize = () => {
       resizing.value = false;
@@ -266,22 +316,30 @@ export default defineComponent({
     };
 
     const addEntry = () => {
-  store.addEntry({ ...newEntry.value, id: Date.now() });
+  store.addEntry({
+    ...newEntry.value,
+    id: Date.now(),
+    images: newEntry.value.images || [], // Stelle sicher, dass images ein Array ist
+  });
+
+  // Reset des Formulars
   newEntry.value = {
     id: null,
     title: "",
     subtitle: "",
-    generalInfo: "", // Reset der Allgemeinen Informationen
+    generalInfo: "",
     notes: "",
     tasks: "",
     sources: "",
     questions: "",
     emoji: "",
     borderColor: "#ccc",
-    image: null,
-    imageWidth: 300,
+    images: [], // Initialisiere images als leeres Array
   };
 };
+
+
+
 
 
     const editEntry = (id) => {
@@ -320,18 +378,22 @@ export default defineComponent({
     });
 
     return {
-      newEntry,
-      filter,
-      emojiOptions,
-      addEntry,
-      editEntry,
-      deleteEntry,
-      handleImageUpload,
-      updateBorderColor,
-      startResize,
-      filteredEntries,
-      highlightText,
-    };
+  newEntry,
+  filter,
+  emojiOptions,
+  addEntry,
+  editEntry,
+  deleteEntry,
+  handleImageUpload,
+  updateBorderColor,
+  startResize,
+  stopResize,
+  doResize,
+  removeImage, // Hier hinzufügen
+  filteredEntries,
+  highlightText,
+};
+
   },
 });
 </script>
@@ -492,16 +554,27 @@ button:active {
   background-color: #fff;
 }
 
-/* Bildgrößenanpassung */
+
+
+
+
+
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .resize-container {
   position: relative;
+  display: inline-block;
 }
 
 .resizable-image {
   max-width: 100%;
   height: auto;
-  display: block;
-  margin: 1rem 0;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .resize-handle {
@@ -514,6 +587,31 @@ button:active {
   cursor: nwse-resize;
   border-radius: 50%;
 }
+
+.delete-image {
+  position: absolute; /* Absolut positioniert relativ zum Container */
+  bottom: 5px; /* Abstand von unten */
+  left: 5px; /* Abstand von links */
+  background-color: transparent; /* Transparent */
+  color: #f44336; /* Farbe des Mülleimer-Icons */
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem; /* Größe des Emojis */
+  padding: 0; /* Kein Padding */
+  width: auto; /* Breite nur basierend auf dem Inhalt */
+  height: auto; /* Höhe nur basierend auf dem Inhalt */
+  line-height: 1; /* Kein zusätzlicher Platz durch Zeilenhöhe */
+  display: inline-flex; /* Verhindert, dass der Button zu breit wird */
+  align-items: center; /* Zentriert das Emoji innerhalb des Buttons */
+  justify-content: center; /* Zentriert das Emoji innerhalb des Buttons */
+}
+
+.delete-image:hover {
+  color: #d32f2f; /* Etwas dunklerer Rotton beim Hover */
+}
+
+
+
 
 </style>
 
