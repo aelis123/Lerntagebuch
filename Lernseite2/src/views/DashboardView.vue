@@ -1,8 +1,6 @@
 <template>
   <section class="dashboard">
     <div class="welcome">
-      <h2>Du vermisst deine Kalendereinträge?</h2>
-      <p>Es gibt nun den Reiter "Patchlogs", dort siehst du, was sich geändert hat. Diese App befindet sich noch in der Entwicklung, du siehst deine Einträge aber wie gewohnt in "Einträge".</p>
       <h2>{{ greeting }}</h2>
       <p>{{ currentDate }}</p>
     </div>

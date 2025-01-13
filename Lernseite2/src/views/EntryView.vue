@@ -68,7 +68,7 @@
       </div>
 
       <div class="form-group mood">
-        <label>🌀 Wie fühlst du dich?</label>
+        <label for="mood">🌀 Wie fühlst du dich?</label>
         <div class="mood-selector">
           <span
             v-for="mood in moods"
@@ -191,11 +191,9 @@ export default {
   border-color: #b9a9e8;
 }
 
-label {
-  font-weight: bold;
+.form-group label {
   color: #333;
   margin-bottom: 0.5rem;
-  display: block;
 }
 
 
