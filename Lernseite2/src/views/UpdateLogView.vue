@@ -1,6 +1,28 @@
 <template>
     <section class="documentation-view" ref="documentation">
 
+<div class="info-box">
+<p><code> 13.01.2025 </code></p>
+<strong>Update Hefteinträge</strong>
+<p>Heute gibt's wieder einige Änderungen für den Reiter Hefteinträge:</p>
+<ul>
+
+  <li>
+Mehr Schriftarten</li>
+<li>Mehr Schulfächer</li>
+<li> Das Formular ist nun modular angeordnet, das heißt, ihr könnt nach Belieben euren Hefteintrag anordnen und gestalten und so viele Module hinzufügen, wie ihr benötigt</li>
+<li> Bei Klicken auf "Bearbeiten" springt ihr automatisch in das Formular mit dem zu bearbeitenden Eintrag</li>
+<li>Wenn ihr die Seite mit ungespeicherten Einträgen verlassen wollt, kommt eine Warnung (ungespeicherte Hefteinträge gehen verloren)</li>
+<li>Design von manchen Buttons wurden angepasst</li>
+<li>Design von den Modulen wurden angepasst</li>
+<li> Reihenfolge des Aufbaus der Seite wurde angepasst </li>
+</ul>
+<p><em>Aktuell arbeite ich an der Zoom-Funktion für Bilder, das bedeutet, dass die Bilddarstellung noch nicht perfekt funktioniert. Das wird bald überarbeitet.</em>
+</p>
+
+
+</div>
+
 
 
 <div class="info-box">
