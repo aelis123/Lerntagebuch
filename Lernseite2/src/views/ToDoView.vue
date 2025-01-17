@@ -15,6 +15,7 @@
         type="date"
         placeholder="Fälligkeitsdatum wählen"
       />
+      <!-- Color-Picker entfernt; wir setzen im Code eine Default-Farbe (#ffffff) -->
       <button @click="addTodo">Hinzufügen</button>
     </div>
 
@@ -22,12 +23,50 @@
     <div class="todo-list">
       <h3>🌟 Aktive To-Dos</h3>
       <ul>
-        <li v-for="todo in activeTodos" :key="todo.id" class="todo-item">
+        <li
+          v-for="todo in activeTodos"
+          :key="todo.id"
+          class="todo-item"
+          draggable="true"
+          @dragstart="onDragStart($event, todo)"
+          @dragenter.prevent="onDragEnter($event, todo)"
+          @dragend="onDragEnd"
+          :style="{ backgroundColor: todo.color }"
+        >
+          <!-- Papierkorb -->
           <div class="delete-button" @click="confirmDelete(todo.id)">🗑️</div>
+
+          <!-- Neues Dropdown für Pastellfarben -->
+          <div class="color-dropdown">
+            <select
+              :value="todo.color"
+              @change="updateTodoColor(todo, $event.target.value)"
+            >
+              <!-- Optionale 'Bitte wählen' oder 'Standardfarbe' -->
+              <option value="#ffffff">Standard</option>
+              <!-- Pastellfarben aus dem Array pastelColors -->
+              <option
+                v-for="(option, idx) in pastelColors"
+                :key="idx"
+                :value="option.value"
+              >
+                {{ option.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Kreis zum Abhaken -->
           <div class="circle" @click="toggleComplete(todo.id)">
             <span v-if="todo.completed" class="checkmark">✔</span>
           </div>
-          <p>{{ todo.text }} <small v-if="todo.dueDate">({{ formatDate(todo.dueDate) }})</small></p>
+
+          <!-- Text & Fälligkeitsdatum -->
+          <p>
+            {{ todo.text }}
+            <small v-if="todo.dueDate">
+              ({{ formatDate(todo.dueDate) }})
+            </small>
+          </p>
         </li>
       </ul>
     </div>
@@ -42,12 +81,44 @@
           v-for="todo in archivedTodos"
           :key="todo.id"
           class="todo-item archived"
+          draggable="true"
+          @dragstart="onDragStart($event, todo)"
+          @dragenter.prevent="onDragEnter($event, todo)"
+          @dragend="onDragEnd"
+          :style="{ backgroundColor: todo.color }"
         >
+          <!-- Papierkorb -->
           <div class="delete-button" @click="confirmDelete(todo.id)">🗑️</div>
+
+          <!-- Dropdown für Pastellfarben -->
+          <div class="color-dropdown">
+            <select
+              :value="todo.color"
+              @change="updateTodoColor(todo, $event.target.value)"
+            >
+              <option value="#ffffff">Standard</option>
+              <option
+                v-for="(option, idx) in pastelColors"
+                :key="idx"
+                :value="option.value"
+              >
+                {{ option.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Abhaken -->
           <div class="circle" @click="toggleComplete(todo.id)">
             <span class="checkmark">✔</span>
           </div>
-          <p>{{ todo.text }} <small v-if="todo.dueDate">({{ formatDate(todo.dueDate) }})</small></p>
+
+          <!-- Text & Fälligkeitsdatum -->
+          <p>
+            {{ todo.text }}
+            <small v-if="todo.dueDate">
+              ({{ formatDate(todo.dueDate) }})
+            </small>
+          </p>
         </li>
       </ul>
     </div>
@@ -60,9 +131,24 @@ export default {
   data() {
     return {
       newTodo: "",
-      newTodoDate: "", // Für das Fälligkeitsdatum
-      todos: [], // Alle To-Dos (aktive und archivierte)
+      newTodoDate: "",
+      // Der User soll nicht mehr beim Anlegen wählen; wir setzen eine Default-Farbe
+      // newTodoColor: "#ffffff", --> entfernt
+
+      todos: [], // Alle To-Dos (aktiv & archiviert)
       archiveOpen: false, // Steuert das Archiv-Dropdown
+
+      // Für Drag-and-Drop
+      draggedTodoId: null,
+
+      // Liste der Pastellfarben
+      pastelColors: [
+        { name: "Pastellrosa", value: "#ffd9e8" },
+        { name: "Pastellgelb", value: "#fff8b3" },
+        { name: "Pastellblau", value: "#d9eeff" },
+        { name: "Pastellgrün", value: "#d9ffe1" },
+        { name: "Pastellorange", value: "#ffe5d9" },
+      ],
     };
   },
   computed: {
@@ -80,18 +166,30 @@ export default {
           id: Date.now().toString(),
           text: this.newTodo.trim(),
           completed: false,
-          dueDate: this.newTodoDate || null, // Datum optional
+          dueDate: this.newTodoDate || null,
+          // Standard-Farbe auf Weiß (oder eine gewünschte Pastellfarbe)
+          color: "#ffffff",
         };
         this.todos.push(newTask);
+
+        // Felder zurücksetzen
         this.newTodo = "";
         this.newTodoDate = "";
+        // this.newTodoColor = "#ffffff"; // weg
+
         this.saveTodos();
       }
     },
+    // Dropdown-Farbe ändern
+    updateTodoColor(todo, newColor) {
+      todo.color = newColor;
+      this.saveTodos();
+    },
+
     toggleComplete(id) {
       const todo = this.todos.find((todo) => todo.id === id);
       if (todo) {
-        todo.completed = !todo.completed; // Status umkehren
+        todo.completed = !todo.completed;
         this.saveTodos();
       }
     },
@@ -117,6 +215,27 @@ export default {
     formatDate(date) {
       const options = { year: "numeric", month: "long", day: "numeric" };
       return new Date(date).toLocaleDateString("de-DE", options);
+    },
+
+    // ---- Drag-and-Drop-Methoden ----
+    onDragStart(event, todo) {
+      // Speichere die ID des gezogenen To-Dos
+      this.draggedTodoId = todo.id;
+      event.dataTransfer.effectAllowed = "move";
+    },
+    onDragEnter(event, targetTodo) {
+      if (this.draggedTodoId === targetTodo.id) return;
+
+      const draggedIndex = this.todos.findIndex((t) => t.id === this.draggedTodoId);
+      const targetIndex = this.todos.findIndex((t) => t.id === targetTodo.id);
+
+      const draggedItem = this.todos[draggedIndex];
+      this.todos.splice(draggedIndex, 1);
+      this.todos.splice(targetIndex, 0, draggedItem);
+    },
+    onDragEnd() {
+      this.draggedTodoId = null;
+      this.saveTodos();
     },
   },
   mounted() {
@@ -203,6 +322,23 @@ export default {
   color: #c9302c;
 }
 
+/* Neues CSS für das Dropdown rechts neben dem Mülleimer */
+.color-dropdown select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fefafc;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #4a4a4a;
+  margin-right: 5px; /* kleiner Abstand zum Kreis */
+}
+
+.color-dropdown select:focus {
+  outline: none;
+  border-color: #b9a9e8;
+}
+
 .circle {
   width: 35px;
   height: 35px;
@@ -239,7 +375,6 @@ export default {
   .todo-item p {
     font-size: 0.9rem;
   }
-
   .circle {
     width: 30px;
     height: 30px;
