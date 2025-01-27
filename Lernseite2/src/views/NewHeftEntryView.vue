@@ -2,8 +2,7 @@
   <div class="heft-view">
     <h2>📘 Hefteinträge</h2>
     <h3>
-      Das hier ist eine Baustelle! Aber du kannst gern schon testen :D Da wird
-      sich noch viel tun.
+      Das hier ist eine Baustelle! Aber du kannst gern schon testen :D Da wird sich noch viel tun.
     </h3>
 
     <!-- Formular zum Erstellen eines neuen Eintrags -->
@@ -15,17 +14,14 @@
         <!-- Überschrift -->
         <div class="form-group form-group-title">
           <label :for="titleId">📌 Überschrift:</label>
-          <div
-            class="title-container"
-            style="display: flex; align-items: center; gap: 10px;"
-          >
+          <div class="title-container" style="display: flex; align-items: center; gap: 10px">
             <input
               :id="titleId"
               v-model="newEntry.title"
               type="text"
               placeholder="Hauptüberschrift eingeben"
               required
-              style="flex-grow: 1; padding: 8px; font-size: 16px;"
+              style="flex-grow: 1; padding: 8px; font-size: 16px"
             />
             <select v-model="newEntry.titleFont" id="title-font" class="font-select">
               <option disabled value="">Schriftart auswählen</option>
@@ -44,21 +40,14 @@
         <!-- Unterüberschrift -->
         <div class="form-group form-group-subtitle">
           <label :for="subtitleId">📋 Unterüberschrift:</label>
-          <div
-            class="subtitle-container"
-            style="display: flex; align-items: center; gap: 10px;"
-          >
+          <div class="subtitle-container" style="display: flex; align-items: center; gap: 10px">
             <input
               :id="subtitleId"
               v-model="newEntry.subtitle"
               type="text"
               placeholder="Optionale Unterüberschrift eingeben"
             />
-            <select
-              v-model="newEntry.subtitleFont"
-              id="subtitle-font"
-              class="font-select"
-            >
+            <select v-model="newEntry.subtitleFont" id="subtitle-font" class="font-select">
               <option disabled value="">Schriftart auswählen</option>
               <option
                 v-for="font in availableFonts"
@@ -76,11 +65,7 @@
         <div class="form-group">
           <label :for="emojiId">📖 Fach oder Farbe wählen:</label>
           <select :id="emojiId" v-model="newEntry.emoji" @change="updateBorderColor">
-            <option
-              v-for="option in emojiOptions"
-              :key="option.emoji"
-              :value="option.emoji"
-            >
+            <option v-for="option in emojiOptions" :key="option.emoji" :value="option.emoji">
               {{ option.emoji }} {{ option.label }}
             </option>
           </select>
@@ -108,12 +93,7 @@
       </div>
 
       <!-- Dynamische Module (drag-and-drop + Pfeile) -->
-      <transition-group
-        name="fade"
-        tag="div"
-        class="dynamic-modules-container"
-        @dragover.prevent
-      >
+      <transition-group name="fade" tag="div" class="dynamic-modules-container" @dragover.prevent>
         <div
           v-for="(mod, index) in newEntry.modules"
           :key="mod.uniqueId"
@@ -137,9 +117,7 @@
           </div>
 
           <div v-else-if="mod.type === 'allgemein'">
-            <label :for="'allgemein-textarea-' + mod.uniqueId"
-              >Allgemeine Informationen:</label
-            >
+            <label :for="'allgemein-textarea-' + mod.uniqueId">Allgemeine Informationen:</label>
             <textarea
               :id="'allgemein-textarea-' + mod.uniqueId"
               v-model="mod.content"
@@ -159,9 +137,7 @@
           </div>
 
           <div v-else-if="mod.type === 'quellen'" class="quellen-box">
-            <label :for="'quellen-textarea-' + mod.uniqueId"
-              >Quellen/Referenzen:</label
-            >
+            <label :for="'quellen-textarea-' + mod.uniqueId">Quellen/Referenzen:</label>
             <textarea
               :id="'quellen-textarea-' + mod.uniqueId"
               v-model="mod.content"
@@ -189,20 +165,11 @@
               multiple
               @change="onFileChange(mod, $event)"
             />
-            <div
-              v-if="mod.images && mod.images.length"
-              class="image-details-container"
-            >
-              <div
-                v-for="(img, i) in mod.images"
-                :key="i"
-                class="image-details"
-              >
+            <div v-if="mod.images && mod.images.length" class="image-details-container">
+              <div v-for="(img, i) in mod.images" :key="i" class="image-details">
                 <h4>{{ img.title }}</h4>
 
-                <label :for="'image-title-' + mod.uniqueId + '-' + i">
-                  Titel:
-                </label>
+                <label :for="'image-title-' + mod.uniqueId + '-' + i"> Titel: </label>
                 <input
                   :id="'image-title-' + mod.uniqueId + '-' + i"
                   type="text"
@@ -210,9 +177,7 @@
                   placeholder="Titel eingeben"
                 />
 
-                <label :for="'image-desc-' + mod.uniqueId + '-' + i">
-                  Beschreibung:
-                </label>
+                <label :for="'image-desc-' + mod.uniqueId + '-' + i"> Beschreibung: </label>
                 <textarea
                   :id="'image-desc-' + mod.uniqueId + '-' + i"
                   rows="2"
@@ -227,10 +192,7 @@
                     class="resizable-image"
                     :style="{ width: img.width + 'px' }"
                   />
-                  <div
-                    class="resize-handle"
-                    @mousedown="startResize($event, mod, i)"
-                  ></div>
+                  <div class="resize-handle" @mousedown="startResize($event, mod, i)"></div>
                   <button
                     @click.stop="removeImage(mod, i)"
                     class="delete-image"
@@ -263,18 +225,14 @@
                 ⬇️
               </button>
             </div>
-            <button type="button" @click="removeModule(index)">
-              Modul löschen
-            </button>
+            <button type="button" @click="removeModule(index)">Modul löschen</button>
           </div>
         </div>
       </transition-group>
 
       <!-- GRÜNER, MITTIGER BUTTON für "Eintrag hinzufügen" -->
       <div class="centered-submit-container">
-        <button type="submit" class="green-submit-button">
-          ✅ Eintrag hinzufügen
-        </button>
+        <button type="submit" class="green-submit-button">✅ Eintrag hinzufügen</button>
       </div>
     </form>
 
@@ -284,12 +242,7 @@
     <!-- Filter unterhalb von "Alle Einträge" -->
     <div class="info-box filter-under-entries">
       <label :for="filterId">🔍 Nach Einträgen filtern:</label>
-      <input
-        :id="filterId"
-        v-model="filter"
-        type="text"
-        placeholder="Suchbegriff eingeben"
-      />
+      <input :id="filterId" v-model="filter" type="text" placeholder="Suchbegriff eingeben" />
     </div>
 
     <!-- Einträge anzeigen -->
@@ -344,19 +297,11 @@
           </div>
 
           <!-- Bilder -->
-          <div
-            v-else-if="mod.type === 'bilder'"
-            class="image-gallery"
-            style="margin-top: 1rem;"
-          >
-            <div
-              v-for="(img, i) in mod.images"
-              :key="i"
-              class="image-row"
-            >
+          <div v-else-if="mod.type === 'bilder'" class="image-gallery" style="margin-top: 1rem">
+            <div v-for="(img, i) in mod.images" :key="i" class="image-row">
               <div class="image-details">
                 <h4>{{ img.title || `Bild ${i + 1}` }}</h4>
-                <p>{{ img.description || "Keine Beschreibung verfügbar." }}</p>
+                <p>{{ img.description || 'Keine Beschreibung verfügbar.' }}</p>
               </div>
               <div class="image-wrapper">
                 <img
@@ -379,9 +324,7 @@
     </transition-group>
 
     <!-- Keine Einträge gefunden -->
-    <div v-if="filteredEntries.length === 0" class="info-box2">
-      Keine Einträge gefunden.
-    </div>
+    <div v-if="filteredEntries.length === 0" class="info-box2">Keine Einträge gefunden.</div>
 
     <!-- Popup-Bestätigung fürs Löschen -->
     <div v-if="showDeleteConfirm" class="delete-confirmation-popup">
@@ -397,320 +340,318 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { useHefteStore } from "../stores/hefteStore.js";
+import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { useHefteStore } from '../stores/hefteStore.js'
 
 export default defineComponent({
   setup() {
-    const store = useHefteStore();
+    const store = useHefteStore()
 
     /* STATES & REFS */
-    const showModuleDropdown = ref(false);
-    const editingEntryId = ref(null);
-    const showDeleteConfirm = ref(false);
-    const entryIdToDelete = ref(null);
-    const draggedModuleIndex = ref(null);
+    const showModuleDropdown = ref(false)
+    const editingEntryId = ref(null)
+    const showDeleteConfirm = ref(false)
+    const entryIdToDelete = ref(null)
+    const draggedModuleIndex = ref(null)
 
     const newEntry = ref({
       id: null,
-      title: "",
-      subtitle: "",
-      titleFont: "",
-      subtitleFont: "",
-      emoji: "",
-      borderColor: "#ccc",
+      title: '',
+      subtitle: '',
+      titleFont: '',
+      subtitleFont: '',
+      emoji: '',
+      borderColor: '#ccc',
       modules: [],
-    });
+    })
 
     // IDs
-    const titleId = "heft-title-input";
-    const subtitleId = "heft-subtitle-input";
-    const emojiId = "heft-emoji-select";
-    const filterId = "heft-filter-input";
+    const titleId = 'heft-title-input'
+    const subtitleId = 'heft-subtitle-input'
+    const emojiId = 'heft-emoji-select'
+    const filterId = 'heft-filter-input'
 
     // Zusätzliche Schriftarten
     const availableFonts = ref([
-      { name: "Arial", label: "Arial" },
-      { name: "Georgia", label: "Georgia" },
-      { name: "Times New Roman", label: "Times New Roman" },
-      { name: "Roboto", label: "Roboto" },
-      { name: "Courier New", label: "Courier New" },
-      { name: "Dancing Script", label: "Dancing Script" },
-      { name: "Pacifico", label: "Pacifico" },
-      { name: "Lobster", label: "Lobster" },
-      { name: "Caveat", label: "Caveat" },
-      { name: "Playfair Display", label: "Playfair Display" },
-      { name: "Bebas Neue", label: "Bebas Neue" },
+      { name: 'Arial', label: 'Arial' },
+      { name: 'Georgia', label: 'Georgia' },
+      { name: 'Times New Roman', label: 'Times New Roman' },
+      { name: 'Roboto', label: 'Roboto' },
+      { name: 'Courier New', label: 'Courier New' },
+      { name: 'Dancing Script', label: 'Dancing Script' },
+      { name: 'Pacifico', label: 'Pacifico' },
+      { name: 'Lobster', label: 'Lobster' },
+      { name: 'Caveat', label: 'Caveat' },
+      { name: 'Playfair Display', label: 'Playfair Display' },
+      { name: 'Bebas Neue', label: 'Bebas Neue' },
 
       // Neu hinzugefügt:
-      { name: "Montserrat", label: "Montserrat" },
-      { name: "Open Sans", label: "Open Sans" },
-      { name: "Raleway", label: "Raleway" },
-      { name: "Poppins", label: "Poppins" },
-    ]);
+      { name: 'Montserrat', label: 'Montserrat' },
+      { name: 'Open Sans', label: 'Open Sans' },
+      { name: 'Raleway', label: 'Raleway' },
+      { name: 'Poppins', label: 'Poppins' },
+    ])
 
     // Emoji-Fächer & Farboptionen (einfaches Array, kein ref!)
     const emojiOptions = [
-      { emoji: "🌌", label: "Astronomie", color: "#d0d0f5" },
-      { emoji: "💼", label: "BWL", color: "#f5deb3" },
-      { emoji: "🦠", label: "Biologie", color: "#bbf3bb" },
-      { emoji: "⚗️", label: "Chemie", color: "#c0ebc0" },
-      { emoji: "🇨🇳", label: "Chinesisch", color: "#ffe4e1" },
-      { emoji: "📖", label: "Deutsch", color: "#ffcccb" },
-      { emoji: "📘", label: "Englisch", color: "#add8e6" },
-      { emoji: "🗺️", label: "Erdkunde/Geografie", color: "#bde0fe" },
-      { emoji: "⚖️", label: "Ethik", color: "#faf4b7" },
-      { emoji: "🇫🇷", label: "Französisch", color: "#fde2e4" },
-      { emoji: "🍳", label: "Hauswirtschaft", color: "#fce2c7" },
-      { emoji: "🖥️", label: "Informatik", color: "#c0e8f8" },
-      { emoji: "🇮🇹", label: "Italienisch", color: "#ffe5b4" },
-      { emoji: "👩‍⚖️", label: "Justiz", color: "#ead1dc" },
-      { emoji: "🎨", label: "Kunst", color: "#ffb6c1" },
-      { emoji: "🔤", label: "Latein", color: "#f8c8dc" },
-      { emoji: "📚", label: "Literatur", color: "#eae4e9" },
-      { emoji: "➗", label: "Mathematik", color: "#d3d3d3" },
-      { emoji: "🎼", label: "Musik", color: "#fff2f2" },
-      { emoji: "👩‍🏫", label: "Pädagogik", color: "#e1bee7" },
-      { emoji: "🤔", label: "Philosophie", color: "#fdf1e6" },
-      { emoji: "🧲", label: "Physik", color: "#e0ffff" },
-      { emoji: "💻", label: "Programmierung", color: "#87cefa" },
-      { emoji: "🧠", label: "Psychologie", color: "#ffcce6" },
-      { emoji: "✝️", label: "Religion", color: "#f0e68c" },
-      { emoji: "🇷🇺", label: "Russisch", color: "#ffd1dc" },
-      { emoji: "🌍", label: "Sozialkunde", color: "#ffa07a" },
-      { emoji: "🇪🇸", label: "Spanisch", color: "#f7c59f" },
-      { emoji: "⚽", label: "Sport", color: "#caf0f8" },
-      { emoji: "🏛️", label: "Staatsbürgerkunde", color: "#ffeebb" },
-      { emoji: "🔧", label: "Technik/Werken", color: "#ced4da" },
-      { emoji: "📐", label: "Technisches Zeichnen", color: "#dee2e6" },
-      { emoji: "🎭", label: "Theater", color: "#ffd6e0" },
-      { emoji: "💲", label: "Wirtschaftskunde", color: "#d2f0cd" },
+      { emoji: '🌌', label: 'Astronomie', color: '#d0d0f5' },
+      { emoji: '💼', label: 'BWL', color: '#f5deb3' },
+      { emoji: '🦠', label: 'Biologie', color: '#bbf3bb' },
+      { emoji: '⚗️', label: 'Chemie', color: '#c0ebc0' },
+      { emoji: '🇨🇳', label: 'Chinesisch', color: '#ffe4e1' },
+      { emoji: '📖', label: 'Deutsch', color: '#ffcccb' },
+      { emoji: '📘', label: 'Englisch', color: '#add8e6' },
+      { emoji: '🗺️', label: 'Erdkunde/Geografie', color: '#bde0fe' },
+      { emoji: '⚖️', label: 'Ethik', color: '#faf4b7' },
+      { emoji: '🇫🇷', label: 'Französisch', color: '#fde2e4' },
+      { emoji: '🍳', label: 'Hauswirtschaft', color: '#fce2c7' },
+      { emoji: '🖥️', label: 'Informatik', color: '#c0e8f8' },
+      { emoji: '🇮🇹', label: 'Italienisch', color: '#ffe5b4' },
+      { emoji: '👩‍⚖️', label: 'Justiz', color: '#ead1dc' },
+      { emoji: '🎨', label: 'Kunst', color: '#ffb6c1' },
+      { emoji: '🔤', label: 'Latein', color: '#f8c8dc' },
+      { emoji: '📚', label: 'Literatur', color: '#eae4e9' },
+      { emoji: '➗', label: 'Mathematik', color: '#d3d3d3' },
+      { emoji: '🎼', label: 'Musik', color: '#fff2f2' },
+      { emoji: '👩‍🏫', label: 'Pädagogik', color: '#e1bee7' },
+      { emoji: '🤔', label: 'Philosophie', color: '#fdf1e6' },
+      { emoji: '🧲', label: 'Physik', color: '#e0ffff' },
+      { emoji: '💻', label: 'Programmierung', color: '#87cefa' },
+      { emoji: '🧠', label: 'Psychologie', color: '#ffcce6' },
+      { emoji: '✝️', label: 'Religion', color: '#f0e68c' },
+      { emoji: '🇷🇺', label: 'Russisch', color: '#ffd1dc' },
+      { emoji: '🌍', label: 'Sozialkunde', color: '#ffa07a' },
+      { emoji: '🇪🇸', label: 'Spanisch', color: '#f7c59f' },
+      { emoji: '⚽', label: 'Sport', color: '#caf0f8' },
+      { emoji: '🏛️', label: 'Staatsbürgerkunde', color: '#ffeebb' },
+      { emoji: '🔧', label: 'Technik/Werken', color: '#ced4da' },
+      { emoji: '📐', label: 'Technisches Zeichnen', color: '#dee2e6' },
+      { emoji: '🎭', label: 'Theater', color: '#ffd6e0' },
+      { emoji: '💲', label: 'Wirtschaftskunde', color: '#d2f0cd' },
 
       // Farbauswahl-Optionen (keine Fächer)
-      { emoji: "🍎", label: "Rot", color: "#ff4d4d" },
-      { emoji: "🍌", label: "Gelb", color: "#ffd700" },
-      { emoji: "🍇", label: "Lila", color: "#dda0dd" },
-      { emoji: "🍊", label: "Orange", color: "#ffa500" },
-      { emoji: "🍋", label: "Hellgelb", color: "#fffacd" },
-      { emoji: "🍉", label: "Pink", color: "#ff69b4" },
-      { emoji: "🍒", label: "Kirschrot", color: "#dc143c" },
-      { emoji: "🍍", label: "Goldgelb", color: "#ffd700" },
-      { emoji: "🥝", label: "Grün", color: "#9acd32" },
-    ];
+      { emoji: '🍎', label: 'Rot', color: '#ff4d4d' },
+      { emoji: '🍌', label: 'Gelb', color: '#ffd700' },
+      { emoji: '🍇', label: 'Lila', color: '#dda0dd' },
+      { emoji: '🍊', label: 'Orange', color: '#ffa500' },
+      { emoji: '🍋', label: 'Hellgelb', color: '#fffacd' },
+      { emoji: '🍉', label: 'Pink', color: '#ff69b4' },
+      { emoji: '🍒', label: 'Kirschrot', color: '#dc143c' },
+      { emoji: '🍍', label: 'Goldgelb', color: '#ffd700' },
+      { emoji: '🥝', label: 'Grün', color: '#9acd32' },
+    ]
 
     const availableModules = ref([
-      { id: 1, type: "merke", label: "Merke", icon: "📝" },
-      { id: 2, type: "allgemein", label: "Allgemein", icon: "📖" },
-      { id: 3, type: "aufgaben", label: "Aufgaben", icon: "✅" },
-      { id: 4, type: "quellen", label: "Quellen", icon: "📚" },
-      { id: 5, type: "fragen", label: "Fragen", icon: "❓" },
-      { id: 6, type: "bilder", label: "Bilder", icon: "🖼️" },
-    ]);
+      { id: 1, type: 'merke', label: 'Merke', icon: '📝' },
+      { id: 2, type: 'allgemein', label: 'Allgemein', icon: '📖' },
+      { id: 3, type: 'aufgaben', label: 'Aufgaben', icon: '✅' },
+      { id: 4, type: 'quellen', label: 'Quellen', icon: '📚' },
+      { id: 5, type: 'fragen', label: 'Fragen', icon: '❓' },
+      { id: 6, type: 'bilder', label: 'Bilder', icon: '🖼️' },
+    ])
 
     // Filter
-    const filter = ref("");
+    const filter = ref('')
 
     /* BEFOREUNLOAD-WARNUNG */
     const isFormDirty = computed(() => {
       return (
-        newEntry.value.title.trim() !== "" ||
-        newEntry.value.subtitle.trim() !== "" ||
+        newEntry.value.title.trim() !== '' ||
+        newEntry.value.subtitle.trim() !== '' ||
         newEntry.value.modules.length > 0
-      );
-    });
+      )
+    })
 
     const handleBeforeUnload = (event) => {
       if (isFormDirty.value) {
-        event.preventDefault();
+        event.preventDefault()
         event.returnValue =
-          "Achtung! Es befinden sich noch ungespeicherte Inhalte in Ihrem Formular. Ungespeicherte Dateien gehen verloren!";
+          'Achtung! Es befinden sich noch ungespeicherte Inhalte in Ihrem Formular. Ungespeicherte Dateien gehen verloren!'
       }
-    };
+    }
 
     onMounted(() => {
-      window.addEventListener("beforeunload", handleBeforeUnload);
-    });
+      window.addEventListener('beforeunload', handleBeforeUnload)
+    })
     onBeforeUnmount(() => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    });
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    })
 
     /* METHODEN: DROPDOWN, FORMULAR, EDIT, DELETE */
     const toggleModuleDropdown = () => {
-      showModuleDropdown.value = !showModuleDropdown.value;
-    };
+      showModuleDropdown.value = !showModuleDropdown.value
+    }
 
     const addModule = (type) => {
-      const moduleData = availableModules.value.find((m) => m.type === type);
-      if (!moduleData) return;
+      const moduleData = availableModules.value.find((m) => m.type === type)
+      if (!moduleData) return
       const newModule = {
         ...moduleData,
-        uniqueId: Date.now() + "-" + Math.random().toString(36).substr(2, 5),
-        content: "",
+        uniqueId: Date.now() + '-' + Math.random().toString(36).substr(2, 5),
+        content: '',
         images: [],
-      };
-      newEntry.value.modules.push(newModule);
-      showModuleDropdown.value = false;
-    };
+      }
+      newEntry.value.modules.push(newModule)
+      showModuleDropdown.value = false
+    }
 
     const removeModule = (index) => {
-      newEntry.value.modules.splice(index, 1);
-    };
+      newEntry.value.modules.splice(index, 1)
+    }
 
     /**
      * updateBorderColor
      *  Hier KEIN .value, da emojiOptions ein normales Array ist.
      */
     const updateBorderColor = () => {
-      const selectedEmoji = emojiOptions.find(
-        (option) => option.emoji === newEntry.value.emoji
-      );
-      newEntry.value.borderColor = selectedEmoji ? selectedEmoji.color : "#ccc";
-    };
+      const selectedEmoji = emojiOptions.find((option) => option.emoji === newEntry.value.emoji)
+      newEntry.value.borderColor = selectedEmoji ? selectedEmoji.color : '#ccc'
+    }
 
     const addEntry = () => {
       if (!newEntry.value.title.trim()) {
-        alert("Bitte Titel angeben!");
-        return;
+        alert('Bitte Titel angeben!')
+        return
       }
       store.addEntry({
         ...newEntry.value,
         id: Date.now(),
-      });
+      })
       // Reset
       newEntry.value = {
         id: null,
-        title: "",
-        subtitle: "",
-        titleFont: "",
-        subtitleFont: "",
-        emoji: "",
-        borderColor: "#ccc",
+        title: '',
+        subtitle: '',
+        titleFont: '',
+        subtitleFont: '',
+        emoji: '',
+        borderColor: '#ccc',
         modules: [],
-      };
-    };
+      }
+    }
 
     const resetForm = () => {
       newEntry.value = {
         id: null,
-        title: "",
-        subtitle: "",
-        titleFont: "",
-        subtitleFont: "",
-        emoji: "",
-        borderColor: "#ccc",
+        title: '',
+        subtitle: '',
+        titleFont: '',
+        subtitleFont: '',
+        emoji: '',
+        borderColor: '#ccc',
         modules: [],
-      };
-    };
+      }
+    }
 
     const editEntry = (entry) => {
       const safeEntry = {
         ...entry,
         modules: entry.modules || [],
-      };
-      newEntry.value = JSON.parse(JSON.stringify(safeEntry));
-      store.deleteEntry(entry.id);
-      editingEntryId.value = entry.id;
-      scrollToForm();
-    };
+      }
+      newEntry.value = JSON.parse(JSON.stringify(safeEntry))
+      store.deleteEntry(entry.id)
+      editingEntryId.value = entry.id
+      scrollToForm()
+    }
 
     const promptDelete = (id) => {
-      entryIdToDelete.value = id;
-      showDeleteConfirm.value = true;
-    };
+      entryIdToDelete.value = id
+      showDeleteConfirm.value = true
+    }
     const confirmDelete = () => {
-      store.deleteEntry(entryIdToDelete.value);
-      showDeleteConfirm.value = false;
-      entryIdToDelete.value = null;
-    };
+      store.deleteEntry(entryIdToDelete.value)
+      showDeleteConfirm.value = false
+      entryIdToDelete.value = null
+    }
     const cancelDelete = () => {
-      showDeleteConfirm.value = false;
-      entryIdToDelete.value = null;
-    };
+      showDeleteConfirm.value = false
+      entryIdToDelete.value = null
+    }
 
     /* DRAG & DROP + PFEILE */
     const dragStart = (index, event) => {
-      draggedModuleIndex.value = index;
-      event.dataTransfer.effectAllowed = "move";
-    };
+      draggedModuleIndex.value = index
+      event.dataTransfer.effectAllowed = 'move'
+    }
     const dragEnter = (index) => {
-      if (draggedModuleIndex.value === null) return;
-      const draggedItem = newEntry.value.modules[draggedModuleIndex.value];
-      newEntry.value.modules.splice(draggedModuleIndex.value, 1);
-      newEntry.value.modules.splice(index, 0, draggedItem);
-      draggedModuleIndex.value = index;
-    };
+      if (draggedModuleIndex.value === null) return
+      const draggedItem = newEntry.value.modules[draggedModuleIndex.value]
+      newEntry.value.modules.splice(draggedModuleIndex.value, 1)
+      newEntry.value.modules.splice(index, 0, draggedItem)
+      draggedModuleIndex.value = index
+    }
     const dragEnd = () => {
-      draggedModuleIndex.value = null;
-    };
+      draggedModuleIndex.value = null
+    }
 
     const moveModuleUp = (index) => {
       if (index > 0) {
-        const mods = newEntry.value.modules;
-        [mods[index - 1], mods[index]] = [mods[index], mods[index - 1]];
+        const mods = newEntry.value.modules
+        ;[mods[index - 1], mods[index]] = [mods[index], mods[index - 1]]
       }
-    };
+    }
     const moveModuleDown = (index) => {
       if (index < newEntry.value.modules.length - 1) {
-        const mods = newEntry.value.modules;
-        [mods[index], mods[index + 1]] = [mods[index + 1], mods[index]];
+        const mods = newEntry.value.modules
+        ;[mods[index], mods[index + 1]] = [mods[index + 1], mods[index]]
       }
-    };
+    }
 
     /* BILDER-UPLOAD & RESIZE */
     const onFileChange = (mod, event) => {
-      const files = event.target.files;
-      if (!mod.images) mod.images = [];
+      const files = event.target.files
+      if (!mod.images) mod.images = []
       if (files.length + mod.images.length > 7) {
-        alert("Maximal 7 Bilder erlaubt!");
-        return;
+        alert('Maximal 7 Bilder erlaubt!')
+        return
       }
       Array.from(files).forEach((file) => {
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.onload = () => {
           mod.images.push({
             src: reader.result,
             width: 300,
             title: `Titel von ${file.name}`,
             description: `Beschreibung von ${file.name}`,
-          });
-        };
-        reader.readAsDataURL(file);
-      });
-    };
+          })
+        }
+        reader.readAsDataURL(file)
+      })
+    }
 
-    const resizing = ref(false);
-    const currentModule = ref(null);
-    const currentImageIndex = ref(null);
-    const startX = ref(0);
-    const startWidth = ref(0);
+    const resizing = ref(false)
+    const currentModule = ref(null)
+    const currentImageIndex = ref(null)
+    const startX = ref(0)
+    const startWidth = ref(0)
 
     const startResize = (event, mod, i) => {
-      resizing.value = true;
-      currentModule.value = mod;
-      currentImageIndex.value = i;
-      startX.value = event.clientX;
-      startWidth.value = mod.images[i].width || 300;
-      document.addEventListener("mousemove", doResize);
-      document.addEventListener("mouseup", stopResize);
-    };
+      resizing.value = true
+      currentModule.value = mod
+      currentImageIndex.value = i
+      startX.value = event.clientX
+      startWidth.value = mod.images[i].width || 300
+      document.addEventListener('mousemove', doResize)
+      document.addEventListener('mouseup', stopResize)
+    }
 
     const doResize = (event) => {
-      if (!resizing.value || !currentModule.value) return;
-      const newWidth = startWidth.value + (event.clientX - startX.value);
-      const img = currentModule.value.images[currentImageIndex.value];
-      img.width = newWidth > 50 ? newWidth : 50;
-    };
+      if (!resizing.value || !currentModule.value) return
+      const newWidth = startWidth.value + (event.clientX - startX.value)
+      const img = currentModule.value.images[currentImageIndex.value]
+      img.width = newWidth > 50 ? newWidth : 50
+    }
 
     const stopResize = () => {
-      resizing.value = false;
-      currentModule.value = null;
-      document.removeEventListener("mousemove", doResize);
-      document.removeEventListener("mouseup", stopResize);
-    };
+      resizing.value = false
+      currentModule.value = null
+      document.removeEventListener('mousemove', doResize)
+      document.removeEventListener('mouseup', stopResize)
+    }
 
     const removeImage = (mod, i) => {
-      mod.images.splice(i, 1);
-    };
+      mod.images.splice(i, 1)
+    }
 
     /* FILTER & HIGHLIGHT */
     const filteredEntries = computed(() =>
@@ -718,35 +659,34 @@ export default defineComponent({
         .slice()
         .sort((a, b) => b.id - a.id)
         .filter((entry) => {
-          const searchTerm = filter.value.toLowerCase();
-          const inTitle = entry.title?.toLowerCase().includes(searchTerm);
+          const searchTerm = filter.value.toLowerCase()
+          const inTitle = entry.title?.toLowerCase().includes(searchTerm)
           const inModules = (entry.modules || []).some((m) =>
-            (m.content || "").toLowerCase().includes(searchTerm)
-          );
-          const inEmoji =
-            entry.emoji && entry.emoji.toLowerCase().includes(searchTerm);
+            (m.content || '').toLowerCase().includes(searchTerm),
+          )
+          const inEmoji = entry.emoji && entry.emoji.toLowerCase().includes(searchTerm)
 
-          return inTitle || inModules || inEmoji;
-        })
-    );
+          return inTitle || inModules || inEmoji
+        }),
+    )
 
     const highlightText = (text) => {
-      if (!filter.value) return text;
-      const escapedFilter = filter.value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const regex = new RegExp(`(${escapedFilter})`, "gi");
-      return text.replace(regex, "<mark>$1</mark>");
-    };
+      if (!filter.value) return text
+      const escapedFilter = filter.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      const regex = new RegExp(`(${escapedFilter})`, 'gi')
+      return text.replace(regex, '<mark>$1</mark>')
+    }
 
     const scrollToForm = () => {
-      const formSection = document.querySelector(".heft-form");
-      formSection?.scrollIntoView({ behavior: "smooth" });
-    };
+      const formSection = document.querySelector('.heft-form')
+      formSection?.scrollIntoView({ behavior: 'smooth' })
+    }
 
     onBeforeUnmount(() => {
-      document.removeEventListener("mousemove", doResize);
-      document.removeEventListener("mouseup", stopResize);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    });
+      document.removeEventListener('mousemove', doResize)
+      document.removeEventListener('mouseup', stopResize)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    })
 
     return {
       /* States */
@@ -801,22 +741,22 @@ export default defineComponent({
       highlightText,
       scrollToForm,
       handleBeforeUnload,
-    };
+    }
   },
-});
+})
 </script>
 
-<style scoped>
+<style>
 /* Zusätzliche Google Fonts für neue Schriftarten */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&family=Poppins:wght@400;600&family=Raleway:wght@400;600&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&family=Lobster&family=Pacifico&family=Playfair+Display:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&family=Lobster&family=Pacifico&family=Playfair+Display:wght@400;700&display=swap');
 
 /* Haupt-Wrapper */
 .heft-view {
   max-width: 600px;
   margin: 0 auto;
   padding: 1.5rem;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #fefcfb;
   color: #4a4a4a;
   border-radius: 10px;
@@ -853,7 +793,7 @@ select {
   border-radius: 5px;
   background-color: #fff;
   margin-bottom: 1rem;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 textarea:focus,
 input:focus,
@@ -872,7 +812,9 @@ button {
   border-radius: 5px;
   cursor: pointer;
   width: auto;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 button:hover {
   transform: translateY(-2px);
@@ -1028,6 +970,7 @@ button:active {
   border-radius: 8px;
   margin-bottom: 1rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 .info-box2 {
   background-color: #ffdce0;
@@ -1057,7 +1000,7 @@ button:active {
   position: relative;
 }
 .entry-title::after {
-  content: "";
+  content: '';
   display: block;
   width: 50%;
   height: 2px;
@@ -1225,5 +1168,13 @@ button:active {
   gap: 10px;
   margin-top: 1rem;
   justify-content: center;
+}
+.dark-mode .heft-view .form-section h3,
+.dark-mode .heft-view .form-section p,
+.dark-mode .heft-view .form-section h2,
+.dark-mode .heft-view .form-section h1,
+.dark-mode .heft-view .filter-under-entries label,
+.dark-mode .heft-view .form-group label {
+  color: #000 !important;
 }
 </style>

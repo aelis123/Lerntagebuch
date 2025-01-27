@@ -10,12 +10,7 @@
         placeholder="Neues To-Do hinzufügen..."
         @keyup.enter="addTodo"
       />
-      <input
-        v-model="newTodoDate"
-        type="date"
-        placeholder="Fälligkeitsdatum wählen"
-      />
-      <!-- Color-Picker entfernt; wir setzen im Code eine Default-Farbe (#ffffff) -->
+      <input v-model="newTodoDate" type="date" placeholder="Fälligkeitsdatum wählen" />
       <button @click="addTodo">Hinzufügen</button>
     </div>
 
@@ -36,20 +31,11 @@
           <!-- Papierkorb -->
           <div class="delete-button" @click="confirmDelete(todo.id)">🗑️</div>
 
-          <!-- Neues Dropdown für Pastellfarben -->
+          <!-- Dropdown für Pastellfarben -->
           <div class="color-dropdown">
-            <select
-              :value="todo.color"
-              @change="updateTodoColor(todo, $event.target.value)"
-            >
-              <!-- Optionale 'Bitte wählen' oder 'Standardfarbe' -->
+            <select :value="todo.color" @change="updateTodoColor(todo, $event.target.value)">
               <option value="#ffffff">Standard</option>
-              <!-- Pastellfarben aus dem Array pastelColors -->
-              <option
-                v-for="(option, idx) in pastelColors"
-                :key="idx"
-                :value="option.value"
-              >
+              <option v-for="(option, idx) in pastelColors" :key="idx" :value="option.value">
                 {{ option.name }}
               </option>
             </select>
@@ -63,9 +49,7 @@
           <!-- Text & Fälligkeitsdatum -->
           <p>
             {{ todo.text }}
-            <small v-if="todo.dueDate">
-              ({{ formatDate(todo.dueDate) }})
-            </small>
+            <small v-if="todo.dueDate"> ({{ formatDate(todo.dueDate) }}) </small>
           </p>
         </li>
       </ul>
@@ -92,16 +76,9 @@
 
           <!-- Dropdown für Pastellfarben -->
           <div class="color-dropdown">
-            <select
-              :value="todo.color"
-              @change="updateTodoColor(todo, $event.target.value)"
-            >
+            <select :value="todo.color" @change="updateTodoColor(todo, $event.target.value)">
               <option value="#ffffff">Standard</option>
-              <option
-                v-for="(option, idx) in pastelColors"
-                :key="idx"
-                :value="option.value"
-              >
+              <option v-for="(option, idx) in pastelColors" :key="idx" :value="option.value">
                 {{ option.name }}
               </option>
             </select>
@@ -115,9 +92,7 @@
           <!-- Text & Fälligkeitsdatum -->
           <p>
             {{ todo.text }}
-            <small v-if="todo.dueDate">
-              ({{ formatDate(todo.dueDate) }})
-            </small>
+            <small v-if="todo.dueDate"> ({{ formatDate(todo.dueDate) }}) </small>
           </p>
         </li>
       </ul>
@@ -127,124 +102,108 @@
 
 <script>
 export default {
-  name: "ToDoView",
+  name: 'ToDoView',
   data() {
     return {
-      newTodo: "",
-      newTodoDate: "",
-      // Der User soll nicht mehr beim Anlegen wählen; wir setzen eine Default-Farbe
-      // newTodoColor: "#ffffff", --> entfernt
-
-      todos: [], // Alle To-Dos (aktiv & archiviert)
-      archiveOpen: false, // Steuert das Archiv-Dropdown
-
-      // Für Drag-and-Drop
+      newTodo: '',
+      newTodoDate: '',
+      todos: [],
+      archiveOpen: false,
       draggedTodoId: null,
-
-      // Liste der Pastellfarben
       pastelColors: [
-        { name: "Pastellrosa", value: "#ffd9e8" },
-        { name: "Pastellgelb", value: "#fff8b3" },
-        { name: "Pastellblau", value: "#d9eeff" },
-        { name: "Pastellgrün", value: "#d9ffe1" },
-        { name: "Pastellorange", value: "#ffe5d9" },
+        { name: 'Pastellrosa', value: '#ffd9e8' },
+        { name: 'Pastellgelb', value: '#fff8b3' },
+        { name: 'Pastellblau', value: '#d9eeff' },
+        { name: 'Pastellgrün', value: '#d9ffe1' },
+        { name: 'Pastellorange', value: '#ffe5d9' },
       ],
-    };
+    }
   },
   computed: {
     activeTodos() {
-      return this.todos.filter((todo) => !todo.completed);
+      return this.todos.filter((todo) => !todo.completed)
     },
     archivedTodos() {
-      return this.todos.filter((todo) => todo.completed);
+      return this.todos.filter((todo) => todo.completed)
     },
   },
   methods: {
     addTodo() {
-      if (this.newTodo.trim() !== "") {
+      if (this.newTodo.trim() !== '') {
         const newTask = {
           id: Date.now().toString(),
           text: this.newTodo.trim(),
           completed: false,
           dueDate: this.newTodoDate || null,
-          // Standard-Farbe auf Weiß (oder eine gewünschte Pastellfarbe)
-          color: "#ffffff",
-        };
-        this.todos.push(newTask);
-
-        // Felder zurücksetzen
-        this.newTodo = "";
-        this.newTodoDate = "";
-        // this.newTodoColor = "#ffffff"; // weg
-
-        this.saveTodos();
+          color: '#ffffff', // Standardfarbe
+        }
+        this.todos.push(newTask)
+        this.newTodo = ''
+        this.newTodoDate = ''
+        this.saveTodos()
       }
     },
-    // Dropdown-Farbe ändern
     updateTodoColor(todo, newColor) {
-      todo.color = newColor;
-      this.saveTodos();
+      todo.color = newColor
+      this.saveTodos()
     },
-
     toggleComplete(id) {
-      const todo = this.todos.find((todo) => todo.id === id);
+      const todo = this.todos.find((todo) => todo.id === id)
       if (todo) {
-        todo.completed = !todo.completed;
-        this.saveTodos();
+        todo.completed = !todo.completed
+        this.saveTodos()
       }
     },
     confirmDelete(id) {
-      if (confirm("Möchtest du dieses To-Do wirklich löschen?")) {
-        this.deleteTodo(id);
+      if (confirm('Möchtest du dieses To-Do wirklich löschen?')) {
+        this.deleteTodo(id)
       }
     },
     deleteTodo(id) {
-      this.todos = this.todos.filter((todo) => todo.id !== id);
-      this.saveTodos();
+      this.todos = this.todos.filter((todo) => todo.id !== id)
+      this.saveTodos()
     },
     toggleArchive() {
-      this.archiveOpen = !this.archiveOpen;
+      this.archiveOpen = !this.archiveOpen
     },
     saveTodos() {
-      localStorage.setItem("todos", JSON.stringify(this.todos));
+      localStorage.setItem('todos', JSON.stringify(this.todos))
     },
     loadTodos() {
-      const savedTodos = JSON.parse(localStorage.getItem("todos") || "[]");
-      this.todos = savedTodos;
+      const savedTodos = JSON.parse(localStorage.getItem('todos') || '[]')
+      this.todos = savedTodos
     },
     formatDate(date) {
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      return new Date(date).toLocaleDateString("de-DE", options);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('de-DE', options)
     },
-
-    // ---- Drag-and-Drop-Methoden ----
     onDragStart(event, todo) {
-      // Speichere die ID des gezogenen To-Dos
-      this.draggedTodoId = todo.id;
-      event.dataTransfer.effectAllowed = "move";
+      this.draggedTodoId = todo.id
+      event.dataTransfer.effectAllowed = 'move'
     },
     onDragEnter(event, targetTodo) {
-      if (this.draggedTodoId === targetTodo.id) return;
-
-      const draggedIndex = this.todos.findIndex((t) => t.id === this.draggedTodoId);
-      const targetIndex = this.todos.findIndex((t) => t.id === targetTodo.id);
-
-      const draggedItem = this.todos[draggedIndex];
-      this.todos.splice(draggedIndex, 1);
-      this.todos.splice(targetIndex, 0, draggedItem);
+      if (this.draggedTodoId === targetTodo.id) return
+      const draggedIndex = this.todos.findIndex((t) => t.id === this.draggedTodoId)
+      const targetIndex = this.todos.findIndex((t) => t.id === targetTodo.id)
+      const draggedItem = this.todos[draggedIndex]
+      this.todos.splice(draggedIndex, 1)
+      this.todos.splice(targetIndex, 0, draggedItem)
     },
     onDragEnd() {
-      this.draggedTodoId = null;
-      this.saveTodos();
+      this.draggedTodoId = null
+      this.saveTodos()
     },
   },
   mounted() {
-    this.loadTodos();
+    this.loadTodos()
   },
-};
+}
 </script>
 
-<style scoped>
+<style>
+/* Kein scoped => globale Styles + Darkmode per .dark-mode .todo-view */
+
+/* ---- Lightmode (Standard) ---- */
 .todo-view {
   padding: 1.5rem;
   font-family: 'Roboto', sans-serif;
@@ -314,7 +273,9 @@ export default {
   font-size: 1.2rem;
   color: #d9534f;
   cursor: pointer;
-  transition: transform 0.2s ease, color 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.3s ease;
 }
 
 .delete-button:hover {
@@ -322,7 +283,6 @@ export default {
   color: #c9302c;
 }
 
-/* Neues CSS für das Dropdown rechts neben dem Mülleimer */
 .color-dropdown select {
   padding: 5px;
   border: 1px solid #ccc;
@@ -331,7 +291,7 @@ export default {
   cursor: pointer;
   font-size: 0.9rem;
   color: #4a4a4a;
-  margin-right: 5px; /* kleiner Abstand zum Kreis */
+  margin-right: 5px;
 }
 
 .color-dropdown select:focus {
@@ -348,7 +308,9 @@ export default {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .circle:hover {
@@ -371,13 +333,55 @@ export default {
   font-size: 1.2rem;
 }
 
-@media (max-width: 768px) {
-  .todo-item p {
-    font-size: 0.9rem;
-  }
-  .circle {
-    width: 30px;
-    height: 30px;
-  }
+/* ---- Darkmode Overrides ---- */
+.dark-mode .todo-view {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+.dark-mode .todo-view .todo-input input {
+  background-color: #444;
+  color: #fff;
+  border-color: #666;
+}
+
+.dark-mode .todo-view .todo-input input::placeholder {
+  color: #ccc;
+}
+
+.dark-mode .todo-view .todo-input button {
+  background-color: #7f6db7;
+}
+.dark-mode .todo-view .todo-input button:hover {
+  background-color: #6f5ea3;
+}
+
+.dark-mode .todo-view .todo-item {
+  border-bottom: 1px solid #444;
+  color: black;
+}
+
+.dark-mode .todo-view .todo-item.archived p {
+  color: #aaa;
+}
+
+.dark-mode .todo-view .delete-button {
+  color: #ff8a8a;
+}
+.dark-mode .todo-view .delete-button:hover {
+  color: #e06c6c;
+}
+
+.dark-mode .todo-view .color-dropdown select {
+  background-color: #555;
+  color: #eee;
+  border-color: #666;
+}
+
+.dark-mode .todo-view .circle {
+  border-color: #666;
+}
+.dark-mode .todo-view .circle:hover {
+  background-color: #555;
 }
 </style>

@@ -1,6 +1,19 @@
 <template>
     <section class="documentation-view" ref="documentation">
 
+      <div class="info-box">
+<p><code> 27.01.2025 </code></p>
+<strong>Update Einführung Darkmode + Datenbanküberarbeitung</strong>
+<p>Heute wurde die Datenbank (IT-Handbuch) erweitert und stark ergänzt. <br>
+Außerdem gibt es nun einen Darkmode für die Anwendung. Dafür musst du nur auf die Sonne/den Mond oben in der Navigationsbar klicken.</p>
+<br><p>Weiter könnt ihr nun Wort für Wort die Datenbank filtern und nicht mehr ausschließlich nach den Überschriften suchen. Das ist praktisch, wenn man zum Beispiel alle Beiträge zu einem bestimmten Thema haben möchte (z.B. Projektmanagement). Diese Funktion soll auch noch in dieser Ausführlichkeit in Hefteinträge eingefügt werden.</p>
+
+
+
+</div>
+
+
+
 <div class="info-box">
 <p><code> 13.01.2025 </code></p>
 <strong>Update Hefteinträge</strong>

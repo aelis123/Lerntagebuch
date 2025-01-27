@@ -3,15 +3,9 @@
     <h2>🌟 Neuer Tagebuch-Eintrag 🌟</h2>
     <form @submit.prevent="saveEntry">
       <div class="form-group date-picker">
-  <label for="entry-date">📅 Für welchen Tag ist dieser Eintrag?</label>
-  <input
-    id="entry-date"
-    type="date"
-    v-model="entry.date"
-    :max="today"
-    class="date-input"
-  />
-</div>
+        <label for="entry-date">📅 Für welchen Tag ist dieser Eintrag?</label>
+        <input id="entry-date" type="date" v-model="entry.date" :max="today" class="date-input" />
+      </div>
 
       <div class="form-group">
         <label for="what-learned">📚 Was habe ich gelernt?</label>
@@ -90,113 +84,84 @@
 
 <script>
 export default {
-  name: "EntryView",
+  name: 'EntryView',
   data() {
     return {
       entry: {
         id: null,
-        date: "",
-        whatLearned: "",
-        challenges: "",
-        success: "",
-        proudMoment: "",
-        discoveries: "",
-        improvement: "",
-        mood: "",
-        timestamp: "",
+        date: '',
+        whatLearned: '',
+        challenges: '',
+        success: '',
+        proudMoment: '',
+        discoveries: '',
+        improvement: '',
+        mood: '',
+        timestamp: '',
       },
       moods: [
-        { emoji: "😊", label: "Glücklich" },
-        { emoji: "😐", label: "Neutral" },
-        { emoji: "😢", label: "Traurig" },
-        { emoji: "😠", label: "Wütend" },
-        { emoji: "😴", label: "Müde" },
-        { emoji: "🤔", label: "Nachdenklich" },
-        { emoji: "😌", label: "Erleichtert" },
-        { emoji: "🤒", label: "Krank" },
+        { emoji: '😊', label: 'Glücklich' },
+        { emoji: '😐', label: 'Neutral' },
+        { emoji: '😢', label: 'Traurig' },
+        { emoji: '😠', label: 'Wütend' },
+        { emoji: '😴', label: 'Müde' },
+        { emoji: '🤔', label: 'Nachdenklich' },
+        { emoji: '😌', label: 'Erleichtert' },
+        { emoji: '🤒', label: 'Krank' },
       ],
-      today: new Date().toISOString().split("T")[0], // Aktuelles Datum für die Maximalgrenze
-    };
+      today: new Date().toISOString().split('T')[0], // Aktuelles Datum für die Maximalgrenze
+    }
   },
   methods: {
     saveEntry() {
-      const entries = JSON.parse(localStorage.getItem("entries") || "[]");
+      const entries = JSON.parse(localStorage.getItem('entries') || '[]')
 
-      const newId = entries.length + 1;
-      this.entry.id = newId;
+      const newId = entries.length + 1
+      this.entry.id = newId
 
       // Standarddatum verwenden, falls kein Datum ausgewählt wurde
       if (!this.entry.date) {
-        this.entry.date = this.today;
+        this.entry.date = this.today
       }
 
       // Uhrzeit für den Eintrag speichern
-      const now = new Date();
-      this.entry.timestamp = `${this.entry.date}T${now.toTimeString().split(" ")[0]}`;
+      const now = new Date()
+      this.entry.timestamp = `${this.entry.date}T${now.toTimeString().split(' ')[0]}`
 
-      entries.push(this.entry);
-      localStorage.setItem("entries", JSON.stringify(entries));
+      entries.push(this.entry)
+      localStorage.setItem('entries', JSON.stringify(entries))
 
-      alert("Eintrag gespeichert!");
-
-      this.resetEntry();
+      alert('Eintrag gespeichert!')
+      this.resetEntry()
     },
     selectMood(mood) {
-      this.entry.mood = mood;
+      this.entry.mood = mood
     },
     resetEntry() {
       this.entry = {
         id: null,
-        date: "",
-        whatLearned: "",
-        challenges: "",
-        success: "",
-        proudMoment: "",
-        discoveries: "",
-        improvement: "",
-        mood: "",
-        timestamp: "",
-      };
+        date: '',
+        whatLearned: '',
+        challenges: '',
+        success: '',
+        proudMoment: '',
+        discoveries: '',
+        improvement: '',
+        mood: '',
+        timestamp: '',
+      }
     },
   },
-};
+}
 </script>
 
-<style scoped>
+<style>
+/*
+   Kein "scoped" mehr -> wir stylen global,
+   und können .dark-mode .entry etc. direkt ansprechen.
+*/
 
-.date-picker {
-  margin-bottom: 1.5rem;
-}
-
-.date-input {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fdfcff;
-  box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  font-family: 'Roboto', sans-serif;
-  color: #333;
-}
-
-.date-input:focus {
-  border-color: #b9a9e8;
-  outline: none;
-  box-shadow: 0px 0px 6px rgba(185, 169, 232, 0.5);
-}
-
-.date-input:hover {
-  border-color: #b9a9e8;
-}
-
-.form-group label {
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-
+/* Lightmode (Standard) */
 .entry {
   padding: 2rem;
   max-width: 800px;
@@ -255,7 +220,9 @@ textarea:focus {
 .mood-selector span {
   font-size: 2rem;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .mood-selector .selected {
@@ -273,7 +240,9 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 button:hover {
@@ -287,5 +256,70 @@ button:active {
 
 .form-actions {
   text-align: center;
+}
+
+/* Inputs (z.B. date-input) */
+.date-picker {
+  margin-bottom: 1.5rem;
+}
+
+.date-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fdfcff;
+  box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.date-input:focus {
+  border-color: #b9a9e8;
+  outline: none;
+  box-shadow: 0px 0px 6px rgba(185, 169, 232, 0.5);
+}
+
+.date-input:hover {
+  border-color: #b9a9e8;
+}
+
+/* ---------------------------------------
+   DARKMODE: .dark-mode .entry
+   --------------------------------------- */
+.dark-mode .entry {
+  background-color: #333; /* dunkler Container */
+  color: #f5f5f5;
+}
+
+.dark-mode .entry h2 {
+  color: #c7b2fa; /* oder was du magst */
+}
+
+.dark-mode .entry textarea,
+.dark-mode .entry .date-input {
+  background-color: #444;
+  color: #f5f5f5;
+  border-color: #666;
+  box-shadow: none;
+}
+
+.dark-mode .entry textarea:focus,
+.dark-mode .entry .date-input:focus {
+  color: aliceblue;
+  border-color: #c7b2fa;
+  box-shadow: 0px 0px 6px rgba(199, 178, 250, 0.5);
+}
+
+.dark-mode .entry button {
+  background-color: #7f6db7;
+}
+.dark-mode label {
+  color: aliceblue;
+}
+.dark-mode .entry button:hover {
+  background-color: #6f5ea3;
 }
 </style>

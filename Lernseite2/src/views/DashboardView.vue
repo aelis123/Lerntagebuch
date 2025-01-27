@@ -28,11 +28,7 @@
           >
             <div v-if="day.date" class="calendar-date">
               <span>{{ day.date }}</span>
-              <div
-                v-if="day.entry"
-                class="emoji-marker"
-                @click="goToEntry(day.entry.id)"
-              >
+              <div v-if="day.entry" class="emoji-marker" @click="goToEntry(day.entry.id)">
                 {{ day.entry.mood }}
               </div>
             </div>
@@ -45,136 +41,138 @@
 
 <script>
 export default {
-  name: "DashboardView",
+  name: 'DashboardView',
   data() {
     return {
-      currentDate: new Date().toLocaleDateString("de-DE", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+      currentDate: new Date().toLocaleDateString('de-DE', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
       }),
       currentMonth: new Date().getMonth(),
       currentYear: new Date().getFullYear(),
       entries: [],
-    };
+    }
   },
   computed: {
     formattedMonthYear() {
-      const date = new Date(this.currentYear, this.currentMonth);
-      return date.toLocaleDateString("de-DE", { month: "long", year: "numeric" });
+      const date = new Date(this.currentYear, this.currentMonth)
+      return date.toLocaleDateString('de-DE', { month: 'long', year: 'numeric' })
     },
     daysOfWeek() {
-      return ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+      return ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
     },
     calendarDays() {
-  const days = [];
-  const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
-  const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+      const days = []
+      const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay()
+      const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate()
 
-  // Leere Felder für die erste Woche auffüllen
-  for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-    days.push({ date: null });
-  }
+      // Leere Felder für die erste Woche auffüllen
+      for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+        days.push({ date: null })
+      }
 
-  // Tage des Monats generieren
-  for (let i = 1; i <= daysInMonth; i++) {
-    const dateString = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
+      // Tage des Monats generieren
+      for (let i = 1; i <= daysInMonth; i++) {
+        const dateString = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
 
-    // Suche nach gültigen Einträgen
-    const entry = this.entries.find((e) => {
-      const entryDate = e.timestamp.split("T")[0]; // Nur Datumsteil vergleichen
-      return entryDate === dateString;
-    });
+        // Suche nach gültigen Einträgen
+        const entry = this.entries.find((e) => {
+          const entryDate = e.timestamp.split('T')[0] // Nur Datumsteil vergleichen
+          return entryDate === dateString
+        })
 
-    days.push({ date: i, entry });
-  }
+        days.push({ date: i, entry })
+      }
 
-  return days;
-},
-
+      return days
+    },
     greeting() {
-      const hour = new Date().getHours();
-
+      const hour = new Date().getHours()
       if (hour >= 6 && hour < 12) {
-        return "Guten Morgen!";
+        return 'Guten Morgen!'
       } else if (hour >= 12 && hour < 14) {
-        return "Mahlzeit!";
+        return 'Mahlzeit!'
       } else if (hour >= 14 && hour < 18) {
-        return "Guten Nachmittag!";
+        return 'Guten Nachmittag!'
       } else if (hour >= 18 && hour <= 23) {
-        return "Guten Abend!";
+        return 'Guten Abend!'
       } else {
-        return "Hallo Nachteule!";
+        return 'Hallo Nachteule!'
       }
     },
   },
- methods: {
-  loadEntries() {
-    const savedEntries = JSON.parse(localStorage.getItem("entries") || "[]");
+  methods: {
+    loadEntries() {
+      const savedEntries = JSON.parse(localStorage.getItem('entries') || '[]')
 
-    // Filtere ungültige Einträge heraus
-    this.entries = savedEntries.filter((entry, index, self) => {
-      const isValid =
-        entry.timestamp &&
-        !isNaN(new Date(entry.timestamp)) &&
-        typeof entry.id === "number" &&
-        entry.id > 0 &&
-        self.findIndex((e) => e.id === entry.id) === index; // Verhindere doppelte IDs
+      // Filtere ungültige Einträge heraus
+      this.entries = savedEntries.filter((entry, index, self) => {
+        const isValid =
+          entry.timestamp &&
+          !isNaN(new Date(entry.timestamp)) &&
+          typeof entry.id === 'number' &&
+          entry.id > 0 &&
+          self.findIndex((e) => e.id === entry.id) === index // Verhindere doppelte IDs
 
-      if (!isValid) {
-        console.warn("Ungültiger Eintrag entfernt:", entry);
+        if (!isValid) {
+          console.warn('Ungültiger Eintrag entfernt:', entry)
+        }
+        return isValid
+      })
+
+      console.log('Geladene gültige Einträge:', this.entries) // Debugging
+    },
+    changeMonth(direction) {
+      this.currentMonth += direction
+
+      // Logik für Monatswechsel
+      if (this.currentMonth < 0) {
+        this.currentMonth = 11
+        this.currentYear--
+      } else if (this.currentMonth > 11) {
+        this.currentMonth = 0
+        this.currentYear++
       }
-      return isValid;
-    });
 
-    console.log("Geladene gültige Einträge:", this.entries); // Debugging
+      console.log(`Monat geändert: ${this.currentMonth + 1}, Jahr: ${this.currentYear}`) // Debugging
+    },
+    getBackgroundColor(mood) {
+      const moodColors = {
+        '😊': '#d4f1f4',
+        '😐': '#f9f7d9',
+        '😢': '#fce4ec',
+        '😠': '#ffe5d9',
+        '😴': '#e3e4f1',
+        '🤔': '#f3e9d2',
+        '😌': '#d1f4e6',
+        '🤒': '#e8daf9',
+      }
+      return moodColors[mood] || '#ffffff'
+    },
+    goToEntry(id) {
+      // Überprüfe, ob die ID gültig ist
+      const entryExists = this.entries.some((entry) => entry.id === id)
+      if (!entryExists) {
+        console.warn('Eintrag nicht gefunden:', id)
+        return
+      }
+      this.$router.push({ path: '/entries', query: { entryId: id } })
+    },
   },
-  changeMonth(direction) {
-    this.currentMonth += direction;
-
-    // Logik für Monatswechsel
-    if (this.currentMonth < 0) {
-      this.currentMonth = 11;
-      this.currentYear--;
-    } else if (this.currentMonth > 11) {
-      this.currentMonth = 0;
-      this.currentYear++;
-    }
-
-    console.log(`Monat geändert: ${this.currentMonth + 1}, Jahr: ${this.currentYear}`); // Debugging
+  mounted() {
+    this.loadEntries()
   },
-  getBackgroundColor(mood) {
-    const moodColors = {
-      "😊": "#d4f1f4",
-      "😐": "#f9f7d9",
-      "😢": "#fce4ec",
-      "😠": "#ffe5d9",
-      "😴": "#e3e4f1",
-      "🤔": "#f3e9d2",
-      "😌": "#d1f4e6",
-      "🤒": "#e8daf9",
-    };
-    return moodColors[mood] || "#ffffff";
-  },
-  goToEntry(id) {
-    // Überprüfe, ob die ID gültig ist
-    const entryExists = this.entries.some((entry) => entry.id === id);
-    if (!entryExists) {
-      console.warn("Eintrag nicht gefunden:", id);
-      return;
-    }
-
-    this.$router.push({ path: "/entries", query: { entryId: id } });
-  },
-},
-mounted() {
-  this.loadEntries();
-},
-
-};
+}
 </script>
-<style scoped>
+
+<style>
+/*  ------------------------------------------------------------
+    Kein "scoped", damit .dark-mode .dashboard etc. global greifen
+    ------------------------------------------------------------ */
+
+/* Lightmode (Standard) */
 .dashboard {
   padding: 1.5rem;
   font-family: 'Roboto', sans-serif;
@@ -237,7 +235,6 @@ button:hover {
   font-weight: bold;
   padding: 5px;
   color: #555;
-
 }
 
 .calendar-day {
@@ -281,5 +278,30 @@ button:hover {
   .emoji-marker {
     font-size: 1rem;
   }
+}
+
+/* -------------------------------------------------
+   DARKMODE-Styling (kein :deep, kein scoped nötig)
+   ------------------------------------------------ */
+.dark-mode .dashboard {
+  background-color: #333; /* Hintergrund der Dashboard-Sektion */
+  color: #f5f5f5; /* Schriftfarbe */
+}
+
+.dark-mode .calendar {
+  background-color: #444; /* Kalender-Hintergrund */
+  color: aliceblue;
+}
+
+.dark-mode .calendar-day:hover {
+  background-color: #555;
+}
+
+.dark-mode button {
+  background-color: #b9a9e8;
+  color: #fff;
+}
+.dark-mode .calendar-day-label {
+  color: aliceblue;
 }
 </style>
