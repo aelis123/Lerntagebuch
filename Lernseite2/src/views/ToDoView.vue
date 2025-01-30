@@ -143,11 +143,11 @@ export default {
 
       // Liste der Pastellfarben
       pastelColors: [
-        { name: "Pastellrosa", value: "#ffd9e8" },
-        { name: "Pastellgelb", value: "#fff8b3" },
-        { name: "Pastellblau", value: "#d9eeff" },
-        { name: "Pastellgrün", value: "#d9ffe1" },
-        { name: "Pastellorange", value: "#ffe5d9" },
+      { name: "🌸", value: "#ffd9e8" },
+        { name: "🌻", value: "#fff8b3" },
+        { name: "🌊", value: "#d9eeff" },
+        { name: "🍀", value: "#d9ffe1" },
+        { name: "🍑", value: "#ffe5d9" },
       ],
     };
   },
@@ -175,7 +175,7 @@ export default {
         // Felder zurücksetzen
         this.newTodo = "";
         this.newTodoDate = "";
-        // this.newTodoColor = "#ffffff"; // weg
+
 
         this.saveTodos();
       }
