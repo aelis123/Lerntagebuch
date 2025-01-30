@@ -4,8 +4,8 @@
     <div v-if="entries.length === 0">Keine Einträge vorhanden.</div>
     <div class="controls">
       <button @click="sortEntries">Sortieren: {{ sortOrder }}</button>
-      
-      
+
+
       <label for="emoji">Filter nach Stimmung:</label>
       <select id="emoji" v-model="filterEmoji">
         <option value="">Alle</option>
@@ -48,9 +48,9 @@ export default {
     return {
       entries: [],
       sortOrder: "Älteste zuerst",
-     
+
       filterEmoji: "",
-     
+
       emojis: ["😊", "😢", "😠", "😴", "🤔", "😌", "🤒"],
     };
   },
@@ -101,17 +101,40 @@ export default {
       this.sortOrder = this.sortOrder === "Älteste zuerst" ? "Neueste zuerst" : "Älteste zuerst";
     },
     async exportToPDF() {
-      const element = this.$refs.entryList;
-      const canvas = await html2canvas(element);
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
+  const pdf = new jsPDF("p", "mm", "a4");
+  const element = this.$refs.entryList;
 
-      const imgWidth = 210; // A4 width in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  // Überschrift für die PDF
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(18);
+  pdf.text("Meine Skillville Tagebucheinträge", 10, 20);
 
-      pdf.addImage(imgData, "PNG", 0, 10, imgWidth, imgHeight);
-      pdf.save("entries.pdf");
-    },
+  let yOffset = 30; // Startposition nach Überschrift
+
+  // Alle Einträge durchgehen
+  for (const entry of element.children) {
+    const canvas = await html2canvas(entry, {
+      scale: 1.5, // Niedrigere Skalierung, um Dateigröße zu verringern
+      useCORS: true
+    });
+
+    const imgData = canvas.toDataURL("image/jpeg", 0.6); // JPEG statt PNG + 60% Qualität
+    const imgWidth = 180; // A4 Breite in mm mit Rand
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    // Falls der Eintrag nicht mehr auf die aktuelle Seite passt, neue Seite hinzufügen
+    if (yOffset + imgHeight > 270) {
+      pdf.addPage();
+      yOffset = 20; // Neue Seite beginnt weiter oben
+    }
+
+    pdf.addImage(imgData, "JPEG", 10, yOffset, imgWidth, imgHeight);
+    yOffset += imgHeight + 10; // Platz zwischen den Einträgen
+  }
+
+  pdf.save("entries.pdf");
+}
+
   },
   mounted() {
     this.loadEntries();
@@ -191,7 +214,7 @@ button:hover {
   background-color: #d32f2f;
 }
 .controls button:hover {
-  background-color: rgb(214, 148, 214); 
+  background-color: rgb(214, 148, 214);
 }
 
 </style>
