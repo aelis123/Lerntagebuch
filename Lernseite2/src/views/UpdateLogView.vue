@@ -1,6 +1,19 @@
 <template>
     <section class="documentation-view" ref="documentation">
 
+
+      <div class="info-box">
+<p><code> 11.02.2025 </code></p>
+<strong>Einjähriges!</strong>
+<p>Morgen bin ich auf den Tag genau ein Jahr in meiner Umschulung zur Anwendungsentwicklerin! </p>
+<p>Anstatt Kuchen gibt's eine Neuerung, es gibt jetzt eine komplette Dokumentation zu Vuetify im Bereich "Technische Dokumentation".</p>
+<p>In Vuetify habe ich mich die letzten Tage eingearbeitet und eine App damit für die Firma, in der ich gerade arbeite, erstellt.</p>
+
+
+
+</div>
+
+
 <div class="info-box">
 <p><code> 13.01.2025 </code></p>
 <strong>Update Hefteinträge</strong>
