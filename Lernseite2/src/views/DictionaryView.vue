@@ -679,10 +679,7 @@ export default {
           definition: 'Ein Netzwerkdienst zur Überprüfung der Erreichbarkeit eines Geräts.',
         },
         { word: 'Prettier', definition: 'Ein automatisches Codeformatierungstool.' },
-        {
-          word: 'Progressive Web App (PWA)',
-          definition: 'Eine Webanwendung mit App-ähnlichem Verhalten.',
-        },
+
         { word: 'Provisioning', definition: 'Einrichten und Konfigurieren von IT-Ressourcen.' },
         {
           word: 'Proxy Server',
@@ -693,6 +690,18 @@ export default {
           word: 'Refactoring',
           definition: 'Verbessern von Code, ohne die Funktionalität zu ändern.',
         },
+
+        {
+          word: 'Vuetify',
+          definition:
+            'Vuetify ist ein UI-Framework für Vue.js, das auf Material Design basiert. Es bietet eine große Auswahl an vorgefertigten, responsiven Komponenten wie Buttons, Dialoge, Tabellen und Karten, die sich leicht anpassen lassen. Vuetify erleichtert die Entwicklung moderner, optisch ansprechender Webanwendungen und unterstützt Dark-Mode, Grid-Systeme und Theme-Anpassungen.',
+        },
+        {
+          word: 'VueUse',
+          definition:
+            'VueUse ist eine Sammlung von nützlichen Composables für Vue 3, die häufig benötigte Funktionen bereitstellen, wie z. B. lokale Speicherung (useLocalStorage), Medienabfragen (useMediaQuery) oder Event-Listener (useEventListener). VueUse erleichtert das Arbeiten mit reaktiven Zuständen und Browser-APIs, indem es wiederverwendbare Hooks für verschiedene Anwendungsfälle bereitstellt.',
+        },
+
         {
           word: 'Regression Testing',
           definition:
@@ -1387,6 +1396,27 @@ export default {
           word: 'Mocking',
           definition:
             'Mocking bezeichnet im Softwareentwicklungs- und Testkontext das Erstellen von simulierten Objekten oder Diensten, die das Verhalten echter Komponenten nachahmen. Es wird häufig verwendet, um isolierte Tests durchzuführen, indem externe Abhängigkeiten ersetzt werden. Mocking hilft dabei, bestimmte Szenarien zu simulieren, Fehler zu reproduzieren oder zu prüfen, wie eine Komponente auf verschiedene Eingaben reagiert, ohne die tatsächliche Infrastruktur zu benötigen. Besonders nützlich ist es bei Unit-Tests, API-Simulationen oder der Validierung komplexer Logiken.',
+        },
+
+        {
+          word: 'PWA (Progressive Web App)',
+          definition:
+            'Eine Progressive Web App (PWA) ist eine Webanwendung, die sich wie eine native App verhält. Sie kann auf Smartphones und Computern installiert werden, funktioniert teilweise offline und nutzt moderne Webtechnologien wie Service Worker, Web App Manifest und Push-Benachrichtigungen. PWAs laufen direkt im Browser und benötigen keinen App-Store.',
+        },
+        {
+          word: 'Tauri',
+          definition:
+            'Tauri ist ein Framework zur Erstellung von Desktop-Apps mit Web-Technologien wie HTML, CSS und JavaScript. Im Gegensatz zu Electron benötigt Tauri kein integriertes Chromium, sondern nutzt das native Webview des Betriebssystems. Dadurch sind Tauri-Apps deutlich kleiner und ressourcenschonender. Der Kern von Tauri ist in Rust geschrieben, was für Sicherheit und hohe Leistung sorgt.',
+        },
+        {
+          word: 'Chromium',
+          definition:
+            'Chromium ist ein Open-Source-Browserprojekt, das als Basis für viele bekannte Browser wie Google Chrome, Microsoft Edge und Opera dient. Es stellt die Rendering-Engine Blink bereit und bildet die Grundlage für Web-Apps, die auf Browser-Technologien basieren. In Desktop-App-Frameworks wie Electron wird Chromium oft mitgeliefert, um eine konsistente Umgebung zu gewährleisten.',
+        },
+        {
+          word: 'Playwright',
+          definition:
+            'Playwright ist ein Open-Source-Testframework von Microsoft zur Automatisierung von Webanwendungen. Es ermöglicht das Testen von Webseiten in verschiedenen Browsern (Chromium, Firefox, WebKit) und unterstützt Funktionen wie parallele Tests, Screenshot- und Videoaufzeichnungen sowie das Interagieren mit der Benutzeroberfläche. Playwright eignet sich besonders für End-to-End-Tests und UI-Tests.',
         },
       ],
     }
