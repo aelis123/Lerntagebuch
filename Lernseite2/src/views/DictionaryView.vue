@@ -912,7 +912,11 @@ export default {
           definition:
             'Die rechtliche Erlaubnis zur Nutzung von Software gemäß den Lizenzbedingungen.',
         },
-        { word: 'Hyper-V', definition: 'Eine Virtualisierungsplattform von Microsoft.' },
+        {
+          word: 'Hyper-V',
+          definition:
+            'Hyper-V ist eine Virtualisierungstechnologie von Microsoft, die es ermöglicht, mehrere Betriebssysteme gleichzeitig auf einem einzigen physischen Rechner auszuführen. Es basiert auf einem Hypervisor und wird häufig für Server- und Entwicklungsumgebungen genutzt. Hyper-V unterstützt Funktionen wie Snapshots, Live-Migration und Ressourcenmanagement, um virtuelle Maschinen effizient zu betreiben.',
+        },
         {
           word: 'Steakholder',
           definition: 'Ein Scherz, den gerne alte Männer machen, wenn es um Stakeholder geht.',
@@ -921,6 +925,35 @@ export default {
           word: 'DHCP (Dynamic Host Configuration Protocol)',
           definition:
             'Ein Netzwerkprotokoll, das automatisch IP-Adressen sowie DNS- und Gateway-Einstellungen an Geräte vergibt. In VirtualBox wird DHCP oft im NAT- oder Bridged-Modus verwendet, damit VMs automatisch eine IP-Adresse erhalten, ohne manuelle Konfiguration.',
+        },
+        {
+          word: 'Manifest (Datei)',
+          definition:
+            'Eine Manifest-Datei ist eine strukturierte Datei (z. B. JSON oder XML), die Metadaten über eine Anwendung enthält. Im Webbereich wird sie oft für Progressive Web Apps (PWAs) verwendet, um Name, Icons, Start-URL und andere Konfigurationsdetails zu definieren. Diese Datei ermöglicht es, eine App wie eine native Anwendung zu installieren und offline-fähig zu machen.',
+        },
+
+        {
+          word: 'Lazy Loading',
+          definition:
+            'Lazy Loading ist eine Technik zur Performance-Optimierung, bei der Inhalte oder Ressourcen erst dann geladen werden, wenn sie wirklich benötigt werden. Dies spart Ladezeit und Bandbreite, indem z. B. Bilder erst erscheinen, wenn sie in den sichtbaren Bereich gescrollt werden, oder Module in einer Single Page Application (SPA) erst bei Bedarf nachgeladen werden.',
+        },
+
+        {
+          word: 'Eager Loading',
+          definition:
+            'Eager Loading ist das Gegenteil von Lazy Loading. Hier werden alle notwendigen Ressourcen sofort beim Initialisieren der Anwendung geladen, auch wenn sie erst später benötigt werden. Dies kann die Ladezeit der ersten Seite verlängern, sorgt aber dafür, dass beim späteren Navigieren keine zusätzlichen Ladezeiten entstehen.',
+        },
+
+        {
+          word: 'DOM (Document Object Model)',
+          definition:
+            'Das Document Object Model (DOM) ist eine baumartige Repräsentation einer HTML- oder XML-Seite. Es ermöglicht Programmen, den Inhalt und die Struktur eines Dokuments zu manipulieren. Mit JavaScript kann das DOM genutzt werden, um Elemente zu erstellen, zu ändern oder zu entfernen, wodurch interaktive Webanwendungen möglich werden.',
+        },
+
+        {
+          word: 'Service Workers',
+          definition:
+            'Service Workers sind Skripte, die im Hintergrund des Browsers laufen und unabhängig von der eigentlichen Webseite arbeiten. Sie ermöglichen Funktionen wie Caching, Offline-Funktionalität und Push-Benachrichtigungen. Dadurch können Web-Apps schneller laden und Inhalte auch ohne Internetverbindung bereitstellen.',
         },
         {
           word: 'VLAN',
@@ -940,10 +973,7 @@ export default {
           word: 'Windows Server',
           definition: 'Ein Betriebssystem von Microsoft für Serveranwendungen.',
         },
-        {
-          word: 'Ubuntu',
-          definition: 'Eine Linux-Distribution, die auf Benutzerfreundlichkeit ausgelegt ist.',
-        },
+
         {
           word: 'Visio',
           definition:
@@ -1255,7 +1285,7 @@ export default {
           definition: 'Ein Gerät, das Datenpakete zwischen Netzwerken weiterleitet.',
         },
         { word: 'Port', definition: 'Eine Schnittstelle zur Kommunikation in einem Netzwerk.' },
-        { word: 'Shell', definition: 'Eine Befehlszeilenumgebung zur Steuerung des Systems.' },
+
         { word: 'Kernel', definition: 'Der zentrale Bestandteil eines Betriebssystems.' },
         { word: 'Package Manager', definition: 'Ein Werkzeug zur Verwaltung von Softwarepaketen.' },
         {
@@ -1264,9 +1294,101 @@ export default {
             'Ein Tool, das dabei hilft, Software auf Debian-basierten Linux-Systemen zu installieren, zu aktualisieren oder zu entfernen. Mit APT (Advanced Package Tool) können Programme und ihre Abhängigkeiten automatisch heruntergeladen und konfiguriert werden, ohne dass der Nutzer alles manuell erledigen muss. Es macht die Verwaltung von Software einfach und effizient.',
         },
         {
-          word: 'Cron Job',
-          definition: 'Ein geplantes Skript, das zu bestimmten Zeiten ausgeführt wird.',
+          word: 'Linux',
+          definition:
+            'Linux ist ein Open-Source-Betriebssystemkern, der von Linus Torvalds 1991 entwickelt wurde. Es bildet die Grundlage für zahlreiche Betriebssysteme (Distributionen) wie Ubuntu, Debian und Fedora. Linux zeichnet sich durch hohe Stabilität, Sicherheit und Flexibilität aus. Es wird in Servern, Desktop-Computern, Embedded-Systemen und sogar mobilen Geräten wie Android eingesetzt. Linux nutzt das GNU-Benutzerland, weshalb es oft als „GNU/Linux“ bezeichnet wird. Es basiert auf einem monolithischen Kernel und unterstützt verschiedene Dateisysteme, Virtualisierung, Containerisierung (z. B. Docker) und Netzwerktechnologien.',
         },
+
+        {
+          word: 'Ubuntu',
+          definition:
+            'Ubuntu ist eine beliebte, benutzerfreundliche Linux-Distribution, die von Canonical Ltd. entwickelt und gepflegt wird. Sie basiert auf Debian und wird mit einem langfristigen Support (LTS) für fünf Jahre veröffentlicht. Ubuntu ist für Desktop- und Server-Anwendungen geeignet und bietet eine intuitive Benutzeroberfläche mit GNOME als Standard-Desktop-Umgebung. Es enthält zahlreiche vorinstallierte Anwendungen wie LibreOffice, Firefox und Snap-Pakete zur einfachen Software-Installation. Ubuntu ist besonders in der Entwickler-Community, bei Cloud-Anwendungen (z. B. mit Ubuntu Server) und im IoT-Bereich beliebt.',
+        },
+
+        {
+          word: 'Linux Kernel',
+          definition:
+            'Der Linux-Kernel ist das Herzstück des Linux-Betriebssystems und verwaltet Hardware-Ressourcen wie CPU, Speicher und Peripheriegeräte. Er ist monolithisch, modular erweiterbar und unterstützt verschiedene Architekturen. Der Kernel steuert Prozesse, verwaltet Dateisysteme, ermöglicht Netzwerkkommunikation und bietet Sicherheit durch Mechanismen wie SELinux und AppArmor. Er wird kontinuierlich weiterentwickelt, wobei neue Versionen von der Open-Source-Community unter Leitung von Linus Torvalds veröffentlicht werden.',
+        },
+
+        {
+          word: 'Linux Distribution (Distro)',
+          definition:
+            'Eine Linux-Distribution ist ein Betriebssystem, das den Linux-Kernel mit zusätzlichen Softwarepaketen, Benutzeroberflächen und Paketverwaltungswerkzeugen kombiniert. Bekannte Distributionen sind Ubuntu, Debian, Fedora, Arch Linux und openSUSE. Jede Distro hat ihre eigene Paketverwaltung (z. B. APT für Debian/Ubuntu, DNF für Fedora, Pacman für Arch) und kann unterschiedliche Zielgruppen ansprechen, von Anfängern bis hin zu fortgeschrittenen Entwicklern und Server-Administratoren.',
+        },
+
+        {
+          word: 'Debian',
+          definition:
+            'Debian ist eine der ältesten und stabilsten Linux-Distributionen, die als Basis für viele andere Distros wie Ubuntu dient. Es wird von einer großen Community gepflegt und verfolgt strikte Open-Source-Richtlinien. Debian verwendet das APT-Paketverwaltungssystem und bietet verschiedene Editionen für Desktop, Server und Embedded-Systeme. Durch den langen Entwicklungszyklus ist Debian besonders für stabile Serverumgebungen geeignet.',
+        },
+
+        {
+          word: 'Shell (Bash, Zsh, Fish)',
+          definition:
+            'Die Shell ist eine textbasierte Benutzeroberfläche für das Linux-Betriebssystem, mit der Benutzer Befehle direkt an das System senden können. Die bekannteste Shell ist Bash (Bourne Again Shell), die standardmäßig in vielen Distributionen enthalten ist. Zsh (Z Shell) bietet erweiterte Features wie Auto-Vervollständigung und Themes. Fish (Friendly Interactive Shell) setzt auf Benutzerfreundlichkeit und farbige Hervorhebungen. Shells sind essenziell für Systemadministration, Automatisierung und Skripting.',
+        },
+
+        {
+          word: 'APT (Advanced Package Tool)',
+          definition:
+            'APT ist das Paketverwaltungssystem von Debian-basierten Distributionen wie Ubuntu. Es ermöglicht die Installation, Aktualisierung und Entfernung von Softwarepaketen über Repositorys. Häufige Befehle sind `apt update`, `apt upgrade`, `apt install [Paket]` und `apt remove [Paket]`. APT sorgt automatisch für das Auflösen von Abhängigkeiten und vereinfacht das Software-Management in Linux-Systemen.',
+        },
+
+        {
+          word: 'Snap',
+          definition:
+            'Snap ist ein von Canonical entwickeltes Paketformat, das eine containerisierte Bereitstellung von Anwendungen ermöglicht. Snaps enthalten alle benötigten Abhängigkeiten und laufen isoliert vom restlichen System. Dies verbessert die Sicherheit und Kompatibilität zwischen verschiedenen Linux-Distributionen. Snaps können über den Snap Store verwaltet werden (`snap install [Paket]`, `snap remove [Paket]`).',
+        },
+
+        {
+          word: 'Flatpak',
+          definition:
+            'Flatpak ist eine alternative Paketlösung für Linux, die ähnlich wie Snap funktioniert. Es ermöglicht das Ausführen von Anwendungen in einer Sandbox, unabhängig von der verwendeten Distribution. Flatpak-Pakete werden über Flathub verwaltet und installiert (`flatpak install [Paket]`). Flatpak bietet eine größere App-Kompatibilität, benötigt jedoch mehr Speicherplatz als herkömmliche Paketmanager wie APT oder DNF.',
+        },
+
+        {
+          word: 'Systemd',
+          definition:
+            'Systemd ist ein Init-System, das den Boot-Prozess und die Systemdienste verwaltet. Es ersetzt ältere Init-Systeme wie SysVinit und bietet paralleles Starten von Prozessen, Logging über `journalctl` und ein einheitliches Management mit `systemctl`. Beispiele: `systemctl start [Dienst]`, `systemctl enable [Dienst]`, `systemctl status [Dienst]`. Systemd ist in modernen Linux-Distributionen wie Ubuntu, Fedora und Arch Linux Standard.',
+        },
+
+        {
+          word: 'GRUB (Grand Unified Bootloader)',
+          definition:
+            'GRUB ist der Standard-Bootloader für Linux-Systeme. Er ermöglicht das Laden mehrerer Betriebssysteme und bietet eine Konfigurationsschnittstelle zur Anpassung von Boot-Optionen. Die Konfigurationsdatei befindet sich in `/etc/default/grub`, und Änderungen werden mit `update-grub` übernommen. GRUB unterstützt UEFI und Legacy-BIOS-Installationen.',
+        },
+
+        {
+          word: 'LTS (Long Term Support)',
+          definition:
+            'LTS-Versionen von Ubuntu und anderen Linux-Distributionen bieten längere Support-Zeiträume mit Sicherheits- und Stabilitätsupdates über mehrere Jahre (meist 5 Jahre für Ubuntu). LTS-Versionen eignen sich besonders für Server und Unternehmen, die auf eine langfristig stabile Umgebung angewiesen sind. Beispiel: Ubuntu 22.04 LTS.',
+        },
+
+        {
+          word: 'LUKS (Linux Unified Key Setup)',
+          definition:
+            'LUKS ist ein Standard zur Festplattenverschlüsselung in Linux. Es wird verwendet, um Partitionen sicher zu verschlüsseln und mit einem Passwort oder Schlüssel zu schützen. Mit `cryptsetup` lassen sich verschlüsselte Laufwerke einrichten (`cryptsetup luksFormat /dev/sdX`). LUKS wird oft für Laptop-Sicherheitslösungen und Datenschutz verwendet.',
+        },
+
+        {
+          word: 'ext4 (Extended Filesystem 4)',
+          definition:
+            'ext4 ist das am häufigsten verwendete Dateisystem in Linux. Es bietet Journaling, große Dateigrößen (bis zu 16 TB) und verbesserte Performance gegenüber seinem Vorgänger ext3. Alternativen sind XFS (für große Dateien) und Btrfs (mit Snapshot-Unterstützung). Ein ext4-Dateisystem kann mit `mkfs.ext4 /dev/sdX` formatiert werden.',
+        },
+
+        {
+          word: 'SSH (Secure Shell)',
+          definition:
+            'SSH ist ein Protokoll zur sicheren Fernsteuerung von Linux-Servern. Es ermöglicht verschlüsselte Verbindungen und Dateiübertragungen über Netzwerke. Ein SSH-Server läuft mit `sshd`, während sich Clients mit `ssh user@host` verbinden können. SSH kann mit Schlüsseln (`~/.ssh/id_rsa.pub`) für passwortlose Authentifizierung konfiguriert werden.',
+        },
+
+        {
+          word: 'Cron Jobs',
+          definition:
+            'Cron ist ein Linux-Dienst zur automatischen Ausführung von Befehlen zu bestimmten Zeiten. Cron-Jobs werden in der Datei `/etc/crontab` oder mit `crontab -e` verwaltet. Beispiel für einen täglichen Backup-Job: `0 3 * * * /home/user/backup.sh`. Systemadministratoren nutzen Cron für regelmäßige Wartungsaufgaben und Skript-Automatisierung.',
+        },
+
         {
           word: 'Bash',
           definition:

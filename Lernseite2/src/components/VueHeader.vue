@@ -1,7 +1,6 @@
 <template>
   <header>
     <div class="header-container">
-
       <button class="menu-toggle" @click="toggleMenu" :class="{ open: menuOpen }">
         <span></span>
         <span></span>
@@ -14,31 +13,28 @@
       <router-link to="/entries" exact-active-class="active-link">Einträge</router-link>
       <router-link to="/todos" exact-active-class="active-link">To-Do-Liste</router-link>
       <router-link to="/cards" exact-active-class="active-link">Karteikarten</router-link>
-      <router-link to="/ringbook" exact-active-class="active-link">Hefteinträge</router-link>
-      <router-link to="/documentation" exact-active-class="active-link">Technische Dokumentation</router-link>
+      <router-link to="/documentation" exact-active-class="active-link"
+        >Technische Dokumentation</router-link
+      >
       <router-link to="/dictionary" exact-active-class="active-link">IT-Wörterbuch</router-link>
-      <router-link to="/news" exact-active-class="active-link">Patchlogs</router-link>
-
-
-
     </nav>
   </header>
 </template>
 
 <script>
 export default {
-  name: "VueHeader",
+  name: 'VueHeader',
   data() {
     return {
       menuOpen: false,
-    };
+    }
   },
   methods: {
     toggleMenu() {
-      this.menuOpen = !this.menuOpen;
+      this.menuOpen = !this.menuOpen
     },
   },
-};
+}
 </script>
 
 <style scoped>
@@ -71,7 +67,6 @@ h1 {
   cursor: pointer;
   padding: 0;
   position: relative;
-
 }
 
 .menu-toggle span {
@@ -113,7 +108,9 @@ nav a {
   color: #333333;
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 nav a:hover {
